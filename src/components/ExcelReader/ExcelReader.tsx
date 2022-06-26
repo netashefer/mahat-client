@@ -1,9 +1,8 @@
 import { useState } from "react";
 import * as XLSX from "xlsx";
 import { convertToJson } from "../../helpers/xls-reader";
-import { Data, Table } from "../../types/data";
-import { setState } from "../../types/utility";
-import { v4 as uuidv4 } from 'uuid';
+import { Table } from "../../types/data";
+import './ExcelReader.scss';
 
 interface ExcelReaderProps {
     addDataInstanceTable: (table: Table) => void;
@@ -11,6 +10,7 @@ interface ExcelReaderProps {
 
 const ExcelReader = ({ addDataInstanceTable }: ExcelReaderProps) => {
     const [file, setFile] = useState<Blob>(null);
+    console.log(file)
 
     const filePathset = (e: any) => {
         e.stopPropagation();
@@ -34,19 +34,19 @@ const ExcelReader = ({ addDataInstanceTable }: ExcelReaderProps) => {
     }
 
     return (
-        <div className="ExcelReader">
-            <div>
-                <input
-                    type="file"
-                    id="file"
-                    onChange={filePathset}
-                />
-                <button
-                    onClick={readFile}
-                >
-                    Read File
-                </button>
-            </div>
+        <div className="excel-reader">
+            <input
+                className="file-input"
+                type="file"
+                id="file"
+                onChange={filePathset}
+            />
+            {file && <button
+                className="file-btn"
+                onClick={readFile}
+            >
+                Read File
+            </button>}
         </div>
     );
 }

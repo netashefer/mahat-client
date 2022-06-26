@@ -1,0 +1,16 @@
+.catalog {
+    width: 100%;
+
+    .widget-option {
+        width: 100%;
+        background-color: rgb(255, 255, 255);
+        border: 1px solid rgb(177, 173, 173);
+        border-radius: 5px;
+        border-right: 3px solid rgb(32, 43, 189);
+
+        &:active {
+            background-color: rgb(175, 172, 172);
+        }
+    }
+
+}

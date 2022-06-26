@@ -4,6 +4,8 @@ import ExcelReader from "./components/ExcelReader/ExcelReader";
 import { v4 as uuidv4 } from 'uuid';
 import { Table, TableDictionary } from "./types/data";
 import './App.scss';
+import Catalog from "./components/Catalog/Catalog";
+import ManagerPanel from "./components/ManagerPanel/ManagerPanel";
 
 const App = () => {
   const [tableDictionary, setTableDictionary] = useState<TableDictionary>({});
@@ -21,10 +23,16 @@ const App = () => {
 
   return (
     <div className="App">
-      <ExcelReader
+      <div className="page-title">Yahel and Neta</div>
+      <div className="wrapper">
+        <Dashboard />
+        {/* <ExcelReader
         addDataInstanceTable={addDataInstanceTable}
-      />
-      <Dashboard />
+      /> */}
+        {/* <Catalog /> */}
+        <ManagerPanel addDataInstanceTable={addDataInstanceTable}
+        />
+      </div>
     </div>
   );
 }
