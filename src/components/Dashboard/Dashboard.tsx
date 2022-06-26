@@ -30,24 +30,26 @@ const Dashboard = () => {
     ]
 
     return (
-        <ResponsiveGridLayout
-            className="layout"
-            resizeHandles={["se"]}
-            preventCollision={false}
-            draggableHandle={`.${WIDGET_DRAGGABLE_TITLE_CLASSNAME}`}
-            onLayoutChange={handleLayoutChange}
-            isResizable
-            isDraggable
-            layouts={{ lg: layout }}
-        >
-            {
-                widgets.map(w =>
-                    <div key={w.id}>
-                        <WidgetContainer {...w} />
-                    </div>
-                )}
+        <div className="dashboard">
+            <ResponsiveGridLayout
+                className="layout"
+                resizeHandles={["se"]}
+                preventCollision={false}
+                draggableHandle={`.${WIDGET_DRAGGABLE_TITLE_CLASSNAME}`}
+                onLayoutChange={handleLayoutChange}
+                isResizable
+                isDraggable
+                layouts={{ lg: layout }}
+            >
+                {
+                    widgets.map(w =>
+                        <div key={w.id}>
+                            <WidgetContainer {...w} />
+                        </div>
+                    )}
 
-        </ResponsiveGridLayout>
+            </ResponsiveGridLayout>
+        </div>
     );
 }
 
