@@ -1,0 +1,13 @@
+.excel-reader {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .file-btn {
+        width: fit-content;
+    }
+
+    .file-input {
+        width: fit-content;
+    }
+}

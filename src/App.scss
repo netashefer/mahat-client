@@ -1,4 +1,19 @@
 .App {
   text-align: center;
   height: 100%;
+  width: 100%;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+
+  .page-title {
+    font-size: 30px;
+    background-color: rgb(219, 212, 212);
+  }
+
+  .wrapper {
+
+    display: flex;
+    flex-direction: row;
+  }
 }
