@@ -1,15 +1,15 @@
 import { useState } from "react";
 import * as XLSX from "xlsx";
 import { convertToJson } from "../../helpers/xls-reader";
-import { Data } from "../../types/data";
+import { Data, Table } from "../../types/data";
 import { setState } from "../../types/utility";
+import { v4 as uuidv4 } from 'uuid';
 
 interface ExcelReaderProps {
-    setData: setState<Data>;
-    setSchema: setState<string[]>;
+    addDataInstanceTable: (table: Table) => void;
 }
 
-const ExcelReader = ({ setData, setSchema }: ExcelReaderProps) => {
+const ExcelReader = ({ addDataInstanceTable }: ExcelReaderProps) => {
     const [file, setFile] = useState<Blob>(null);
 
     const filePathset = (e: any) => {
@@ -27,10 +27,8 @@ const ExcelReader = ({ setData, setSchema }: ExcelReaderProps) => {
             const wsname = wb.SheetNames[0];/* Get first worksheet */
             const ws = wb.Sheets[wsname];
             const data = XLSX.utils.sheet_to_csv(ws);/* Convert array of arrays */
-            const result: Data = JSON.parse(convertToJson(data));
-            setData(result);
-            setSchema(data[0].split(","));
-            console.log(result)
+            const table: Table = convertToJson(data);
+            addDataInstanceTable(table);
         };
         reader.readAsBinaryString(file);
     }

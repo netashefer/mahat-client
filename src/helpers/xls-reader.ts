@@ -1,4 +1,6 @@
-export const convertToJson = (csv: string) => {
+import { Table } from "../types/data";
+
+export const convertToJson = (csv: string): Table => {
     const lines = csv.split("\n");
 
     const result = [];
@@ -16,5 +18,5 @@ export const convertToJson = (csv: string) => {
         result.push(obj);
     }
 
-    return JSON.stringify(result); //JSON
+    return { data: result, schema: headers };
 }
