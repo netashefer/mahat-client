@@ -1,0 +1,12 @@
+.data-manager {
+    direction: rtl;
+
+    .info-icon {
+        width: 15px;
+
+        &:hover {
+            fill: red;
+            cursor: pointer;
+        }
+    }
+}

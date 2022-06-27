@@ -3,3 +3,5 @@ export interface Widget {
     content: string;
     title: string;
 }
+
+export type DataInstanceId = string;

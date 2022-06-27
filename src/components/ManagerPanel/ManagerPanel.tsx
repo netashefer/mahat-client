@@ -1,20 +1,23 @@
 
 import { useState } from 'react';
-import { Table } from '../../types/data';
+import { FullDataInstanceInfo, Table, TableDictionary } from '../../types/data';
 import Catalog from '../Catalog/Catalog';
 import ExcelReader from '../ExcelReader/ExcelReader';
 import ReactTooltip from 'react-tooltip';
 import classNames from 'classnames';
+import Tooltip from '@mui/material/Tooltip';
 
 import './ManagerPanel.scss';
+import DataManager from '../DataManager/DataManager';
 
 interface ManagerPanelProps {
-    addDataInstanceTable: (table: Table) => void;
-
+    addDataInstanceTable: (table: Table, info: any) => void;
+    tableDictionary: TableDictionary;
+    fullDataInstanceInfo: FullDataInstanceInfo;
 }
 
 
-const ManagerPanel = ({ addDataInstanceTable }: ManagerPanelProps) => {
+const ManagerPanel = ({ addDataInstanceTable, tableDictionary, fullDataInstanceInfo }: ManagerPanelProps) => {
     const [currentContent, setCurrentContent] = useState<number>(0);
 
     const getChildren = () => {
@@ -22,7 +25,11 @@ const ManagerPanel = ({ addDataInstanceTable }: ManagerPanelProps) => {
             case 0:
                 return <Catalog />
             case 1:
-                return <ExcelReader addDataInstanceTable={addDataInstanceTable} />
+                return <DataManager
+                    tableDictionary={tableDictionary}
+                    addDataInstanceTable={addDataInstanceTable}
+                    fullDataInstanceInfo={fullDataInstanceInfo}
+                />
             default:
                 return <div>not yet :)</div>
         }
@@ -50,14 +57,14 @@ const ManagerPanel = ({ addDataInstanceTable }: ManagerPanelProps) => {
             <div className='left-buttons-panel'>
                 <ReactTooltip />
                 {
-                    buttons.map(btn =>
-                        <button
-                            data-place="left"
-                            data-tip={btn.tooltipText}
-                            onClick={() => setCurrentContent(btn.number)}
-                            className={classNames('panel-btn', { "selected": currentContent === btn.number })}>
-                            {btn.content}
-                        </button>
+                    buttons.map((btn, index) =>
+                        <Tooltip key={index} title={btn.tooltipText} placement="left">
+                            <button
+                                onClick={() => setCurrentContent(btn.number)}
+                                className={classNames('panel-btn', { "selected": currentContent === btn.number })}>
+                                {btn.content}
+                            </button>
+                        </Tooltip>
                     )}
             </div>
             <div className='panel-content'>
