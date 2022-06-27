@@ -1,5 +1,5 @@
 
-import { Widget } from '../../types/widget';
+import { Widget } from '../../types/entities';
 import './WidgetContainer.scss';
 
 interface WidgetContainerProps extends Widget { }

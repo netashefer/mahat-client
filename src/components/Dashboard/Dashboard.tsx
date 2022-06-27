@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Layout, Responsive, WidthProvider } from "react-grid-layout";
-import { Widget } from "../../types/widget";
+import { Widget } from "../../types/entities";
 import WidgetContainer, { WIDGET_DRAGGABLE_TITLE_CLASSNAME } from "../WidgetContainer/WidgetContainer";
 import './Dashboard.scss';
 

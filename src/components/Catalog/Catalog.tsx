@@ -20,14 +20,14 @@ const Catalog = ({ }: CatalogProps) => {
     return (
         <div className='catalog'>
             <h1>קטלוג</h1>
-            {sections.map(section => {
+            {sections.map((section, index) => {
                 return (
-                    <>
+                    <div key={index}>
                         <h4>{section.name}</h4>
                         {
-                            section.widgets.map(m => <button className='widget-option'>{m.name}</button>)
+                            section.widgets.map(m => <button key={m.name} className='widget-option'>{m.name}</button>)
                         }
-                    </>
+                    </div>
                 )
             })}
         </div>

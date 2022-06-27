@@ -5,7 +5,7 @@ import { Table } from "../../types/data";
 import './ExcelReader.scss';
 
 interface ExcelReaderProps {
-    addDataInstanceTable: (table: Table) => void;
+    addDataInstanceTable: (table: Table, info: any) => void;
 }
 
 const ExcelReader = ({ addDataInstanceTable }: ExcelReaderProps) => {
@@ -28,7 +28,7 @@ const ExcelReader = ({ addDataInstanceTable }: ExcelReaderProps) => {
             const ws = wb.Sheets[wsname];
             const data = XLSX.utils.sheet_to_csv(ws);/* Convert array of arrays */
             const table: Table = convertToJson(data);
-            addDataInstanceTable(table);
+            addDataInstanceTable(table, file);
         };
         reader.readAsBinaryString(file);
     }
@@ -39,6 +39,7 @@ const ExcelReader = ({ addDataInstanceTable }: ExcelReaderProps) => {
                 className="file-input"
                 type="file"
                 id="file"
+                accept=".xls,.xlsx"
                 onChange={filePathset}
             />
             {file && <button

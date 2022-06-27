@@ -5,8 +5,10 @@
         width: 100%;
         background-color: rgb(255, 255, 255);
         border: 1px solid rgb(177, 173, 173);
-        border-radius: 5px;
-        border-right: 3px solid rgb(32, 43, 189);
+        border-radius: 7px;
+        border-right: 4px solid rgb(32, 43, 189);
+        height: 2em;
+        margin: 1px;
 
         &:active {
             background-color: rgb(175, 172, 172);
