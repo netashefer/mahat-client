@@ -9,6 +9,7 @@ import { AppBar, Toolbar } from "@mui/material";
 const App = () => {
   const [tableDictionary, setTableDictionary] = useState<TableDictionary>({});
   const [fullDataInstanceInfo, setFullDataInstanceInfo] = useState<FullDataInstanceInfo>({});
+  console.log("Experiment")
 
   const addDataInstanceTable = (table: Table, info: any) => {
     const dataInstanceId = uuidv4();
