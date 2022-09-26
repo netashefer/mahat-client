@@ -2,6 +2,7 @@ import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import Dashboard from "./components/Dashboard/Dashboard";
 import ManagerPanel from "./components/ManagerPanel/ManagerPanel";
+import { parseTable } from "./helpers/xls-reader";
 import { FullDataInstanceInfo, Table, TableDictionary } from "./types/data";
 import './App.scss';
 
@@ -14,7 +15,7 @@ const App = () => {
     setTableDictionary(prev => {
       return {
         ...prev,
-        [dataInstanceId]: table
+        [dataInstanceId]: parseTable(table)
       }
     })
     setFullDataInstanceInfo(prev => {

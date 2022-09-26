@@ -1,14 +1,13 @@
 
+import Tooltip from '@mui/material/Tooltip';
+import classNames from 'classnames';
 import { useState } from 'react';
+import ReactTooltip from 'react-tooltip';
 import { FullDataInstanceInfo, Table, TableDictionary } from '../../types/data';
 import Catalog from '../Catalog/Catalog';
-import ExcelReader from '../ExcelReader/ExcelReader';
-import ReactTooltip from 'react-tooltip';
-import classNames from 'classnames';
-import Tooltip from '@mui/material/Tooltip';
 
-import './ManagerPanel.scss';
 import DataManager from '../DataManager/DataManager';
+import './ManagerPanel.scss';
 
 interface ManagerPanelProps {
     addDataInstanceTable: (table: Table, info: any) => void;
