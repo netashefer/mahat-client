@@ -29,14 +29,12 @@ export const parseTable = (table: Table) => { // should be on processing-service
             columnParsingMap[column] = (d: string) => new Date(d)
         } else if (column.includes("(NUMBER)")) {
             columnParsingMap[column] = parseInt;
-        } else {
-            columnParsingMap[column] = identity;
         }
     })
 
     const data: any[] = [];
     table.data.forEach(dataRow => {
-        table.schema.forEach(column => {
+        Object.keys(columnParsingMap).forEach(column => {
             dataRow[column] = columnParsingMap[column]?.(dataRow[column]);
         })
         data.push(dataRow);
