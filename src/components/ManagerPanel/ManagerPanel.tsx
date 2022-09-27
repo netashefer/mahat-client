@@ -22,17 +22,17 @@ const ManagerPanel = ({ addDataInstanceTable, tableDictionary, fullDataInstanceI
     const getChildren = () => {
         switch (currentContent) {
             case 0:
-                return <Catalog />
+                return <Catalog />;
             case 1:
                 return <DataManager
                     tableDictionary={tableDictionary}
                     addDataInstanceTable={addDataInstanceTable}
                     fullDataInstanceInfo={fullDataInstanceInfo}
-                />
+                />;
             default:
-                return <div>not yet :)</div>
+                return <div>not yet :)</div>;
         }
-    }
+    };
 
     const buttons = [
         {
@@ -49,7 +49,7 @@ const ManagerPanel = ({ addDataInstanceTable, tableDictionary, fullDataInstanceI
             tooltipText: "יוזר",
             number: 2
         }
-    ]
+    ];
 
     return (
         <div className='manager-panel'>
@@ -71,6 +71,6 @@ const ManagerPanel = ({ addDataInstanceTable, tableDictionary, fullDataInstanceI
             </div>
         </div>
     );
-}
+};
 
 export default ManagerPanel;

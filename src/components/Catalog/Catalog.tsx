@@ -3,7 +3,7 @@ import './Catalog.scss';
 
 interface CatalogProps { }
 
-const mock = [{ id: "2", name: "גרף2" }, { id: "1", name: "גרף1" }]
+const mock = [{ id: "2", name: "גרף2" }, { id: "1", name: "גרף1" }];
 
 const Catalog = ({ }: CatalogProps) => {
     const sections = [
@@ -15,7 +15,7 @@ const Catalog = ({ }: CatalogProps) => {
             name: "גרפים",
             widgets: mock
         }
-    ]
+    ];
 
     return (
         <div className='catalog'>
@@ -28,10 +28,10 @@ const Catalog = ({ }: CatalogProps) => {
                             section.widgets.map(m => <button key={m.name} className='widget-option'>{m.name}</button>)
                         }
                     </div>
-                )
+                );
             })}
         </div>
     );
-}
+};
 
 export default Catalog;

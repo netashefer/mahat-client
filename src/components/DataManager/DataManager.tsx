@@ -23,7 +23,7 @@ const DataManager = ({ tableDictionary, addDataInstanceTable, fullDataInstanceIn
     const pickDataInstance = (dataInstanceId: DataInstanceId) => {
         setClickedDataInstance(dataInstanceId);
         setIsOpen(true);
-    }
+    };
     return (
         <div
             className="data-manager"
@@ -48,6 +48,6 @@ const DataManager = ({ tableDictionary, addDataInstanceTable, fullDataInstanceIn
             <ExcelReader addDataInstanceTable={addDataInstanceTable} />
         </div>
     );
-}
+};
 
 export default DataManager;

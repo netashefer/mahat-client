@@ -17,17 +17,17 @@ const App = () => {
       return {
         ...prev,
         [dataInstanceId]: parsedTable
-      }
-    })
+      };
+    });
     setFullDataInstanceInfo(prev => {
       return {
         ...prev,
         [dataInstanceId]: info
-      }
-    })
-  }
+      };
+    });
+  };
 
-  console.log(tableDictionary)
+  console.log(tableDictionary);
 
   return (
     <div className="App" id="app">
@@ -42,6 +42,6 @@ const App = () => {
       </div>
     </div>
   );
-}
+};
 
 export default App;
