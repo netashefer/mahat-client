@@ -1,14 +1,13 @@
 
+import Tooltip from '@mui/material/Tooltip';
+import classNames from 'classnames';
 import { useState } from 'react';
+import ReactTooltip from 'react-tooltip';
 import { FullDataInstanceInfo, Table, TableDictionary } from '../../types/data';
 import Catalog from '../Catalog/Catalog';
-import ExcelReader from '../ExcelReader/ExcelReader';
-import ReactTooltip from 'react-tooltip';
-import classNames from 'classnames';
-import Tooltip from '@mui/material/Tooltip';
 
-import './ManagerPanel.scss';
 import DataManager from '../DataManager/DataManager';
+import './ManagerPanel.scss';
 
 interface ManagerPanelProps {
     addDataInstanceTable: (table: Table, info: any) => void;
@@ -23,17 +22,17 @@ const ManagerPanel = ({ addDataInstanceTable, tableDictionary, fullDataInstanceI
     const getChildren = () => {
         switch (currentContent) {
             case 0:
-                return <Catalog />
+                return <Catalog />;
             case 1:
                 return <DataManager
                     tableDictionary={tableDictionary}
                     addDataInstanceTable={addDataInstanceTable}
                     fullDataInstanceInfo={fullDataInstanceInfo}
-                />
+                />;
             default:
-                return <div>not yet :)</div>
+                return <div>not yet :)</div>;
         }
-    }
+    };
 
     const buttons = [
         {
@@ -50,7 +49,7 @@ const ManagerPanel = ({ addDataInstanceTable, tableDictionary, fullDataInstanceI
             tooltipText: "יוזר",
             number: 2
         }
-    ]
+    ];
 
     return (
         <div className='manager-panel'>
@@ -72,6 +71,6 @@ const ManagerPanel = ({ addDataInstanceTable, tableDictionary, fullDataInstanceI
             </div>
         </div>
     );
-}
+};
 
 export default ManagerPanel;

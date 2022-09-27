@@ -10,14 +10,14 @@ interface ExcelReaderProps {
 
 const ExcelReader = ({ addDataInstanceTable }: ExcelReaderProps) => {
     const [file, setFile] = useState<Blob>(null);
-    console.log(file)
+    console.log(file);
 
     const filePathset = (e: any) => {
         e.stopPropagation();
         e.preventDefault();
         var file = e.target.files[0];
         setFile(file);
-    }
+    };
 
     const readFile = () => {
         const reader = new FileReader();
@@ -31,7 +31,7 @@ const ExcelReader = ({ addDataInstanceTable }: ExcelReaderProps) => {
             addDataInstanceTable(table, file);
         };
         reader.readAsBinaryString(file);
-    }
+    };
 
     return (
         <div className="excel-reader">
@@ -50,6 +50,6 @@ const ExcelReader = ({ addDataInstanceTable }: ExcelReaderProps) => {
             </button>}
         </div>
     );
-}
+};
 
 export default ExcelReader;

@@ -19,4 +19,4 @@ export const convertToJson = (csv: string): Table => {
     }
 
     return { data: result, schema: headers };
-}
+};
