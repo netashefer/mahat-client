@@ -1,4 +1,3 @@
-import { identity } from "lodash";
 import { Table } from "../types/data";
 
 export const convertToJson = (csv: string): Table => {
@@ -20,26 +19,4 @@ export const convertToJson = (csv: string): Table => {
     }
 
     return { data: result, schema: headers };
-}
-
-export const parseTable = (table: Table) => { // should be on processing-service
-    const columnParsingMap: Record<string, (value: string) => string | Date | number> = {};
-    table.schema.forEach(column => {
-        if (column.includes("(DATE)")) {
-            columnParsingMap[column] = (d: string) => new Date(d)
-        } else if (column.includes("(NUMBER)")) {
-            columnParsingMap[column] = parseInt;
-        }
-    })
-
-    const data: any[] = [];
-    table.data.forEach(dataRow => {
-        Object.keys(columnParsingMap).forEach(column => {
-            dataRow[column] = columnParsingMap[column]?.(dataRow[column]);
-        })
-        data.push(dataRow);
-    })
-
-    table.data = data;
-    return table;
 }
