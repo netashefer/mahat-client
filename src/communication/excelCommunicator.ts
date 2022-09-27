@@ -1,14 +1,17 @@
+import { config } from "../config";
 import { Table } from "../types/data";
+import Communicator from "./Communicator";
 import requestProvider from "./requestProvider";
 
-class ExcelCommunicator {
-    async getParsedTable(body: { table: Table; }) {
+class ExcelCommunicator extends Communicator {
+
+    getParsedTable(body: { table: Table; }) {
         try {
-            return await requestProvider.post<Table>("excel/parse", { body });
+            return requestProvider.post<Table>(this.getFullURL("/excel/parse"), { body });
         } catch {
             return null;
         }
     }
 }
 
-export default new ExcelCommunicator();
+export default new ExcelCommunicator(config.processingServiceUrl);
