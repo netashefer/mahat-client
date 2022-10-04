@@ -10,13 +10,14 @@ const WidgetContainer = ({ content, id, title }: WidgetContainerProps) => {
     return (
         <div
             className="widget-container"
-            key={id}>
+            key={id}
+        >
             <p className={WIDGET_DRAGGABLE_TITLE_CLASSNAME}>
                 {title}
             </p>
             {content}
         </div>
     );
-}
+};
 
 export default WidgetContainer;
