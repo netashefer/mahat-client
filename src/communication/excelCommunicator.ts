@@ -7,7 +7,7 @@ class ExcelCommunicator extends Communicator {
 
     getParsedTable(body: { table: Table; }) {
         try {
-            return requestProvider.post<Table>(this.getFullURL("/excel/parse"), { body });
+            return requestProvider.post<Table>(this.getFullURL("excel/parse"), body);
         } catch {
             return null;
         }
