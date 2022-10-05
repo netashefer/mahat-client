@@ -4,7 +4,7 @@ import { Table } from "../../types/data";
 import './ExcelReader.scss';
 
 interface ExcelReaderProps {
-    addDataInstanceTable: (table: Table, info: any) => void;
+    addDataInstanceTable: (dataSourceId: string, table: Table, info: any) => void;
 }
 
 const ExcelReader = ({ addDataInstanceTable }: ExcelReaderProps) => {
@@ -14,7 +14,7 @@ const ExcelReader = ({ addDataInstanceTable }: ExcelReaderProps) => {
     const filePathset = (e: any) => {
         e.stopPropagation();
         e.preventDefault();
-        var file = e.target.files[0];
+        const file = e.target.files[0];
         setFile(file);
     };
 

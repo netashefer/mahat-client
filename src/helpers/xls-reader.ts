@@ -23,16 +23,15 @@ export const convertToJson = (csv: string): Table => {
     return { data: result, schema: headers };
 };
 
-export const onLoad = (evt: ProgressEvent<FileReader>, file: Blob, callback: (table: Table, info: any) => void) => {// evt = on_file_select event
+export const onLoad = async (evt: ProgressEvent<FileReader>, file: Blob, callback: (dataSourceId: string, table: Table, info: any) => void) => {// evt = on_file_select event
     const wb = getWorkBook(evt);
-    excelCommunicator.saveExcel(evt);
     const wsname = wb.SheetNames[0];/* Get first worksheet */
     const ws = wb.Sheets[wsname];
     const data = XLSX.utils.sheet_to_csv(ws);/* Convert array of arrays */
-    console.log("-----", data);
 
     const table: Table = convertToJson(data);
-    callback(table, file);
+    const dataSourceId = await excelCommunicator.addExcelDataSource({ table, dashboardId: "bla", displayName: "blas" });
+    callback(dataSourceId, table, file);
 };
 
 export const getWorkBook = (evt: ProgressEvent<FileReader>) => {
