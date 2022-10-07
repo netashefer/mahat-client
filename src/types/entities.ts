@@ -5,3 +5,8 @@ export interface Widget {
 }
 
 export type DataInstanceId = string;
+
+export type Dashboard = {
+    dashboardName: string;
+    dashboardId?: string;
+};
