@@ -1,0 +1,17 @@
+.my-dashboards {
+    display: flex;
+    flex-direction: column;
+    background-color: #2D325A;
+    padding: 1em;
+    width: 25em;
+
+    .list {
+        overflow-y: auto;
+        height: 15em;
+    }
+
+    #outlined-basic-label,
+    #outlined-basic {
+        color: white;
+    }
+}

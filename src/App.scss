@@ -12,8 +12,15 @@
   }
 
   .wrapper {
-
     display: flex;
     flex-direction: row;
   }
+}
+
+html,
+body,
+#root,
+#app,
+#app>div {
+  height: 100%
 }
