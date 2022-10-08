@@ -1,46 +1,27 @@
-import { useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
-import Dashboard from "./components/Dashboard/Dashboard";
-import ManagerPanel from "./components/ManagerPanel/ManagerPanel";
-import { FullDataInstanceInfo, Table, TableDictionary } from "./types/data";
-import excelCommunicator from "./communication/excelCommunicator";
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import './App.scss';
+import ButtonAppBar from './components/Common/AppBar';
+import SignIn from './components/UserSignIn/SignIn';
+import SignUp from './components/UserSignUp/UserSignUp';
+import theme from './themes/theme';
+import DashboardPage from './views/DashboardPage/DashboardPage';
+import NotFoundPage from './views/NotFoundPage/NotFoundPage';
 
 const App = () => {
-  const [tableDictionary, setTableDictionary] = useState<TableDictionary>({});
-  const [fullDataInstanceInfo, setFullDataInstanceInfo] = useState<FullDataInstanceInfo>({});
-
-  const addDataInstanceTable = async (table: Table, info: any) => {
-    const dataInstanceId = uuidv4();
-    const parsedTable = await excelCommunicator.getParsedTable({ table });
-    setTableDictionary(prev => {
-      return {
-        ...prev,
-        [dataInstanceId]: parsedTable
-      };
-    });
-    setFullDataInstanceInfo(prev => {
-      return {
-        ...prev,
-        [dataInstanceId]: info
-      };
-    });
-  };
-
-  console.log(tableDictionary);
-
   return (
-    <div className="App" id="app">
-      <div className="page-title">Yahel and Neta</div>
-      <div className="wrapper">
-        <Dashboard />
-        <ManagerPanel
-          addDataInstanceTable={addDataInstanceTable}
-          tableDictionary={tableDictionary}
-          fullDataInstanceInfo={fullDataInstanceInfo}
-        />
-      </div>
-    </div>
+    <ThemeProvider theme={theme}>
+    <Router>
+          <CssBaseline />
+          <ButtonAppBar/>
+      <Routes>
+        <Route path="/signin" element={<SignIn/>}/>
+        <Route path="/signup" element={<SignUp/>}/>
+        <Route path="/dashboard" element={<DashboardPage/>}/>
+        <Route path="*" element={<NotFoundPage/>}/>
+      </Routes>
+  </Router>
+  </ThemeProvider>
   );
 };
 
