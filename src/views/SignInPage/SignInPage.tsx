@@ -5,18 +5,18 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import Copyleft from "../Common/Copyleft/Copyleft";
-import Form from "../Common/Form";
+import Copyleft from "../../components/Common/Copyleft/Copyleft";
+import Form from "../../components/Common/Form";
 
-export default function SignUp() {
+const SignInPage = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get("username"),
+      username: data.get("username"),
       password: data.get("password"),
     });
-    //todo: server req
+    //todo - req to server
   };
 
   const userFormConfig = {
@@ -34,11 +34,11 @@ export default function SignUp() {
         id:"password",
         label:"Password",
         name:"username",
-        autoComplete:"new-password",
+        autoComplete:"password",
     }
     ],
     handleSubmit: handleSubmit,
-    submitText: 'Sign Up'
+    submitText: 'Sign In'
   }
 
   return (
@@ -51,20 +51,22 @@ export default function SignUp() {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}/>
         <Typography component="h1" variant="h5">
-          Sign up
+          Sign in
         </Typography>
         <Form {...userFormConfig}/>
-          <Grid container justifyContent="flex-end">
-            <Grid item>
-              <Link href="signin" variant="body2" color="secondary">
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
-        </Box>
+        <Grid container justifyContent="flex-end">
+      <Grid item>
+        <Link href="/signup" variant="body2" color="secondary">
+          {"Don't have an account? Sign Up"}
+        </Link>
+      </Grid>
+    </Grid>
+      </Box>
       <Copyleft sx={{ mt: 5 }} />
     </Container>
   );
 }
+
+export default SignInPage;

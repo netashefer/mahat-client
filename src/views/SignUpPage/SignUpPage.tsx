@@ -1,26 +1,22 @@
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import Copyleft from "../Common/Copyleft/Copyleft";
-import Form from "../Common/Form";
+import Copyleft from "../../components/Common/Copyleft/Copyleft";
+import Form from "../../components/Common/Form";
 
-export default function SignIn() {
+const SignUpPage = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      username: data.get("username"),
+      email: data.get("username"),
       password: data.get("password"),
     });
-    //todo - req to server
+    //todo: server req
   };
 
   const userFormConfig = {
@@ -38,11 +34,11 @@ export default function SignIn() {
         id:"password",
         label:"Password",
         name:"username",
-        autoComplete:"password",
+        autoComplete:"new-password",
     }
     ],
     handleSubmit: handleSubmit,
-    submitText: 'Sign In'
+    submitText: 'Sign Up'
   }
 
   return (
@@ -57,18 +53,20 @@ export default function SignIn() {
       >
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}/>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign up
         </Typography>
         <Form {...userFormConfig}/>
-        <Grid container justifyContent="flex-end">
-      <Grid item>
-        <Link href="/signup" variant="body2" color="secondary">
-          {"Don't have an account? Sign Up"}
-        </Link>
-      </Grid>
-    </Grid>
-      </Box>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link href="signin" variant="body2" color="secondary">
+                Already have an account? Sign in
+              </Link>
+            </Grid>
+          </Grid>
+        </Box>
       <Copyleft sx={{ mt: 5 }} />
     </Container>
   );
 }
+
+export default SignUpPage;

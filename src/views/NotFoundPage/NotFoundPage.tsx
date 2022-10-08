@@ -9,8 +9,7 @@ const NotFoundPage = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-            }}
-                    >
+            }}>
         <CardMedia
         component="img"
         image={notFoundImage}/>
