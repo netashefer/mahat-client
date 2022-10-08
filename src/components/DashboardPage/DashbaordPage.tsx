@@ -9,19 +9,17 @@ const DashbaordPage = () => {
     const [tableDictionary, setTableDictionary] = useState<TableDictionary>({});
     const [fullDataInstanceInfo, setFullDataInstanceInfo] = useState<FullDataInstanceInfo>({});
 
-    const addDataInstanceTable = async (table: Table, info: any) => {
-        const dataInstanceId = uuidv4();
-        const parsedTable = await excelCommunicator.getParsedTable({ table });
+    const addDataInstanceTable = async (dataSourceId: string, table: Table, info: any) => {
         setTableDictionary(prev => {
             return {
                 ...prev,
-                [dataInstanceId]: parsedTable
+                [dataSourceId]: table
             };
         });
         setFullDataInstanceInfo(prev => {
             return {
                 ...prev,
-                [dataInstanceId]: info
+                [dataSourceId]: info
             };
         });
     };

@@ -10,7 +10,7 @@ import DataManager from '../DataManager/DataManager';
 import './ManagerPanel.scss';
 
 interface ManagerPanelProps {
-    addDataInstanceTable: (table: Table, info: any) => void;
+    addDataInstanceTable: (dataSourceId: string, table: Table, info: any) => void;
     tableDictionary: TableDictionary;
     fullDataInstanceInfo: FullDataInstanceInfo;
 }

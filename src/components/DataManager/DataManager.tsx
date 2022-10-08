@@ -9,7 +9,7 @@ import './DataManager.scss';
 
 interface DataManagerProps {
     tableDictionary: TableDictionary;
-    addDataInstanceTable: (table: Table, info: any) => void;
+    addDataInstanceTable: (dataSourceId: string, table: Table, info: any) => void;
     fullDataInstanceInfo: FullDataInstanceInfo;
 }
 
