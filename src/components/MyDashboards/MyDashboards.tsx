@@ -42,7 +42,10 @@ const MyDashboards = () => {
                 {
                     myDashboards?.
                         filter(d => d.dashboardName?.includes(searchedValue))
-                        .map(d => <DashbaordItem name={d.dashboardName} />)
+                        .map(d => <DashbaordItem
+                            dashboardId={d.dashboardId}
+                            dashboardName={d.dashboardName}
+                        />)
                 }
 
             </div>

@@ -1,17 +1,22 @@
+import dashboardCommunicator from '../../../communication/dashboardCommunicator';
 import { ReactComponent as Trash } from '../../../icons/trash.svg';
+import { Dashboard } from '../../../types/entities';
 import './DashboardItem.scss';
 
-interface DashbaordItemProps {
-    name: string;
-}
+type DashbaordItemProps = Dashboard;
 
-const DashbaordItem = ({ name }: DashbaordItemProps) => {
+const DashbaordItem = ({ dashboardName, dashboardId }: DashbaordItemProps) => {
+
+    const deleteDashboard = () => {
+        dashboardCommunicator.deleteDashboard(dashboardId); // update recoil
+    };
+
     return (
 
         <div className='dashboard-item'>
-            <div className='name'>{name}</div>
+            <div className='name'>{dashboardName}</div>
             <div className='trash-container'>
-                <Trash className='trash-icon' />
+                <Trash className='trash-icon' onClick={deleteDashboard} />
             </div>
         </div>
 

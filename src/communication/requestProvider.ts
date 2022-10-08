@@ -16,6 +16,14 @@ class RequestProvider {
             throw e;
         }
     }
+
+    async delete(url: string) {
+        try {
+            await axios.delete(url);
+        } catch (e) {
+            throw e;
+        }
+    }
 }
 
 export default new RequestProvider();

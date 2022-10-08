@@ -33,6 +33,14 @@ class DashboardCommunicator extends Communicator {
             throw e;
         }
     }
+
+    deleteDashboard(dashboardId: string) {
+        try {
+            return requestProvider.delete(this.getFullURL(`dashboards/delete/${dashboardId}`));
+        } catch (e) {
+            throw e;
+        }
+    }
 }
 
 export default new DashboardCommunicator(config.graphServerUrl);
