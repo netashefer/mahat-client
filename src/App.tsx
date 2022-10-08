@@ -1,31 +1,10 @@
-import { useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
-import Dashboard from "./components/Dashboard/Dashboard";
-import ManagerPanel from "./components/ManagerPanel/ManagerPanel";
-import { FullDataInstanceInfo, Table, TableDictionary } from "./types/data";
-import excelCommunicator from "./communication/excelCommunicator";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import DashbaordPage from './components/DashboardPage/DashbaordPage';
+import HomePage from './components/HomePage/HomePage';
 import './App.scss';
 
 const App = () => {
-
-  const addDataInstanceTable = async (table: Table, info: any) => {
-    const dataInstanceId = uuidv4();
-    const parsedTable = await excelCommunicator.getParsedTable({ table });
-    setTableDictionary(prev => {
-      return {
-        ...prev,
-        [dataInstanceId]: parsedTable
-      };
-    });
-    setFullDataInstanceInfo(prev => {
-      return {
-        ...prev,
-        [dataInstanceId]: info
-      };
-    });
-  };
-
-  console.log(tableDictionary);
 
   return (
     <div className="App" id="app">
