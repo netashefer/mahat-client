@@ -24,10 +24,10 @@ export const convertToJson = (csv: string): Table => {
 };
 
 export const onLoad = async (evt: ProgressEvent<FileReader>, file: Blob, callback: (dataSourceId: string, table: Table, info: any) => void) => {// evt = on_file_select event
-    const wb = getWorkBook(evt);
-    const wsname = wb.SheetNames[0];/* Get first worksheet */
-    const ws = wb.Sheets[wsname];
-    const data = XLSX.utils.sheet_to_csv(ws);/* Convert array of arrays */
+    const workBook = getWorkBook(evt);
+    const workSheetName = workBook.SheetNames[0];/* Get first worksheet */
+    const workSheet = workBook.Sheets[workSheetName];
+    const data = XLSX.utils.sheet_to_csv(workSheet);/* Convert array of arrays */
 
     const table: Table = convertToJson(data);
     const dataSourceId = await excelCommunicator.addExcelDataSource({ table, dashboardId: "bla", displayName: "blas" });
