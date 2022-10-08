@@ -12,7 +12,6 @@ const CreateNewDashboard = () => {
     const createNewDashboard = async () => {
         if (newName?.trim()) {
             try {
-                // should also insert to permmisions
                 const dashboardId = await dashboardCommunicator.createNewDashboard({ dashboardName: newName });
                 await dashboardCommunicator.addDashboardPermissions(dashboardId);
                 setNewName("");
