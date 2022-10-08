@@ -6,11 +6,11 @@ import requestProvider from "./requestProvider";
 
 class DashboardCommunicator extends Communicator {
 
-    createNewDashboard(dashbaord: Dashboard) {
+    createNewDashboard(dashboard: Dashboard) {
         try {
-            return requestProvider.post<Table>(this.getFullURL("dashboards/create"), { dashbaord });
-        } catch {
-            return null;
+            return requestProvider.post<Table>(this.getFullURL("dashboards/create"), { dashboard });
+        } catch (e) {
+            throw e;
         }
     }
 }
