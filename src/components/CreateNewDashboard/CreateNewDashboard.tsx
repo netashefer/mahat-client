@@ -13,7 +13,8 @@ const CreateNewDashboard = () => {
         if (newName?.trim()) {
             try {
                 // should also insert to permmisions
-                await dashboardCommunicator.createNewDashboard({ dashboardName: newName });
+                const dashboardId = await dashboardCommunicator.createNewDashboard({ dashboardName: newName });
+                await dashboardCommunicator.addDashboardPermissions(dashboardId);
                 setNewName("");
                 notifySuccess("your dashboard created successfully");
             } catch {

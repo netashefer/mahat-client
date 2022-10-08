@@ -8,6 +8,14 @@ class RequestProvider {
             throw e;
         }
     }
+
+    async get<T>(url: string): Promise<T> {
+        try {
+            return await (await axios.get(url)).data;
+        } catch (e) {
+            throw e;
+        }
+    }
 }
 
 export default new RequestProvider();

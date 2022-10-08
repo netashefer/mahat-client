@@ -1,12 +1,22 @@
 import TextField from "@mui/material/TextField";
-import DashbaordItem from './DashboardItem/DashboardItem';
+import { ChangeEvent, useEffect, useState } from "react";
+import dashboardCommunicator from "../../communication/dashboardCommunicator";
 import { ReactComponent as Icon } from "../../icons/search.svg";
+import { Dashboard } from "../../types/entities";
+import DashbaordItem from './DashboardItem/DashboardItem';
 import './MyDashboards.scss';
-import { ChangeEvent, useState } from "react";
 
 const MyDashboards = () => {
     const [searchedValue, setSearchedValue] = useState("");
-    const myDashboards = [{ name: "fdsf" }, { name: "bef" }, { name: "bef" }, { name: "bef" }, { name: "dfsdfsd" }];
+    const [myDashboards, setMyDashboards] = useState<Dashboard[]>([]); // need recoil
+
+    useEffect(() => {
+        (async () => {
+            const dashabords = await dashboardCommunicator.getMyDashboards();
+            setMyDashboards(dashabords);
+        })();
+    }, []);
+
 
     const setSearched = (event: ChangeEvent<HTMLInputElement>) => {
         setSearchedValue(event.target.value);
@@ -30,9 +40,9 @@ const MyDashboards = () => {
             />
             <div className="list">
                 {
-                    myDashboards.
-                        filter(d => d.name?.includes(searchedValue))
-                        .map(d => <DashbaordItem name={d.name} />)
+                    myDashboards?.
+                        filter(d => d.dashboardName?.includes(searchedValue))
+                        .map(d => <DashbaordItem name={d.dashboardName} />)
                 }
 
             </div>

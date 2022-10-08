@@ -8,7 +8,27 @@ class DashboardCommunicator extends Communicator {
 
     createNewDashboard(dashboard: Dashboard) {
         try {
-            return requestProvider.post<Table>(this.getFullURL("dashboards/create"), { dashboard });
+            return requestProvider.post<string>(this.getFullURL("dashboards/create"), { dashboard });
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    addDashboardPermissions(dashboardId: string) {
+        try {
+            const dashboardPermissions = {
+                dashboardId,
+                username: "neta"
+            };
+            return requestProvider.post(this.getFullURL("dashboards/addPermissions"), { dashboardPermissions });
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    getMyDashboards() {
+        try {
+            return requestProvider.get<Dashboard[]>(this.getFullURL(`dashboards/${"neta"}`));
         } catch (e) {
             throw e;
         }
