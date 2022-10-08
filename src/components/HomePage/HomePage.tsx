@@ -5,7 +5,6 @@ import TopBar from "../TopBar/TopBar";
 import './HomePage.scss';
 
 const HomePage = () => {
-
     return (
         <div className="home-page">
             <TopBar />

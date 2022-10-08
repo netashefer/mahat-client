@@ -2,7 +2,6 @@
 import LogoTitle from '../LogoTitle/LogoTitle';
 import './TopBar.scss';
 
-
 interface TopBarProps {
     withLogo?: boolean;
 }

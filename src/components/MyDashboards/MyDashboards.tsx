@@ -3,7 +3,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import dashboardCommunicator from "../../communication/dashboardCommunicator";
 import { ReactComponent as Icon } from "../../icons/search.svg";
 import { Dashboard } from "../../types/entities";
-import DashbaordItem from './DashboardItem/DashboardItem';
+import DashboardItem from './DashboardItem/DashboardItem';
 import './MyDashboards.scss';
 
 const MyDashboards = () => {
@@ -12,18 +12,16 @@ const MyDashboards = () => {
 
     useEffect(() => {
         (async () => {
-            const dashabords = await dashboardCommunicator.getMyDashboards();
-            setMyDashboards(dashabords);
+            const dashboards = await dashboardCommunicator.getMyDashboards();
+            setMyDashboards(dashboards);
         })();
     }, []);
-
 
     const setSearched = (event: ChangeEvent<HTMLInputElement>) => {
         setSearchedValue(event.target.value);
     };
 
     return (
-
         <div className='my-dashboards'>
             <TextField
                 id="outlined-basic"
@@ -42,16 +40,13 @@ const MyDashboards = () => {
                 {
                     myDashboards?.
                         filter(d => d.dashboardName?.includes(searchedValue))
-                        .map(d => <DashbaordItem
+                        .map(d => <DashboardItem
                             dashboardId={d.dashboardId}
                             dashboardName={d.dashboardName}
                         />)
                 }
-
             </div>
-
         </div>
-
     );
 };
 
