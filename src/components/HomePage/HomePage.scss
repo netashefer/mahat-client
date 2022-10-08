@@ -1,0 +1,22 @@
+.home-page {
+    background-color: #202342;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .main {
+        margin-top: 2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+
+        .content {
+            margin-top: 2em;
+            display: flex;
+            flex-direction: row;
+        }
+
+    }
+}

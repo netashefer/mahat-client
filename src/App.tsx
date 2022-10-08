@@ -1,42 +1,21 @@
-import { useState } from "react";
-import Dashboard from "./components/Dashboard/Dashboard";
-import ManagerPanel from "./components/ManagerPanel/ManagerPanel";
-import { FullDataInstanceInfo, Table, TableDictionary } from "./types/data";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import DashbaordPage from './components/DashboardPage/DashbaordPage';
+import HomePage from './components/HomePage/HomePage';
 import './App.scss';
 
 const App = () => {
-  const [tableDictionary, setTableDictionary] = useState<TableDictionary>({});
-  const [fullDataInstanceInfo, setFullDataInstanceInfo] = useState<FullDataInstanceInfo>({});
-
-  const addDataInstanceTable = async (dataSourceId: string, table: Table, info: any) => {
-    // we said the client wont be familiar with the data so chnage it
-    setTableDictionary(prev => {
-      return {
-        ...prev,
-        [dataSourceId]: table
-      };
-    });
-    setFullDataInstanceInfo(prev => {
-      return {
-        ...prev,
-        [dataSourceId]: info
-      };
-    });
-  };
-
-  console.log(tableDictionary);
 
   return (
     <div className="App" id="app">
-      <div className="page-title">Yahel and Neta</div>
-      <div className="wrapper">
-        <Dashboard />
-        <ManagerPanel
-          addDataInstanceTable={addDataInstanceTable}
-          tableDictionary={tableDictionary}
-          fullDataInstanceInfo={fullDataInstanceInfo}
-        />
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="dashboard" element={<DashbaordPage />} />
+        </Routes>
+      </BrowserRouter>,
+
+      <ToastContainer />
     </div>
   );
 };
