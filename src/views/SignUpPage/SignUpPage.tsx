@@ -6,7 +6,7 @@ import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import Copyleft from "../../components/Common/Copyleft/Copyleft";
-import Form from "../../components/Common/Form";
+import Form from "../../components/Common/Form/Form";
 
 const SignUpPage = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {

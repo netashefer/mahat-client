@@ -1,12 +1,12 @@
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.scss';
-import ButtonAppBar from './components/Common/AppBar';
-import SignInPage from './views/SignInPage/SignInPage';
-import SignUpPage from './views/SignUpPage/SignUpPage';
+import ButtonAppBar from './components/Common/AppBar/AppBar';
 import theme from './themes/theme';
 import DashboardPage from './views/DashboardPage/DashboardPage';
 import NotFoundPage from './views/NotFoundPage/NotFoundPage';
+import SignInPage from './views/SignInPage/SignInPage';
+import SignUpPage from './views/SignUpPage/SignUpPage';
 
 const App = () => {
   return (
