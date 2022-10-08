@@ -1,28 +1,25 @@
 import { useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
 import Dashboard from "./components/Dashboard/Dashboard";
 import ManagerPanel from "./components/ManagerPanel/ManagerPanel";
 import { FullDataInstanceInfo, Table, TableDictionary } from "./types/data";
-import excelCommunicator from "./communication/excelCommunicator";
 import './App.scss';
 
 const App = () => {
   const [tableDictionary, setTableDictionary] = useState<TableDictionary>({});
   const [fullDataInstanceInfo, setFullDataInstanceInfo] = useState<FullDataInstanceInfo>({});
 
-  const addDataInstanceTable = async (table: Table, info: any) => {
-    const dataInstanceId = uuidv4();
-    const parsedTable = await excelCommunicator.getParsedTable({ table });
+  const addDataInstanceTable = async (dataSourceId: string, table: Table, info: any) => {
+    // we said the client wont be familiar with the data so chnage it
     setTableDictionary(prev => {
       return {
         ...prev,
-        [dataInstanceId]: parsedTable
+        [dataSourceId]: table
       };
     });
     setFullDataInstanceInfo(prev => {
       return {
         ...prev,
-        [dataInstanceId]: info
+        [dataSourceId]: info
       };
     });
   };
