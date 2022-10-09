@@ -24,9 +24,12 @@
                 width: 70%;
             }
 
-            .add-icon {
+            .add-icon,
+            .replace-icon {
                 cursor: pointer;
                 width: 30%;
+                height: 1em;
+                fill: #2DEDBF;
             }
         }
 

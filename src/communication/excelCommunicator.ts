@@ -31,6 +31,24 @@ class ExcelCommunicator extends Communicator {
             throw e;
         }
     }
+
+    async deleteDateSource(dataSourceId: string) {
+        try {
+            return await requestProvider.delete(this.getFullURL(`excel/${dataSourceId}`));
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
+
+    async replaceExcelDataSource(excelDataSource: { dataSourceId: string, table: Table, displayName: string, dashboardId: string; }) {
+        try {
+            return await requestProvider.put<string>(this.getFullURL("excel/replace"), excelDataSource);
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
 }
 
 export default new ExcelCommunicator(config.processingServiceUrl);

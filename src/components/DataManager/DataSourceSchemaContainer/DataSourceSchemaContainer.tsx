@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import excelCommunicator from '../../../communication/excelCommunicator';
+import DataSourceSchema from './DataSourceSchema';
 
 interface DataInstanceInfoContainerProps {
     modalIsOpen: boolean;
@@ -10,7 +9,6 @@ interface DataInstanceInfoContainerProps {
 }
 
 const DataSourceSchemaContainer = ({ closeModal, dataSourceId, filename, modalIsOpen }: DataInstanceInfoContainerProps) => {
-    const [schema, setSchema] = useState<string[]>();
     const customStyles: Modal.Styles = {
         content: {
             backgroundColor: "#202342",
@@ -25,16 +23,6 @@ const DataSourceSchemaContainer = ({ closeModal, dataSourceId, filename, modalIs
         },
     };
 
-    const getDataSourceSchema = async () => {
-        const schema = await excelCommunicator.getschema(dataSourceId);
-        setSchema(schema);
-    };
-
-    useEffect(() => {
-        if (dataSourceId)
-            getDataSourceSchema(); //eslint-disable-next-line
-    }, [dataSourceId]);
-
     return (
         <Modal
             isOpen={modalIsOpen}
@@ -42,9 +30,10 @@ const DataSourceSchemaContainer = ({ closeModal, dataSourceId, filename, modalIs
             style={customStyles}
             ariaHideApp={false}
         >
-            <b>File Schema Information: {filename || "No file Found"}</b>
-            {schema?.map((s, index) =>
-                <li key={index}>{s}</li>)}
+            <DataSourceSchema
+                dataSourceId={dataSourceId}
+                filename={filename}
+            />
         </Modal>
     );
 

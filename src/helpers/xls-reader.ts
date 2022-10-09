@@ -1,8 +1,6 @@
-import { Table } from "../types/data";
 import * as XLSX from 'xlsx';
-import excelCommunicator from "../communication/excelCommunicator";
+import { Table } from "../types/data";
 import { notifyError } from "./toaster";
-import { DataSource } from "../types/entities";
 
 export const convertToJson = (csv: string): Table => {
     const lines = csv.split("\n");
@@ -29,7 +27,7 @@ export const onLoad = async (
     dashboardId: string,
     evt: ProgressEvent<FileReader>,
     file: File,
-    onReadingSucceed: (newDataSource: DataSource) => void,
+    onReadingSucceed: (table: Table, filename: string) => void,
     onReadingEnd: () => void
 ) => {// evt = on_file_select event
     const workBook = getWorkBook(evt);
@@ -39,8 +37,7 @@ export const onLoad = async (
 
     const table: Table = convertToJson(data);
     try {
-        const dataSourceId = await excelCommunicator.addExcelDataSource({ table, dashboardId, displayName: file.name });
-        onReadingSucceed({ dataSourceId, displayName: file.name });
+        onReadingSucceed(table, file.name);
     } catch {
         notifyError("we couldnt add this excel...");
     } finally {

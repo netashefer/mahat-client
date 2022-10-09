@@ -1,9 +1,10 @@
 
-import './DataSourceItem.scss';
-import { ReactComponent as ReplaceIcon } from '../../../icons/replace-icon.svg';
-import { ReactComponent as InfoIcon } from '../../../icons/info.svg';
-import { ReactComponent as RemoveIcon } from '../../../icons/x.svg';
+import { Tooltip } from '@mui/material';
 import classNames from 'classnames';
+import { ReactComponent as InfoIcon } from '../../../icons/info.svg';
+import { ReactComponent as ReplaceIcon } from '../../../icons/replace-icon.svg';
+import { ReactComponent as RemoveIcon } from '../../../icons/x.svg';
+import './DataSourceItem.scss';
 
 interface DataSourceItemProps {
     fileName: string;
@@ -15,10 +16,31 @@ interface DataSourceItemProps {
 const DataSourceItem = ({ fileName, onInfo, onRemove, onReplace }: DataSourceItemProps) => {
     return (
         <div className='data-source-container'>
-            <RemoveIcon className={classNames('remove-icon', 'data-source-icon')} onClick={onRemove} />
+            <Tooltip
+                title="remove"
+                placement="left"
+                children={<RemoveIcon
+                    className={classNames('remove-icon', 'data-source-icon')}
+                    onClick={onRemove}
+                />}
+            />
             <div className={'file-name'}>{fileName}</div>
-            <InfoIcon className={classNames('info-icon', 'data-source-icon')} onClick={onInfo} />
-            <ReplaceIcon className={classNames('replace-icon', 'data-source-icon')} onClick={onReplace} />
+            <Tooltip
+                title="info"
+                placement="top"
+                children={<InfoIcon
+                    className={classNames('info-icon', 'data-source-icon')}
+                    onClick={onInfo}
+                />}
+            />
+            <Tooltip
+                title="replace"
+                placement="top"
+                children={<ReplaceIcon
+                    className={classNames('replace-icon', 'data-source-icon')}
+                    onClick={onReplace}
+                />}
+            />
         </div>
     );
 };

@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 import { ReactComponent as ShareIcon } from "../../icons/share.svg";
 import { dashabordAtom } from "../../recoil/dashboard/dashboard";
 import Dashboard from "../Dashboard/Dashboard";
-import DataSourceManager from "../DataManager/DataManager";
+import DataSourceManager from "../DataManager/DataSourceManager";
 import DashbaordActions from "./DashboardActions/DashboardActions";
 import './DashboardPage.scss';
 
