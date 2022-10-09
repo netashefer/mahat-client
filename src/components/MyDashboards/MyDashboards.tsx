@@ -38,8 +38,8 @@ const MyDashboards = () => {
             />
             <div className="list">
                 {
-                    myDashboards?.
-                        filter(d => d.dashboardName?.includes(searchedValue))
+                    myDashboards
+                        ?.filter(d => d.dashboardName?.includes(searchedValue))
                         .map(d => <DashboardItem
                             dashboardId={d.dashboardId}
                             dashboardName={d.dashboardName}

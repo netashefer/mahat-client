@@ -1,0 +1,19 @@
+.dashboard-actions {
+    display: flex;
+    float: 1;
+    align-items: center;
+
+    &>div {
+        margin-right: 1em;
+    }
+
+    .info-icon {
+        fill: white;
+        height: 2em;
+        margin-right: 1em;
+    }
+}
+
+.tooltip-text {
+    font-size: 16px;
+}

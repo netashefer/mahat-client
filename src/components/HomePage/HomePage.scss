@@ -1,5 +1,7 @@
+@import '../../styles/genralStyles.scss';
+
 .home-page {
-    background-color: #202342;
+    background-color: var(--main-background-color);
     height: 100%;
     display: flex;
     flex-direction: column;

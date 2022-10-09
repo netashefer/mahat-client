@@ -1,7 +1,8 @@
 
 import { Widget } from '../../types/entities';
 import './WidgetContainer.scss';
-
+import { ReactComponent as XIcon } from '../../icons/x.svg';
+import { ReactComponent as EditIcon } from '../../icons/edit.svg';
 interface WidgetContainerProps extends Widget { }
 
 export const WIDGET_DRAGGABLE_TITLE_CLASSNAME = "widget-draggable-title";
@@ -12,9 +13,14 @@ const WidgetContainer = ({ content, id, title }: WidgetContainerProps) => {
             className="widget-container"
             key={id}
         >
-            <p className={WIDGET_DRAGGABLE_TITLE_CLASSNAME}>
-                {title}
-            </p>
+            <div className='widget-top'>
+                <EditIcon className='edit-icon' />
+                <p className={WIDGET_DRAGGABLE_TITLE_CLASSNAME}>
+                    {title}
+                </p>
+
+                <XIcon className='remove-icon' />
+            </div>
             {content}
         </div>
     );

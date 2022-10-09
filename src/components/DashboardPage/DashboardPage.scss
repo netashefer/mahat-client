@@ -1,0 +1,32 @@
+@import '../../styles/genralStyles.scss';
+
+.dashboard-page {
+    background-color: var(--main-background-color);
+    height: 100%;
+
+    .dashboard-top {
+        display: flex;
+
+        .left-section {
+            width: 80%;
+            align-items: center;
+            display: flex;
+        }
+
+        .dashboard-title {
+            color: white;
+            font-size: 28px;
+            text-align: left;
+            margin-left: 1.5em;
+            padding: 0.5em;
+        }
+
+        .share-icon {
+            cursor: pointer;
+        }
+    }
+
+    .bottom {
+        display: flex;
+    }
+}

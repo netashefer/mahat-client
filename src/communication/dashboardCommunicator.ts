@@ -1,5 +1,4 @@
 import { config } from "../config";
-import { Table } from "../types/data";
 import { Dashboard } from "../types/entities";
 import Communicator from "./Communicator";
 import requestProvider from "./requestProvider";
@@ -37,6 +36,22 @@ class DashboardCommunicator extends Communicator {
     deleteDashboard(dashboardId: string) {
         try {
             return requestProvider.delete(this.getFullURL(`dashboards/delete/${dashboardId}`));
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    getDashboardUserCount(dashboardId: string) {
+        try {
+            return requestProvider.get<number>(this.getFullURL(`dashboards/countOfUsers/${dashboardId}`));
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    getDashboard(dashboardId: string) {
+        try {
+            return requestProvider.get<Dashboard>(this.getFullURL(`dashboards/dashboard/${dashboardId}`));
         } catch (e) {
             throw e;
         }
