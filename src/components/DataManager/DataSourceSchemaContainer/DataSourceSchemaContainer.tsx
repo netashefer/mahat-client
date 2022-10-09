@@ -36,7 +36,6 @@ const DataSourceSchemaContainer = ({ closeModal, dataSourceId, filename, modalIs
             />
         </Modal>
     );
-
 };
 
 export default DataSourceSchemaContainer;

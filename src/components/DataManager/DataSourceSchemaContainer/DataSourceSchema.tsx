@@ -30,11 +30,12 @@ const DataSourceSchema = ({ dataSourceId, filename }: DataInstanceInfoContainerP
                 schema ?
                     <>
                         <b>File Schema Information: {filename || "No file Found"}</b>
-
-                        <div className='items'>{
-                            schema?.map((s, index) =>
-                                <li key={index}>{s}</li>)
-                        }</div>
+                        <div className='items'>
+                            {
+                                schema?.map((s, index) =>
+                                    <li key={index}>{s}</li>)
+                            }
+                        </div>
                     </>
                     : <CircularProgress />
             }
