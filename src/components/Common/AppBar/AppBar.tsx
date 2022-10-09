@@ -21,7 +21,9 @@ export default function ButtonAppBar() {
 			  aria-label="menu"
 			  sx={{ mr: 2 }}
 			>
-			  <DashboardIcon />
+			  <DashboardIcon /> 
+			  {//make this redirect back to homepage
+			  }
 			</IconButton>
 			<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 			  Graph.it
@@ -31,13 +33,6 @@ export default function ButtonAppBar() {
 				<Button onClick={() => logout({ returnTo: window.location.origin })} color="inherit">Logout</Button> :
 				<Button onClick={() => loginWithRedirect()} color="inherit">Login</Button>
 			} 
-			{
-			//this button WONT exist in prod, this is simply because localhost is problematic security-wise
-			//click this button when it seems like things from the server are not arriving
-			<Button onClick={() => getAccessTokenWithPopup()} color="inherit"> 
-			Allow API To Connect
-			</Button>
-			}
 		  </Toolbar>
 		</AppBar>
 	  </Box>
