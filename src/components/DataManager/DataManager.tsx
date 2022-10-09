@@ -1,53 +1,55 @@
 
+import { noop } from 'lodash';
 import { useState } from 'react';
-import { ReactComponent as InfoIcon } from '../../icons/info.svg';
-import { FullDataInstanceInfo, Table, TableDictionary } from '../../types/data';
-import { DataInstanceId } from '../../types/entities';
+import { useRecoilValue } from 'recoil';
+import { dataSourcesAtom } from '../../recoil/dataSources/dataSources';
+import { DataSource } from '../../types/entities';
 import ExcelReader from '../ExcelReader/ExcelReader';
-import DataInstanceInfoContainer from './DataInstanceInfo/DataInstanceInfo';
+import DataSourceItem from './DataSource/DataSourceItem';
+import DataSourceSchemaContainer from './DataSourceSchemaContainer/DataSourceSchemaContainer';
 import './DataManager.scss';
 
 interface DataManagerProps {
-    tableDictionary: TableDictionary;
-    addDataInstanceTable: (dataSourceId: string, table: Table, info: any) => void;
-    fullDataInstanceInfo: FullDataInstanceInfo;
+    dashboardId: string;
 }
 
-const DataManager = ({ tableDictionary, addDataInstanceTable, fullDataInstanceInfo }: DataManagerProps) => {
-    const [clickedDataInstance, setClickedDataInstance] = useState<DataInstanceId>();
+const DataSourceManager = ({ dashboardId }: DataManagerProps) => {
+    const [clickedDataSource, setClickedDataSource] = useState<DataSource>();
     const [modalIsOpen, setIsOpen] = useState(false);
+    const dashboardDataSources = useRecoilValue(dataSourcesAtom);
 
-    const currentDataInstanceInfo = fullDataInstanceInfo[clickedDataInstance];
-    const currentDataInstanceTable = tableDictionary[clickedDataInstance];
-
-    const pickDataInstance = (dataInstanceId: DataInstanceId) => {
-        setClickedDataInstance(dataInstanceId);
+    const pickDataSource = (dataSource: DataSource) => {
+        setClickedDataSource(dataSource);
         setIsOpen(true);
     };
     return (
         <div
-            className="data-manager"
+            className="data-sources-manager"
         >
-            <h1>ניהול מידע</h1>
-            <DataInstanceInfoContainer
+            <div className='title'>Upload New File</div>
+            <DataSourceSchemaContainer
                 modalIsOpen={modalIsOpen}
                 closeModal={() => setIsOpen(false)}
-                currentDataInstanceInfo={currentDataInstanceInfo}
-                currentDataInstanceTable={currentDataInstanceTable}
+                dataSourceId={clickedDataSource?.dataSourceId}
+                filename={clickedDataSource?.displayName}
             />
 
-            {Object.entries(fullDataInstanceInfo).map(([dataInstanceId, info]) =>
-                <li key={dataInstanceId}>
-                    {info.name}
-                    <InfoIcon
-                        className='info-icon'
-                        onClick={() => pickDataInstance(dataInstanceId)}
-                    />
-                </li>
-            )}
-            <ExcelReader addDataInstanceTable={addDataInstanceTable} />
+            <ExcelReader dashboardId={dashboardId} />
+            <div className='existing-files'>
+                <div className='title'>Existing Files</div>
+                {
+                    dashboardDataSources.map(dataSource =>
+                        <DataSourceItem
+                            fileName={dataSource.displayName}
+                            onInfo={() => pickDataSource(dataSource)}
+                            onRemove={noop}
+                            onReplace={noop}
+                        />
+                    )
+                }
+            </div>
         </div>
     );
 };
 
-export default DataManager;
+export default DataSourceManager; // add withLoader - office

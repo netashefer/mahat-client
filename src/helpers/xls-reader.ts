@@ -1,6 +1,8 @@
 import { Table } from "../types/data";
 import * as XLSX from 'xlsx';
 import excelCommunicator from "../communication/excelCommunicator";
+import { notifyError } from "./toaster";
+import { DataSource } from "../types/entities";
 
 export const convertToJson = (csv: string): Table => {
     const lines = csv.split("\n");
@@ -23,15 +25,27 @@ export const convertToJson = (csv: string): Table => {
     return { data: result, schema: headers };
 };
 
-export const onLoad = async (evt: ProgressEvent<FileReader>, file: Blob, callback: (dataSourceId: string, table: Table, info: any) => void) => {// evt = on_file_select event
+export const onLoad = async (
+    dashboardId: string,
+    evt: ProgressEvent<FileReader>,
+    file: File,
+    onReadingSucceed: (newDataSource: DataSource) => void,
+    onReadingEnd: () => void
+) => {// evt = on_file_select event
     const workBook = getWorkBook(evt);
     const workSheetName = workBook.SheetNames[0];/* Get first worksheet */
     const workSheet = workBook.Sheets[workSheetName];
     const data = XLSX.utils.sheet_to_csv(workSheet);/* Convert array of arrays */
 
     const table: Table = convertToJson(data);
-    const dataSourceId = await excelCommunicator.addExcelDataSource({ table, dashboardId: "bla", displayName: "blas" });
-    callback(dataSourceId, table, file);
+    try {
+        const dataSourceId = await excelCommunicator.addExcelDataSource({ table, dashboardId, displayName: file.name });
+        onReadingSucceed({ dataSourceId, displayName: file.name });
+    } catch {
+        notifyError("we couldnt add this excel...");
+    } finally {
+        onReadingEnd();
+    }
 };
 
 export const getWorkBook = (evt: ProgressEvent<FileReader>) => {

@@ -1,5 +1,5 @@
 import { config } from "../config";
-import { Table } from "../types/data";
+import { DashboardDataSources, Table } from "../types/data";
 import Communicator from "./Communicator";
 import requestProvider from "./requestProvider";
 
@@ -10,6 +10,25 @@ class ExcelCommunicator extends Communicator {
             return await requestProvider.post<string>(this.getFullURL("excel/addDataSource"), excelDataSource);
         } catch (e) {
             console.error(e);
+            throw e;
+        }
+    }
+
+    async getDashboardDataSources(dashboardId: string) {
+        try {
+            return await requestProvider.get<DashboardDataSources>(this.getFullURL(`excel/dashboard/${dashboardId}`));
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
+
+    async getschema(dataSourceId: string) {
+        try {
+            return await requestProvider.get<string[]>(this.getFullURL(`excel/schema/${dataSourceId}`));
+        } catch (e) {
+            console.error(e);
+            throw e;
         }
     }
 }

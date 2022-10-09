@@ -4,8 +4,11 @@ export interface Widget {
     title: string;
 }
 
-export type DataInstanceId = string;
-
+export type DataSourceId = string;
+export type DataSource = {
+    dataSourceId: DataSourceId;
+    displayName: string;
+};
 export type Dashboard = {
     dashboardName: string;
     dashboardId?: string;
