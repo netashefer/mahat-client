@@ -1,0 +1,31 @@
+.text-container {
+    display: flex;
+    align-items: center;
+
+    .title.lr {
+        color: white;
+        margin-left: 1em;
+        font-size: 50px;
+    }
+
+    .title.sm {
+        color: white;
+        margin-left: 1em;
+        font-size: 14px;
+    }
+
+    .logo {
+        margin-left: 1em;
+
+
+        &.lr {
+            width: 10em;
+            height: 10em;
+        }
+
+        &.sm {
+            width: 70%;
+            height: 70%;
+        }
+    }
+}

@@ -5,13 +5,13 @@ import requestProvider from "./requestProvider";
 
 class ExcelCommunicator extends Communicator {
 
-    getParsedTable(body: { table: Table; }) {
+    async addExcelDataSource(excelDataSource: { table: Table, displayName: string, dashboardId: string; }) {
         try {
-            return requestProvider.post<Table>(this.getFullURL("excel/parse"), body);
-        } catch {
-            return null;
+            return await requestProvider.post<string>(this.getFullURL("excel/addDataSource"), excelDataSource);
+        } catch (e) {
+            console.error(e);
         }
     }
 }
 
-export default new ExcelCommunicator(config.processingServiceUrl);
+export default new ExcelCommunicator(config.processingService.url, config.processingService.auth0);

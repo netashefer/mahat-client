@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import "./AppBar.scss";
 
 export default function ButtonAppBar() {
-	const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+	const { loginWithRedirect, logout, isAuthenticated, getAccessTokenWithPopup } = useAuth0();
 	return (
 	  <Box sx={{ flexGrow: 1 }}>
 		<AppBar position="static" className='app-bar'>
@@ -30,6 +30,13 @@ export default function ButtonAppBar() {
 				isAuthenticated ?
 				<Button onClick={() => logout({ returnTo: window.location.origin })} color="inherit">Logout</Button> :
 				<Button onClick={() => loginWithRedirect()} color="inherit">Login</Button>
+			} 
+			{
+			//this button WONT exist in prod, this is simply because localhost is problematic security-wise
+			//click this button when it seems like things from the server are not arriving
+			<Button onClick={() => getAccessTokenWithPopup()} color="inherit"> 
+			Allow API To Connect
+			</Button>
 			}
 		  </Toolbar>
 		</AppBar>

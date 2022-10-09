@@ -1,9 +1,25 @@
-import axios from "axios";
+import axios, { AxiosRequestHeaders } from "axios";
 
-class RequestProvider {
-    async post<T>(url: string, body: any): Promise<T> {
+class RequestProvider {	  
+    async post<T>(url: string, body: any, headers?: AxiosRequestHeaders): Promise<T> {
         try {
-            return await (await axios.post(url, body)).data;
+            return await (await axios.post(url, body, {headers})).data;
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    async get<T>(url: string, headers?: AxiosRequestHeaders): Promise<T> {
+        try {
+        	return await (await axios.get(url, {headers})).data;
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    async delete(url: string, headers?: AxiosRequestHeaders) {
+        try {
+            await axios.delete(url, {headers});
         } catch (e) {
             throw e;
         }

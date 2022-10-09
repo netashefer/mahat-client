@@ -1,11 +1,8 @@
-
 import './Catalog.scss';
-
-interface CatalogProps { }
 
 const mock = [{ id: "2", name: "גרף2" }, { id: "1", name: "גרף1" }];
 
-const Catalog = ({ }: CatalogProps) => {
+const Catalog = () => {
     const sections = [
         {
             name: "כללי",
