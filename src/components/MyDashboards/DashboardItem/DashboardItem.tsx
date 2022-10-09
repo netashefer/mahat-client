@@ -18,7 +18,7 @@ const DashboardItem = ({ dashboardName, dashboardId }: DashboardItemProps) => {
 
     const chooseDashboard = () => {
         setDashboardId(dashboardId);
-        navigate("/dashboard");
+        navigate(`/dashboard/${dashboardId}`);
     };
 
     return (

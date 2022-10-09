@@ -2,16 +2,9 @@ import { atom, selector } from 'recoil';
 import dashboardCommunicator from '../../communication/dashboardCommunicator';
 import { Dashboard } from '../../types/entities';
 
-const dashboardIdDefaultSelector = selector<string>({
-    key: 'dashboardDefaulfdsftSelector',
-    get: async ({ get }) => {
-        return localStorage.getItem('dashboard-id');
-    }
-});
-
 export const dashabordIdAtom = atom({
     key: 'dashabordId',
-    default: dashboardIdDefaultSelector,
+    default: null,
     effects: [
         ({ onSet }) => {
             onSet(newID => {
@@ -24,7 +17,7 @@ export const dashabordIdAtom = atom({
 const dashboardDefaultSelector = selector<Dashboard>({
     key: 'dashboardDefaultSelector',
     get: async ({ get }) => {
-        console.log("id", get(dashabordIdAtom));
+        console.log(get(dashabordIdAtom));
         return await dashboardCommunicator.getDashboard(get(dashabordIdAtom));
     }
 });
