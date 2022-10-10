@@ -12,8 +12,9 @@ const DashboardItem = ({ dashboardName, dashboardId }: DashboardItemProps) => {
     let navigate = useNavigate();
     const setDashboardId = useSetRecoilState(dashabordIdAtom);
 
-    const deleteDashboard = () => {
+    const deleteDashboard = (event: React.MouseEvent<SVGSVGElement>) => {
         dashboardCommunicator.deleteDashboard(dashboardId); // update recoil
+        event.stopPropagation();
     };
 
     const chooseDashboard = () => {
