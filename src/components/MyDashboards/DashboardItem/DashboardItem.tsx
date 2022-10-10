@@ -1,15 +1,16 @@
-import dashboardCommunicator from '../../../communication/dashboardCommunicator';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useRecoilCallback } from 'recoil';
-import { Dashboard } from '../../../types/dashboard.types';
-import { useSetRecoilState } from 'recoil';
 import { useNavigate } from "react-router-dom";
-import { dashabordIdAtom } from '../../../recoil/dashboard/dashboard';
+import { useRecoilCallback, useSetRecoilState } from 'recoil';
+import dashboardCommunicator from '../../../communication/dashboardCommunicator';
 import { notifyError } from '../../../helpers/toaster';
+import { dashabordIdAtom } from '../../../recoil/dashboard/dashboard';
 import { myDashabordsAtom } from '../../../recoil/dashboard/myDashboards';
 import './DashboardItem.scss';
 
-type DashboardItemProps = Dashboard;
+type DashboardItemProps = {
+    dashboardName: string;
+    dashboardId?: string;
+};
 
 const DashboardItem = ({ dashboardName, dashboardId }: DashboardItemProps) => {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ const DashboardItem = ({ dashboardName, dashboardId }: DashboardItemProps) => {
     const deleteDashboard = useRecoilCallback(({ set }) => async (event: React.MouseEvent<SVGSVGElement>) => {
         event.stopPropagation();
         try {
-            await dashboardCommunicator.deleteDashboard(dashboardId); // update recoil
+            await dashboardCommunicator.deleteDashboard(dashboardId);
             set(myDashabordsAtom, prev => prev?.filter(d => d.dashboardId !== dashboardId) || []);
         } catch {
             notifyError("We couldn't delete this dashboard");

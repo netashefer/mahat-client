@@ -1,11 +1,11 @@
 import { config } from "../config";
-import { Dashboard } from "../types/dashboard.types";
+import { DashboardType } from "../types/dashboard.types";
 import Communicator from "./Communicator";
 import requestProvider from "./requestProvider";
 
 class DashboardCommunicator extends Communicator {
 
-    createNewDashboard(dashboard: Dashboard) {
+    createNewDashboard(dashboard: DashboardType) {
         try {
             return requestProvider.post<string>(this.getFullURL("dashboards/create"), { dashboard });
         } catch (e) {
@@ -29,7 +29,7 @@ class DashboardCommunicator extends Communicator {
 
     getMyDashboards() {
         try {
-            return requestProvider.get<Dashboard[]>(this.getFullURL(`dashboards/${"neta"}`));
+            return requestProvider.get<DashboardType[]>(this.getFullURL(`dashboards/${"neta"}`));
         } catch (e) {
             console.error(e);
             throw e;
@@ -56,7 +56,7 @@ class DashboardCommunicator extends Communicator {
 
     getDashboard(dashboardId: string) {
         try {
-            return requestProvider.get<Dashboard>(this.getFullURL(`dashboards/dashboard/${dashboardId}`));
+            return requestProvider.get<DashboardType>(this.getFullURL(`dashboards/dashboard/${dashboardId}`));
         } catch (e) {
             console.error(e);
             throw e;
