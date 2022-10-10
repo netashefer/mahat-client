@@ -6,9 +6,11 @@ export const Loader: React.FC = () => {
 
   return (
 	<div className="page-layout">
-	<div className="page-layout__content">	<div className="loader">
-		<img src={loadingImg} alt="Loading..." />
-  	</div></div>
-  </div>
+		<div className="page-layout__content">	
+			<div className="loader">
+				<img src={loadingImg} alt="Loading..." />
+  			</div>
+		</div>
+   </div>
   );
 };

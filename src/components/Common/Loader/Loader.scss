@@ -1,9 +1,7 @@
 .loader {
 	height: 5rem;
 	width: 5rem;
-  
 	margin: auto;
-  
 	animation: spin 2s infinite linear;
   }
   
@@ -30,9 +28,8 @@
 		flex-shrink: 0;
 		display: flex;
 		flex-direction: column;
-	  
 		margin-top: 8rem;
 		max-width: 120rem;
 		width: 100%;
 	  }
-  }
+}

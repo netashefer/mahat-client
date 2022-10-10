@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import TextField from "@mui/material/TextField";
 import { ChangeEvent, useEffect, useState } from "react";
 import dashboardCommunicator from "../../communication/dashboardCommunicator";
@@ -9,6 +10,9 @@ import './MyDashboards.scss';
 const MyDashboards = () => {
     const [searchedValue, setSearchedValue] = useState("");
     const [myDashboards, setMyDashboards] = useState<Dashboard[]>([]); // need recoil
+	const {user} = useAuth0();
+
+	console.log({user})
 
     useEffect(() => {
         (async () => {
