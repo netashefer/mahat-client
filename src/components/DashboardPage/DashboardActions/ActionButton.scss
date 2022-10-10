@@ -12,14 +12,15 @@
     }
 
     .add-icon {
+        color: white;
         margin-right: 0.5em;
     }
 
     &.green {
-        border: 2px solid #04E9E9;
+        border: 2px solid var(--green-color);
     }
 
     &.blue {
-        border: 2px solid #4992FF;
+        border: 2px solid var(--blue-color);
     }
 }

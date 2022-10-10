@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ReactComponent as PlusIcon } from '../../../icons/plus.svg';
+import AddIcon from '@mui/icons-material/Add';
 import './ActionButton.scss';
 
 interface ActionButtonProps {
@@ -11,7 +11,7 @@ interface ActionButtonProps {
 const ActionButton = ({ text, onClick, borderColor }: ActionButtonProps) => {
     return (
         <div className={classNames("action-button", borderColor)} onClick={onClick}>
-            <PlusIcon className="add-icon" />
+            <AddIcon className="add-icon" />
             <div className='text'>
                 {text}
             </div>

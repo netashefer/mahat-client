@@ -1,26 +1,26 @@
 
 import { Tooltip } from '@mui/material';
 import { notifyError, notifySuccess } from '../../helpers/toaster';
-import { ReactComponent as ShareIcon } from '../../icons/share.svg';
+import ShareIcon from '@mui/icons-material/Share';
 import './ShareLink.scss';
 
 const ShareLink = () => {
     const copyLink = () => {
-        const el = document.createElement('input');
-        el.value = window.location.href;
-        document.body.appendChild(el);
-        el.select();
+        const element = document.createElement('input');
+        element.value = window.location.href;
+        document.body.appendChild(element);
+        element.select();
         if (!navigator.clipboard) {
             document.execCommand('copy');
-            notifySuccess("the link is copied!");
+            notifySuccess("The link is copied!");
         } else {
-            navigator.clipboard.writeText(el.value).then(() => {
-                notifySuccess("the link is copied!");
+            navigator.clipboard.writeText(element.value).then(() => {
+                notifySuccess("The link is copied!");
             }).catch(() => {
-                notifyError("we cannot copy the link");
+                notifyError("We cannot copy the link");
             });
         }
-        document.body.removeChild(el);
+        document.body.removeChild(element);
     };
 
     return (

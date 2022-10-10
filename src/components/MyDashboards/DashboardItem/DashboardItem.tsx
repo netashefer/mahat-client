@@ -1,6 +1,6 @@
 import dashboardCommunicator from '../../../communication/dashboardCommunicator';
-import { ReactComponent as Trash } from '../../../icons/trash.svg';
-import { Dashboard } from '../../../types/entities';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Dashboard } from '../../../types/dashboard.types';
 import { useSetRecoilState } from 'recoil';
 import { useNavigate } from "react-router-dom";
 import './DashboardItem.scss';
@@ -25,7 +25,7 @@ const DashboardItem = ({ dashboardName, dashboardId }: DashboardItemProps) => {
         <div className='dashboard-item' onClick={chooseDashboard}>
             <div className='name'>{dashboardName}</div>
             <div className='trash-container'>
-                <Trash className='trash-icon' onClick={deleteDashboard} />
+                <DeleteIcon className='trash-icon' onClick={deleteDashboard} />
             </div>
         </div>
     );

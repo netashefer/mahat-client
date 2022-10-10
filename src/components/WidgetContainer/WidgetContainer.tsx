@@ -1,7 +1,7 @@
 
-import { Widget } from '../../types/entities';
-import { ReactComponent as XIcon } from '../../icons/x.svg';
-import { ReactComponent as EditIcon } from '../../icons/edit.svg';
+import { Widget } from '../../types/widget.types';
+import RemoveIcon from '@mui/icons-material/Clear';
+import EditIcon from '@mui/icons-material/Edit';
 import './WidgetContainer.scss';
 
 interface WidgetContainerProps extends Widget { }
@@ -19,7 +19,7 @@ const WidgetContainer = ({ content, id, title }: WidgetContainerProps) => {
                 <p className={WIDGET_DRAGGABLE_TITLE_CLASSNAME}>
                     {title}
                 </p>
-                <XIcon className='remove-icon' />
+                <RemoveIcon className='remove-icon' />
             </div>
             {content}
         </div>

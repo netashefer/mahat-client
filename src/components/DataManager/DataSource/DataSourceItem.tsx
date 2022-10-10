@@ -1,9 +1,9 @@
 
+import ClearIcon from '@mui/icons-material/Clear';
+import InfoIcon from '@mui/icons-material/Info';
 import { Tooltip } from '@mui/material';
 import classNames from 'classnames';
-import { ReactComponent as InfoIcon } from '../../../icons/info.svg';
 import { ReactComponent as ReplaceIcon } from '../../../icons/replace-icon.svg';
-import { ReactComponent as RemoveIcon } from '../../../icons/x.svg';
 import './DataSourceItem.scss';
 
 interface DataSourceItemProps {
@@ -19,7 +19,7 @@ const DataSourceItem = ({ fileName, onInfo, onRemove, onReplace }: DataSourceIte
             <Tooltip
                 title="remove"
                 placement="left"
-                children={<RemoveIcon
+                children={<ClearIcon
                     className={classNames('remove-icon', 'data-source-icon')}
                     onClick={onRemove}
                 />}
