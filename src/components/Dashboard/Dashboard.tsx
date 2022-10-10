@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Layout, Responsive, WidthProvider } from "react-grid-layout";
-import { Widget } from "../../types/widget.types";
 import WidgetContainer, { WIDGET_DRAGGABLE_TITLE_CLASSNAME } from "../WidgetContainer/WidgetContainer";
+import EmptyDashboard from './EmptyDashboard/EmptyDashboard';
+import { DashboardType } from "../../types/dashboard.types";
+import { Widget } from "../../types/widget.types";
 import 'react-grid-layout/css/styles.css';
 import './Dashboard.scss';
 
@@ -22,7 +24,7 @@ const getLayout = () => {
     return savedGridLayout ? JSON.parse(savedGridLayout) : initialLayout;
 };
 
-const Dashboard = () => {
+const Dashboard = ({ dashboard }: { dashboard: DashboardType; }) => {
     const [layout] = useState<Layout[]>(getLayout());
 
     const widgets: Widget[] = [
@@ -32,24 +34,30 @@ const Dashboard = () => {
 
     return (
         <div className="dashboard">
-            <ResponsiveGridLayout
-                className="layout"
-                resizeHandles={["se"]}
-                preventCollision={false}
-                draggableHandle={`.${WIDGET_DRAGGABLE_TITLE_CLASSNAME}`}
-                onLayoutChange={handleLayoutChange}
-                isResizable
-                isDraggable
-                layouts={{ lg: layout }}
-            >
-                {
-                    widgets.map(w =>
-                        <div key={w.id}>
-                            <WidgetContainer {...w} />
-                        </div>
-                    )}
+            {
+                dashboard.widgets?.length ?
+                    <ResponsiveGridLayout
+                        className="layout"
+                        resizeHandles={["se"]}
+                        preventCollision={false}
+                        draggableHandle={`.${WIDGET_DRAGGABLE_TITLE_CLASSNAME}`}
+                        onLayoutChange={handleLayoutChange}
+                        isResizable
+                        isDraggable
+                        layouts={{ lg: layout }}
+                    >
+                        {
+                            widgets.map(w =>
+                                <div key={w.id}>
+                                    <WidgetContainer {...w} />
+                                </div>
+                            )}
 
-            </ResponsiveGridLayout>
+                    </ResponsiveGridLayout>
+                    :
+                    <EmptyDashboard />
+            }
+
         </div>
     );
 };

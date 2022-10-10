@@ -33,7 +33,7 @@ const DashbaordPage = () => {
                 />
             </div>
             <div className="bottom">
-                <Dashboard />
+                <Dashboard dashboard={dashboard} />
                 {
                     openManagerPage === ManagerPanelOptions.dataSources &&
                     <DataSourceManager

@@ -1,9 +1,9 @@
 import { atom, selector } from 'recoil';
 import dashboardCommunicator from '../../communication/dashboardCommunicator';
 import { notifyError } from '../../helpers/toaster';
-import { Dashboard } from '../../types/dashboard.types';
+import { DashboardType } from '../../types/dashboard.types';
 
-const myDashboardsDefaultSelector = selector<Dashboard[]>({
+const myDashboardsDefaultSelector = selector<DashboardType[]>({
     key: 'myDashboardsDefaultSelector',
     get: async () => {
         try {
