@@ -1,23 +1,28 @@
 import { Tooltip } from '@mui/material';
 import { useEffect, useState } from 'react';
 import dashboardCommunicator from '../../../communication/dashboardCommunicator';
-import { ReactComponent as InfoIcon } from '../../../icons/info.svg';
+import { notifyError } from '../../../helpers/toaster';
+import InfoIcon from '@mui/icons-material/Info';
 import ActionButton from "./ActionButton";
 import './DashboardActions.scss';
 
-interface DashbaordActionsProps {
+interface DashboardActionsProps {
     onAddGrpah: () => void;
     onAddDataSource: () => void;
     dashboardId: string;
 }
 
-const DashboardActions = ({ dashboardId, onAddDataSource, onAddGrpah }: DashbaordActionsProps) => {
+const DashboardActions = ({ dashboardId, onAddDataSource, onAddGrpah }: DashboardActionsProps) => {
     const [userCount, setUserCount] = useState(0);
 
     useEffect(() => {
         (async () => {
-            const count = await dashboardCommunicator.getDashboardUserCount(dashboardId);
-            setUserCount(count);
+            try {
+                const count = await dashboardCommunicator.getDashboardUserCount(dashboardId);
+                setUserCount(count);
+            } catch {
+                notifyError("Couldnt get count of users");
+            }
         })(); // eslint-disable-next-line
     }, []);
 

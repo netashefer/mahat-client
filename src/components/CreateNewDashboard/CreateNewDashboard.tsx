@@ -15,12 +15,12 @@ const CreateNewDashboard = () => {
                 const dashboardId = await dashboardCommunicator.createNewDashboard({ dashboardName: newName });
                 await dashboardCommunicator.addDashboardPermissions(dashboardId);
                 setNewName("");
-                notifySuccess("your dashboard created successfully");
+                notifySuccess("Your dashboard created successfully");
             } catch {
-                notifyError("couldn't create a dashboard, try again");
+                notifyError("Couldn't create a dashboard, try again");
             }
         } else {
-            notifyInfo("you must insert a name");
+            notifyInfo("You must insert a name");
         }
     };
 
