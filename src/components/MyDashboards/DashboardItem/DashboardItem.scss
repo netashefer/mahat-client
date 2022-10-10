@@ -4,6 +4,7 @@
     display: flex;
     justify-content: space-between;
     margin: 1em;
+    cursor: pointer;
 
     .name {
         display: flex;
@@ -25,6 +26,10 @@
         &:hover {
             cursor: pointer;
             background-color: white;
+        }
+
+        .trash-icon {
+            fill: #00B2FF;
         }
     }
 }

@@ -1,0 +1,28 @@
+.data-source-container {
+    display: flex;
+    color: white;
+    align-items: center;
+    margin-bottom: 0.5em;
+
+    .info-icon,
+    .replace-icon {
+        width: 1em;
+        height: 1em;
+        fill: #73FBFD;
+        width: 20%;
+    }
+
+    .file-name {
+        width: 50%;
+    }
+
+    .data-source-icon {
+        cursor: pointer;
+    }
+
+    .remove-icon {
+        height: 0.7em;
+        width: 20%;
+        fill: #00E0FF
+    }
+}

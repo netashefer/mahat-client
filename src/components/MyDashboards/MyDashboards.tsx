@@ -1,8 +1,8 @@
 import TextField from "@mui/material/TextField";
 import { ChangeEvent, useEffect, useState } from "react";
 import dashboardCommunicator from "../../communication/dashboardCommunicator";
-import { ReactComponent as Icon } from "../../icons/search.svg";
-import { Dashboard } from "../../types/entities";
+import SearchIcon from '@mui/icons-material/Search';
+import { Dashboard } from "../../types/dashboard.types";
 import DashboardItem from './DashboardItem/DashboardItem';
 import './MyDashboards.scss';
 
@@ -31,15 +31,15 @@ const MyDashboards = () => {
                 label="Search Existing Dashboards"
                 InputProps={{
                     startAdornment: (
-                        <Icon />
+                        <SearchIcon className="search-icon" />
                     ),
                 }}
                 onChange={setSearched}
             />
             <div className="list">
                 {
-                    myDashboards?.
-                        filter(d => d.dashboardName?.includes(searchedValue))
+                    myDashboards
+                        ?.filter(d => d.dashboardName?.includes(searchedValue))
                         .map(d => <DashboardItem
                             dashboardId={d.dashboardId}
                             dashboardName={d.dashboardName}

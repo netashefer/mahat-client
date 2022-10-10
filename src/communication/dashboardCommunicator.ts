@@ -1,6 +1,5 @@
 import { config } from "../config";
-import { Table } from "../types/data";
-import { Dashboard } from "../types/entities";
+import { Dashboard } from "../types/dashboard.types";
 import Communicator from "./Communicator";
 import requestProvider from "./requestProvider";
 
@@ -10,6 +9,7 @@ class DashboardCommunicator extends Communicator {
         try {
             return requestProvider.post<string>(this.getFullURL("dashboards/create"), { dashboard });
         } catch (e) {
+            console.error(e);
             throw e;
         }
     }
@@ -22,6 +22,7 @@ class DashboardCommunicator extends Communicator {
             };
             return requestProvider.post(this.getFullURL("dashboards/addPermissions"), { dashboardPermissions });
         } catch (e) {
+            console.error(e);
             throw e;
         }
     }
@@ -30,6 +31,7 @@ class DashboardCommunicator extends Communicator {
         try {
             return requestProvider.get<Dashboard[]>(this.getFullURL(`dashboards/${"neta"}`));
         } catch (e) {
+            console.error(e);
             throw e;
         }
     }
@@ -38,6 +40,25 @@ class DashboardCommunicator extends Communicator {
         try {
             return requestProvider.delete(this.getFullURL(`dashboards/delete/${dashboardId}`));
         } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
+
+    getDashboardUserCount(dashboardId: string) {
+        try {
+            return requestProvider.get<number>(this.getFullURL(`dashboards/countOfUsers/${dashboardId}`));
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
+
+    getDashboard(dashboardId: string) {
+        try {
+            return requestProvider.get<Dashboard>(this.getFullURL(`dashboards/dashboard/${dashboardId}`));
+        } catch (e) {
+            console.error(e);
             throw e;
         }
     }
