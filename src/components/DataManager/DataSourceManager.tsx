@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 import excelCommunicator from '../../communication/excelCommunicator';
 import { notifyError } from '../../helpers/toaster';
 import { dataSourcesAtom } from '../../recoil/dataSources/dataSources';
-import { DataSource } from '../../types/entities';
+import { DataSourceIdentifiers, FileUploadStage } from '../../types/dataSource.types';
 import ExcelReader from '../ExcelReader/ExcelReader';
 import DataSourceItem from './DataSource/DataSourceItem';
 import DataSourceSchemaContainer from './DataSourceSchemaContainer/DataSourceSchemaContainer';
@@ -16,34 +16,33 @@ interface DataManagerProps {
 }
 
 const DataSourceManager = ({ dashboardId }: DataManagerProps) => {
-    const [clickedDataSource, setClickedDataSource] = useState<DataSource>();
+    const [clickedDataSource, setClickedDataSource] = useState<DataSourceIdentifiers>();
     const [modalIsOpen, setIsOpen] = useState(false);
-    const [isAdding, setIsAdding] = useState(true);
+    const [fileUploadStage, setFileUploadStage] = useState<FileUploadStage>(FileUploadStage.add);
     const [dataSourceIdToReplace, setDataSourceIdToReplace] = useState("");
     const [dashboardDataSources, setDashboardDataSources] = useRecoilState(dataSourcesAtom);
 
-
-    const pickDataSource = (dataSource: DataSource) => {
+    const pickDataSource = (dataSource: DataSourceIdentifiers) => {
         setClickedDataSource(dataSource);
         setIsOpen(true);
     };
 
-    const deleteDateSource = async (dataSource: DataSource) => {
+    const deleteDateSource = async (dataSource: DataSourceIdentifiers) => {
         try {
             await excelCommunicator.deleteDateSource(dataSource.dataSourceId);
             setDashboardDataSources(prev => prev.filter(d => d.dataSourceId !== dataSource.dataSourceId));
         } catch {
-            notifyError("we cannot delete this data source");
+            notifyError("We cannot delete this data source");
         }
     };
 
-    const replaceDataSource = (dataSource: DataSource) => {
-        setIsAdding(false);
+    const replaceDataSource = (dataSource: DataSourceIdentifiers) => {
+        setFileUploadStage(FileUploadStage.replace);
         setDataSourceIdToReplace(dataSource.dataSourceId);
     };
 
-    const resetReplacement = () => {
-        setIsAdding(true);
+    const resetDataSourceReplacement = () => {
+        setFileUploadStage(FileUploadStage.add);
         setDataSourceIdToReplace(null);
     };
 
@@ -51,13 +50,13 @@ const DataSourceManager = ({ dashboardId }: DataManagerProps) => {
         <div className="data-sources-manager" >
             <div className='upper-section'>
                 {
-                    !isAdding &&
+                    fileUploadStage !== FileUploadStage.add &&
                     <Tooltip
                         title="back to adding"
-                        children={<RefreshIcon className='back-icon' onClick={resetReplacement} />}
+                        children={<RefreshIcon className='back-icon' onClick={resetDataSourceReplacement} />}
                     />
                 }
-                <div className='title'>{isAdding ? "Upload New File" : "Replace File"}</div>
+                <div className='title'>{fileUploadStage === FileUploadStage.add ? "Upload New File" : "Replace File"}</div>
             </div>
             <DataSourceSchemaContainer
                 modalIsOpen={modalIsOpen}
@@ -67,8 +66,8 @@ const DataSourceManager = ({ dashboardId }: DataManagerProps) => {
             />
             <ExcelReader
                 dashboardId={dashboardId}
-                isAdding={isAdding}
-                setIsAdding={setIsAdding}
+                fileUploadStage={fileUploadStage}
+                setFileUploadStage={setFileUploadStage}
                 dataSourceIdToReplace={dataSourceIdToReplace}
             />
             <div className='existing-files'>

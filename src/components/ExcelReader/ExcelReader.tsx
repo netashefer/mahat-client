@@ -2,24 +2,25 @@ import { LinearProgress } from "@mui/material";
 import { ChangeEvent, useState } from "react";
 import { useRecoilCallback } from 'recoil';
 import excelCommunicator from "../../communication/excelCommunicator";
-import { notifySuccess } from "../../helpers/toaster";
+import { notifyError, notifySuccess } from "../../helpers/toaster";
 import { onLoad } from "../../helpers/xls-reader";
-import { ReactComponent as AddIcon } from "../../icons/addFile.svg";
+import AddIcon from '@mui/icons-material/Add';
 import { ReactComponent as ReplaceIcon } from "../../icons/replace-icon.svg";
 import { ReactComponent as UploadIcon } from "../../icons/upload.svg";
 import { dataSourcesAtom } from "../../recoil/dataSources/dataSources";
-import { Table } from "../../types/data";
-import { setState } from "../../types/utility";
+import { Table } from "../../types/table.types";
+import { setState } from "../../types/utility.types";
 import './ExcelReader.scss';
+import { FileUploadStage } from "../../types/dataSource.types";
 
 interface ExcelReaderProps {
     dashboardId: string;
-    isAdding: boolean;
     dataSourceIdToReplace?: string;
-    setIsAdding: setState<boolean>;
+    fileUploadStage: FileUploadStage;
+    setFileUploadStage: setState<FileUploadStage>;
 }
 
-const ExcelReader = ({ dashboardId, isAdding, dataSourceIdToReplace, setIsAdding }: ExcelReaderProps) => {
+const ExcelReader = ({ dashboardId, fileUploadStage, dataSourceIdToReplace, setFileUploadStage }: ExcelReaderProps) => {
     const [file, setFile] = useState<File>(null);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -43,19 +44,23 @@ const ExcelReader = ({ dashboardId, isAdding, dataSourceIdToReplace, setIsAdding
     };
 
     const onReadingSucceed = useRecoilCallback(({ set }) => async (table: Table, fileName: string) => {
-        if (isAdding) {
-            const dataSourceId = await excelCommunicator.addExcelDataSource({ table, dashboardId, displayName: fileName });
-            set(dataSourcesAtom, prev => [{ dataSourceId, displayName: fileName }, ...prev]);
-            notifySuccess("file added successfully");
-        } else {
-            await excelCommunicator.replaceExcelDataSource({ dataSourceId: dataSourceIdToReplace, table, dashboardId, displayName: fileName });
-            set(dataSourcesAtom, prev => {
-                return [...(prev?.filter(d => d.dataSourceId !== dataSourceIdToReplace) || []), { dataSourceId: dataSourceIdToReplace, displayName: fileName }];
-            });
-            setIsAdding(true);
-            notifySuccess("file replaced successfully");
+        try {
+            if (fileUploadStage === FileUploadStage.add) {
+                const dataSourceId = await excelCommunicator.addExcelDataSource({ table, dashboardId, displayName: fileName });
+                set(dataSourcesAtom, prev => [{ dataSourceId, displayName: fileName }, ...prev]);
+                notifySuccess("File added successfully");
+            } else {
+                await excelCommunicator.replaceExcelDataSource({ dataSourceId: dataSourceIdToReplace, table, dashboardId, displayName: fileName });
+                set(dataSourcesAtom, prev => {
+                    return [...(prev?.filter(d => d.dataSourceId !== dataSourceIdToReplace) || []), { dataSourceId: dataSourceIdToReplace, displayName: fileName }];
+                });
+                setFileUploadStage(FileUploadStage.add);
+                notifySuccess("File replaced successfully");
+            }
+        } catch {
+            notifyError("We couldn't save the file");
         }
-    }, [isAdding, setIsAdding]);
+    }, [fileUploadStage, setFileUploadStage]);
 
     return (
         <div className="excel-reader">
@@ -78,7 +83,7 @@ const ExcelReader = ({ dashboardId, isAdding, dataSourceIdToReplace, setIsAdding
                             {file.name}
                         </div>
                         {
-                            isAdding ?
+                            fileUploadStage === FileUploadStage.add ?
                                 <AddIcon className="add-icon" onClick={readFile} /> :
                                 <ReplaceIcon className="replace-icon" onClick={readFile} />
                         }
