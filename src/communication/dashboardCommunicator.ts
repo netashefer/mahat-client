@@ -1,5 +1,5 @@
 import { config } from "../config";
-import { Dashboard } from "../types/entities";
+import { Dashboard } from "../types/dashboard.types";
 import Communicator from "./Communicator";
 import requestProvider from "./requestProvider";
 
@@ -9,6 +9,7 @@ class DashboardCommunicator extends Communicator {
         try {
             return await requestProvider.post<string>(this.getFullURL("dashboards/create"), { dashboard }, await this.getSecureHeaders());
         } catch (e) {
+            console.error(e);
             throw e;
         }
     }
@@ -21,6 +22,7 @@ class DashboardCommunicator extends Communicator {
             };
             return await requestProvider.post(this.getFullURL("dashboards/addPermissions"), { dashboardPermissions }, await this.getSecureHeaders());
         } catch (e) {
+            console.error(e);
             throw e;
         }
     }
@@ -29,6 +31,7 @@ class DashboardCommunicator extends Communicator {
         try {
             return await requestProvider.get<Dashboard[]>(this.getFullURL(`dashboards/${"neta"}`), await this.getSecureHeaders());
         } catch (e) {
+            console.error(e);
             throw e;
         }
     }
@@ -37,6 +40,25 @@ class DashboardCommunicator extends Communicator {
         try {
             return await requestProvider.delete(this.getFullURL(`dashboards/delete/${dashboardId}`), await this.getSecureHeaders());
         } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
+
+    async getDashboardUserCount(dashboardId: string) {
+        try {
+            return await requestProvider.get<number>(this.getFullURL(`dashboards/countOfUsers/${dashboardId}`), await this.getSecureHeaders());
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
+
+    async getDashboard(dashboardId: string) {
+        try {
+            return await requestProvider.get<Dashboard>(this.getFullURL(`dashboards/dashboard/${dashboardId}`), await this.getSecureHeaders());
+        } catch (e) {
+            console.error(e);
             throw e;
         }
     }

@@ -1,43 +1,48 @@
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { dashabordAtom, dashabordIdAtom } from "../../recoil/dashboard/dashboard";
+import { ManagerPanelOptions } from "../../types/dashboard.types";
 import Dashboard from "../../components/Dashboard/Dashboard";
-import ManagerPanel from "../../components/ManagerPanel/ManagerPanel";
-import { FullDataInstanceInfo, Table, TableDictionary } from "../../types/data";
+import DataSourceManager from "../../components/DataManager/DataSourceManager";
+import ShareLink from "../../components/ShareLink/ShareLink";
+import DashboardActions from "./DashboardActions/DashboardActions";
+import './DashboardPage.scss';
 
-const DashboardPage = () => {
-    const [tableDictionary, setTableDictionary] = useState<TableDictionary>({});
-    const [fullDataInstanceInfo, setFullDataInstanceInfo] = useState<FullDataInstanceInfo>({});
+const DashbaordPage = () => {
+    const { dashboardId } = useParams(); // for link sharing 
+    const setDashboardId = useSetRecoilState(dashabordIdAtom);
+    const dashboard = useRecoilValue(dashabordAtom);
+    const [openManagerPage, setOpenManager] = useState<ManagerPanelOptions>(ManagerPanelOptions.none);
 
-    const addDataInstanceTable = async (dataSourceId: string, table: Table, info: any) => {
-        setTableDictionary(prev => {
-            return {
-                ...prev,
-                [dataSourceId]: table
-            };
-        });
-        setFullDataInstanceInfo(prev => {
-            return {
-                ...prev,
-                [dataSourceId]: info
-            };
-        });
-    };
-
-    console.log(tableDictionary);
+    useEffect(() => {
+        setDashboardId(dashboardId); // eslint-disable-next-line
+    }, []);
 
     return (
-        <div className="dashboard-page" id="app">
-            <div className="page-title">Yahel and Neta</div>
-            <div className="wrapper">
-                <Dashboard />
-                <ManagerPanel
-                    addDataInstanceTable={addDataInstanceTable}
-                    tableDictionary={tableDictionary}
-                    fullDataInstanceInfo={fullDataInstanceInfo}
+        <div className="dashboard-page">
+            <div className="dashboard-top">
+                <div className="left-section">
+                    <div className="dashboard-title">{dashboard.dashboardName}</div>
+                    <ShareLink />
+                </div>
+                <DashboardActions
+                    dashboardId={dashboard.dashboardId}
+                    onAddDataSource={() => setOpenManager(ManagerPanelOptions.dataSources)}
+                    onAddGrpah={() => setOpenManager(ManagerPanelOptions.catalog)}
                 />
+            </div>
+            <div className="bottom">
+                <Dashboard />
+                {
+                    openManagerPage === ManagerPanelOptions.dataSources &&
+                    <DataSourceManager
+                        dashboardId={dashboard.dashboardId}
+                    />
+                }
             </div>
         </div>
     );
 };
 
-export default DashboardPage;
+export default DashbaordPage;

@@ -24,6 +24,14 @@ class RequestProvider {
             throw e;
         }
     }
+
+    async put<T>(url: string, body: any, headers?: AxiosRequestHeaders): Promise<T> {
+        try {
+            return await (await axios.put(url, body, {headers})).data;
+        } catch (e) {
+            throw e;
+        }
+    }
 }
 
 export default new RequestProvider();

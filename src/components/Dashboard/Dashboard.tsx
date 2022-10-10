@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Layout, Responsive, WidthProvider } from "react-grid-layout";
-import { Widget } from "../../types/entities";
+import { Widget } from "../../types/widget.types";
 import WidgetContainer, { WIDGET_DRAGGABLE_TITLE_CLASSNAME } from "../WidgetContainer/WidgetContainer";
+import 'react-grid-layout/css/styles.css';
 import './Dashboard.scss';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -17,9 +18,9 @@ const initialLayout: Layout[] = [
 ];
 
 const getLayout = () => {
-    const a = localStorage.getItem("grid-layout");
-    return a ? JSON.parse(a) : initialLayout;
-}
+    const savedGridLayout = localStorage.getItem("grid-layout");
+    return savedGridLayout ? JSON.parse(savedGridLayout) : initialLayout;
+};
 
 const Dashboard = () => {
     const [layout] = useState<Layout[]>(getLayout());
@@ -27,7 +28,7 @@ const Dashboard = () => {
     const widgets: Widget[] = [
         { id: '1', title: "neta", content: "n1" },
         { id: '2', title: "yahel", content: "n12" }
-    ]
+    ];
 
     return (
         <div className="dashboard">
@@ -51,6 +52,6 @@ const Dashboard = () => {
             </ResponsiveGridLayout>
         </div>
     );
-}
+};
 
 export default Dashboard;

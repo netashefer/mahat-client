@@ -1,0 +1,38 @@
+@import '../../styles/genralStyles.scss';
+
+.data-sources-manager {
+    background-color: var(--main-background-color);
+    width: 15em;
+    padding: 1em;
+    box-shadow: 3px 3px 6px 2px;
+
+    .upper-section {
+        display: flex;
+        justify-content: center;
+
+        .title {
+            color: white;
+            margin-bottom: 0.5em;
+            width: 100%;
+        }
+
+        .back-icon {
+            cursor: pointer;
+            width: 20%;
+        }
+    }
+
+    .existing-files {
+        .title {
+            font-size: 18px;
+            color: white;
+            margin-bottom: 0.5em;
+        }
+    }
+
+    .back-icon {
+        fill: #2DEDBF;
+        height: 1em;
+        width: 1em;
+    }
+}

@@ -2,12 +2,43 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    border-bottom: 2px solid #2DEDBF;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
 
-    .file-btn {
-        width: fit-content;
+    .upload-icon {
+        cursor: pointer;
     }
 
-    .file-input {
-        width: fit-content;
+    .file-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .file-section {
+            width: 100%;
+            display: flex;
+
+            .file-name {
+                color: white;
+                width: 70%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .add-icon,
+            .replace-icon {
+                cursor: pointer;
+                width: 30%;
+                height: 1em;
+                fill: #2DEDBF;
+            }
+        }
+    }
+
+    .loader {
+        width: 80%;
+        height: 0.7em;
     }
 }
