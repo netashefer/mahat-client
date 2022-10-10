@@ -1,11 +1,11 @@
 import { config } from "../config";
-import { DashboardDataSources, Table } from "../types/data";
+import { DashboardDataSources, DataSource, DataSourceId, DataSourceWithoutId } from "../types/dataSource.types";
 import Communicator from "./Communicator";
 import requestProvider from "./requestProvider";
 
 class ExcelCommunicator extends Communicator {
 
-    async addExcelDataSource(excelDataSource: { table: Table, displayName: string, dashboardId: string; }) {
+    async addExcelDataSource(excelDataSource: DataSourceWithoutId) {
         try {
             return await requestProvider.post<string>(this.getFullURL("excel/addDataSource"), excelDataSource);
         } catch (e) {
@@ -23,7 +23,7 @@ class ExcelCommunicator extends Communicator {
         }
     }
 
-    async getschema(dataSourceId: string) {
+    async getschema(dataSourceId: DataSourceId) {
         try {
             return await requestProvider.get<string[]>(this.getFullURL(`excel/schema/${dataSourceId}`));
         } catch (e) {
@@ -32,7 +32,7 @@ class ExcelCommunicator extends Communicator {
         }
     }
 
-    async deleteDateSource(dataSourceId: string) {
+    async deleteDateSource(dataSourceId: DataSourceId) {
         try {
             return await requestProvider.delete(this.getFullURL(`excel/${dataSourceId}`));
         } catch (e) {
@@ -41,7 +41,7 @@ class ExcelCommunicator extends Communicator {
         }
     }
 
-    async replaceExcelDataSource(excelDataSource: { dataSourceId: string, table: Table, displayName: string, dashboardId: string; }) {
+    async replaceExcelDataSource(excelDataSource: DataSource) {
         try {
             return await requestProvider.put<string>(this.getFullURL("excel/replace"), excelDataSource);
         } catch (e) {

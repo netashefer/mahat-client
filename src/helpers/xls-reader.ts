@@ -1,5 +1,5 @@
 import * as XLSX from 'xlsx';
-import { Table } from "../types/data";
+import { Table } from "../types/table.types";
 import { notifyError } from "./toaster";
 
 export const convertToJson = (csv: string): Table => {
@@ -39,7 +39,7 @@ export const onLoad = async (
     try {
         onReadingSucceed(table, file.name);
     } catch {
-        notifyError("we couldnt add this excel...");
+        notifyError("We couldnt add this excel...");
     } finally {
         onReadingEnd();
     }
