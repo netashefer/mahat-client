@@ -1,31 +1,30 @@
-import { CircularProgress } from '@mui/material';
-import { Suspense } from 'react';
+import { lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { RecoilRoot } from 'recoil';
-import './App.scss';
-import DashboardPage from './components/DashboardPage/DashboardPage';
-import HomePage from './components/HomePage/HomePage';
+import withLoader from './components/Common/withLoader/withLoader';
 import TopBar from './components/TopBar/TopBar';
+import './App.scss';
+
+const DashboardPage = lazy(() => import('./components/DashboardPage/DashboardPage'));
+const HomePage = lazy(() => import('./components/HomePage/HomePage'));
 
 const App = () => {
   return (
     <div className="App" id="app">
       <TopBar />
       <RecoilRoot>
-        <Suspense fallback={<CircularProgress />}>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="dashboard/:dashboardId" element={<DashboardPage />} />
-            </Routes>
-          </BrowserRouter>
-        </Suspense>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="dashboard/:dashboardId" element={<DashboardPage />} />
+          </Routes>
+        </BrowserRouter>
       </RecoilRoot>
       <ToastContainer />
     </div>
   );
 };
 
-export default App;
+export default withLoader(App);

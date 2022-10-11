@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { dashabordAtom, dashabordIdAtom } from "../../recoil/dashboard/dashboard";
 import { ManagerPanelOptions } from "../../types/dashboard.types";
+import withLoader from "../Common/withLoader/withLoader";
 import Dashboard from "../Dashboard/Dashboard";
 import DataSourceManager from "../DataManager/DataSourceManager";
 import ShareLink from "../ShareLink/ShareLink";
@@ -45,4 +46,4 @@ const DashbaordPage = () => {
     );
 };
 
-export default DashbaordPage;
+export default withLoader(DashbaordPage);
