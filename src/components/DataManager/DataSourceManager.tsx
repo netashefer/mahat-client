@@ -1,39 +1,25 @@
-import { useState } from 'react';
-import { useRecoilState } from 'recoil';
-import excelCommunicator from '../../communication/excelCommunicator';
-import { notifyError } from '../../helpers/toaster';
-import { dataSourcesAtom } from '../../recoil/dataSources/dataSources';
-import { DataSourceIdentifiers, FileUploadStage } from '../../types/dataSource.types';
-import ExcelReader from '../ExcelReader/ExcelReader';
-import DataSourceItem from './DataSource/DataSourceItem';
-import DataSourceSchemaContainer from './DataSourceSchemaContainer/DataSourceSchemaContainer';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { Tooltip } from '@mui/material';
+import { useState } from 'react';
+import { DataSourceIdentifiers, FileUploadStage } from '../../types/dataSource.types';
+import ExcelReader from '../ExcelReader/ExcelReader';
+import DataSourceSchemaContainer from './DataSourceSchemaContainer/DataSourceSchemaContainer';
+import ExistingFiles from './ExistingFiles/ExistingFiles';
 import './DataSourceManager.scss';
 
-interface DataManagerProps {
+interface DataSourceManagerProps {
     dashboardId: string;
 }
 
-const DataSourceManager = ({ dashboardId }: DataManagerProps) => {
+const DataSourceManager = ({ dashboardId }: DataSourceManagerProps) => {
     const [clickedDataSource, setClickedDataSource] = useState<DataSourceIdentifiers>();
     const [modalIsOpen, setIsOpen] = useState(false);
     const [fileUploadStage, setFileUploadStage] = useState<FileUploadStage>(FileUploadStage.add);
     const [dataSourceIdToReplace, setDataSourceIdToReplace] = useState("");
-    const [dashboardDataSources, setDashboardDataSources] = useRecoilState(dataSourcesAtom);
 
     const pickDataSource = (dataSource: DataSourceIdentifiers) => {
         setClickedDataSource(dataSource);
         setIsOpen(true);
-    };
-
-    const deleteDateSource = async (dataSource: DataSourceIdentifiers) => {
-        try {
-            await excelCommunicator.deleteDateSource(dataSource.dataSourceId);
-            setDashboardDataSources(prev => prev.filter(d => d.dataSourceId !== dataSource.dataSourceId));
-        } catch {
-            notifyError("We cannot delete this data source");
-        }
     };
 
     const replaceDataSource = (dataSource: DataSourceIdentifiers) => {
@@ -70,21 +56,12 @@ const DataSourceManager = ({ dashboardId }: DataManagerProps) => {
                 setFileUploadStage={setFileUploadStage}
                 dataSourceIdToReplace={dataSourceIdToReplace}
             />
-            <div className='existing-files'>
-                <div className='title'>Existing Files</div>
-                {
-                    dashboardDataSources.map(dataSource =>
-                        <DataSourceItem
-                            fileName={dataSource.displayName}
-                            onInfo={() => pickDataSource(dataSource)}
-                            onRemove={() => deleteDateSource(dataSource)}
-                            onReplace={() => replaceDataSource(dataSource)}
-                        />
-                    )
-                }
-            </div>
+            <ExistingFiles
+                replaceDataSource={replaceDataSource}
+                pickDataSource={pickDataSource}
+            />
         </div>
     );
 };
 
-export default DataSourceManager; // add withLoader - office
+export default DataSourceManager;
