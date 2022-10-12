@@ -7,9 +7,9 @@ import './ExistingGraphs.scss';
 
 const ExistingGraphs = () => {
     const graphs: Graph[] = [
-        { dataSourceId: "1", graphId: "1", title: "g1", type: "pie" },
-        { dataSourceId: "1", graphId: "2", title: "g2", type: "column" },
-        { dataSourceId: "2", graphId: "3", title: "g3", type: "line" },
+        { dataSourceId: "1", graphId: "1", title: "g1", type: "pie", dashboardId: "this" },
+        { dataSourceId: "1", graphId: "2", title: "g2", type: "column", dashboardId: "this" },
+        { dataSourceId: "2", graphId: "3", title: "g3", type: "line", dashboardId: "this" },
     ];
     const dataSources: DashboardDataSources = [
         { dataSourceId: "1", displayName: "Df" },
