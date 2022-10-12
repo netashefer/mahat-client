@@ -6,6 +6,7 @@ export type Graph = {
     title: string;
     type: GraphType;
     dataSourceId: DataSourceId;
+    dashboardId: string;
 };
 
 export const GRAPH_DRAG_AND_DROP_KEY = "graph-dnd";
