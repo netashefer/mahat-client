@@ -7,3 +7,5 @@ export type Graph = {
     type: GraphType;
     dataSourceId: DataSourceId;
 };
+
+export const GRAPH_DRAG_AND_DROP_KEY = "graph-dnd";

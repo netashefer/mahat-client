@@ -1,9 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Layout, Responsive, WidthProvider } from "react-grid-layout";
 import WidgetContainer, { WIDGET_DRAGGABLE_TITLE_CLASSNAME } from "../WidgetContainer/WidgetContainer";
 import EmptyDashboard from './EmptyDashboard/EmptyDashboard';
 import { DashboardType } from "../../types/dashboard.types";
 import { Widget } from "../../types/widget.types";
+import { GRAPH_DRAG_AND_DROP_KEY } from "../../types/graph.types";
 import 'react-grid-layout/css/styles.css';
 import './Dashboard.scss';
 
@@ -32,8 +33,18 @@ const Dashboard = ({ dashboard }: { dashboard: DashboardType; }) => {
         { id: '2', title: "yahel", content: "n12" }
     ];
 
+    const onDrop = (event: React.DragEvent<HTMLDivElement>) => {
+        event.preventDefault();
+        const graphId = event.dataTransfer.getData(GRAPH_DRAG_AND_DROP_KEY);
+        alert("add graph" + graphId);
+    };
+
+    const allowDrop = (event: React.DragEvent<HTMLDivElement>) => {
+        event.preventDefault();
+    };
+
     return (
-        <div className="dashboard">
+        <div className="dashboard" onDrop={onDrop} onDragOver={allowDrop}>
             {
                 dashboard.widgets?.length ?
                     <ResponsiveGridLayout
