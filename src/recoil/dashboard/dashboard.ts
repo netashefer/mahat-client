@@ -1,5 +1,6 @@
 import { atom, selector } from 'recoil';
 import dashboardCommunicator from '../../communication/dashboardCommunicator';
+import { notifyError } from '../../helpers/toaster';
 import { DashboardType } from '../../types/dashboard.types';
 
 export const dashabordIdAtom = atom({
@@ -17,7 +18,12 @@ export const dashabordIdAtom = atom({
 const dashboardDefaultSelector = selector<DashboardType>({
     key: 'dashboardDefaultSelector',
     get: async ({ get }) => {
-        return await dashboardCommunicator.getDashboard(get(dashabordIdAtom));
+        try {
+            return await dashboardCommunicator.getDashboard(get(dashabordIdAtom));
+        } catch {
+            notifyError("We couldn't load your dashboard");
+            return null;
+        }
     }
 });
 

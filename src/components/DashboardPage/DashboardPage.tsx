@@ -22,6 +22,8 @@ const DashbaordPage = () => {
         setDashboardId(dashboardId); // eslint-disable-next-line
     }, []);
 
+    const closeManagerPage = () => setOpenManager(ManagerPanelOptions.none);
+
     const getManager = () => {
         let Component;
         if (openManagerPage === ManagerPanelOptions.none)
@@ -34,7 +36,9 @@ const DashbaordPage = () => {
             Component = <Catalog />;
         }
 
-        return <ManagerWrapper>{Component}</ManagerWrapper>;
+        return <ManagerWrapper closeManagerPage={closeManagerPage}>
+            {Component}
+        </ManagerWrapper>;
     };
 
     return (
