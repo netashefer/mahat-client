@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { dashabordAtom, dashabordIdAtom } from "../../recoil/dashboard/dashboard";
+import { dashabordAtom, dashboardIdAtom } from "../../recoil/dashboard/dashboard";
 import { ManagerPanelOptions } from "../../types/dashboard.types";
 import Catalog from "../Catalog/Catalog";
 import ManagerWrapper from "../Common/ManagerWrapper/ManagerWrapper";
@@ -15,7 +15,7 @@ import './DashboardPage.scss';
 
 const DashbaordPage = () => {
     const { dashboardId } = useParams(); // for link sharing 
-    const setDashboardId = useSetRecoilState(dashabordIdAtom);
+    const setDashboardId = useSetRecoilState(dashboardIdAtom);
     const dashboard = useRecoilValue(dashabordAtom);
     const [openManagerPage, setOpenManager] = useState<ManagerPanelOptions>(ManagerPanelOptions.none);
 
@@ -59,7 +59,7 @@ const DashbaordPage = () => {
                             />
                         </div>
                         <div className="bottom">
-                            <Dashboard dashboard={dashboard} />
+                            <Dashboard />
                             {getManager()}
                         </div>
                     </>

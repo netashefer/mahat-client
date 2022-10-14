@@ -20,7 +20,7 @@ const ExistingGraphs = () => {
                     return <div key={dataSourceId}>
                         <div className='data-source-header'>
                             <FileIcon className='file-icon' />
-                            {dataSources.find(d => d.dataSourceId === dataSourceId)?.displayName}
+                            {dataSources.find(d => d.dataSourceId === dataSourceId)?.displayName || "unknown"}
                         </div>
                         {
                             graphs.map(g =>

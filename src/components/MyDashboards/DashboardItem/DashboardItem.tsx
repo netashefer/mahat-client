@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilCallback, useSetRecoilState } from 'recoil';
 import dashboardCommunicator from '../../../communication/dashboardCommunicator';
 import { notifyError } from '../../../helpers/toaster';
-import { dashabordIdAtom } from '../../../recoil/dashboard/dashboard';
+import { dashboardIdAtom } from '../../../recoil/dashboard/dashboard';
 import { myDashabordsAtom } from '../../../recoil/dashboard/myDashboards';
 import './DashboardItem.scss';
 
@@ -14,7 +14,7 @@ type DashboardItemProps = {
 
 const DashboardItem = ({ dashboardName, dashboardId }: DashboardItemProps) => {
     const navigate = useNavigate();
-    const setDashboardId = useSetRecoilState(dashabordIdAtom);
+    const setDashboardId = useSetRecoilState(dashboardIdAtom);
 
     const deleteDashboard = useRecoilCallback(({ set }) => async (event: React.MouseEvent<SVGSVGElement>) => {
         event.stopPropagation();

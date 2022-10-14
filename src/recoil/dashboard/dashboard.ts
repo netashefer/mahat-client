@@ -3,8 +3,8 @@ import dashboardCommunicator from '../../communication/dashboardCommunicator';
 import { notifyError } from '../../helpers/toaster';
 import { DashboardType } from '../../types/dashboard.types';
 
-export const dashabordIdAtom = atom({
-    key: 'dashabordIdAtom',
+export const dashboardIdAtom = atom({
+    key: 'dashboardIdAtom',
     default: null,
     effects: [
         ({ onSet }) => {
@@ -18,7 +18,7 @@ export const dashabordIdAtom = atom({
 const dashboardDefaultSelector = selector<DashboardType>({
     key: 'dashboardDefaultSelector',
     get: async ({ get }) => {
-        const dashboardId = get(dashabordIdAtom);
+        const dashboardId = get(dashboardIdAtom);
         if (!dashboardId) return null;
         try {
             return await dashboardCommunicator.getDashboard(dashboardId);

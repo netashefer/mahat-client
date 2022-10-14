@@ -5,6 +5,7 @@ import { notifyError } from '../../../helpers/toaster';
 import InfoIcon from '@mui/icons-material/Info';
 import ActionButton from "./ActionButton";
 import './DashboardActions.scss';
+import React from 'react';
 
 interface DashboardActionsProps {
     onAddGrpah: () => void;
@@ -12,18 +13,20 @@ interface DashboardActionsProps {
     dashboardId: string;
 }
 
-const DashboardActions = ({ dashboardId, onAddDataSource, onAddGrpah }: DashboardActionsProps) => {
+const DashboardActions = React.memo(({ dashboardId, onAddDataSource, onAddGrpah }: DashboardActionsProps) => {
     const [userCount, setUserCount] = useState(0);
 
+    const getUsers = async () => {
+        try {
+            const count = await dashboardCommunicator.getDashboardUserCount(dashboardId);
+            setUserCount(count);
+        } catch {
+            notifyError("Couldnt get count of users");
+        }
+    };
+
     useEffect(() => {
-        (async () => {
-            try {
-                const count = await dashboardCommunicator.getDashboardUserCount(dashboardId);
-                setUserCount(count);
-            } catch {
-                notifyError("Couldnt get count of users");
-            }
-        })(); // eslint-disable-next-line
+        getUsers(); // eslint-disable-next-line
     }, []);
 
     const tooltipComponent = <div className='tooltip-text'>
@@ -39,6 +42,6 @@ const DashboardActions = ({ dashboardId, onAddDataSource, onAddGrpah }: Dashboar
             <ActionButton text="Add data source" onClick={onAddDataSource} borderColor="blue" />
         </div>
     );
-};
+});
 
 export default DashboardActions;

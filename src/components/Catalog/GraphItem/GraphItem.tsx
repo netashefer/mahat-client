@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useRecoilCallback } from 'recoil';
 import graphCommunicator from '../../../communication/graphCommunicator';
 import { graphsAtom } from '../../../recoil/graphs/graphs';
+import { useAddWidget } from '../../../recoil/customHooks/useWidgetHandler';
 
 interface GraphItemProps {
     graphId: string;
@@ -15,6 +16,7 @@ interface GraphItemProps {
 
 const GraphItem = ({ graphId, title, type }: GraphItemProps) => {
     const [isHovered, setIsHovered] = useState(false);
+    const addWidget = useAddWidget();
 
     const drag = (event: React.DragEvent<HTMLDivElement>) => {
         event.dataTransfer.setData(GRAPH_DRAG_AND_DROP_KEY, graphId);
@@ -33,6 +35,7 @@ const GraphItem = ({ graphId, title, type }: GraphItemProps) => {
             onDragStart={drag}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
+            onDoubleClick={() => addWidget(graphId)}
         >
             <Icon className="graph-icon" />
             <div className='title'>{title}</div>

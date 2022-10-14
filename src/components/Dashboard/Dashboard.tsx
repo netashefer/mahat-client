@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Layout, Responsive, WidthProvider } from "react-grid-layout";
-import WidgetContainer, { WIDGET_DRAGGABLE_TITLE_CLASSNAME } from "../WidgetContainer/WidgetContainer";
-import EmptyDashboard from './EmptyDashboard/EmptyDashboard';
-import { DashboardType } from "../../types/dashboard.types";
-import { Widget } from "../../types/widget.types";
-import { GRAPH_DRAG_AND_DROP_KEY } from "../../types/graph.types";
 import 'react-grid-layout/css/styles.css';
+import { useRecoilValue } from "recoil";
+import { useAddWidget } from "../../recoil/customHooks/useWidgetHandler";
+import { widgetsAtom } from "../../recoil/widgets/widgets";
+import { GRAPH_DRAG_AND_DROP_KEY } from "../../types/graph.types";
+import { Widget } from "../../types/widget.types";
+import WidgetContainer, { WIDGET_DRAGGABLE_TITLE_CLASSNAME } from "../WidgetContainer/WidgetContainer";
 import './Dashboard.scss';
+import EmptyDashboard from './EmptyDashboard/EmptyDashboard';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -25,18 +27,16 @@ const getLayout = () => {
     return savedGridLayout ? JSON.parse(savedGridLayout) : initialLayout;
 };
 
-const Dashboard = ({ dashboard }: { dashboard: DashboardType; }) => {
+const Dashboard = () => {
     const [layout] = useState<Layout[]>(getLayout());
-
-    const widgets: Widget[] = [
-        { id: '1', title: "neta", content: "n1" },
-        { id: '2', title: "yahel", content: "n12" }
-    ];
+    const addWidget = useAddWidget();
+    const widgets: Widget[] = useRecoilValue(widgetsAtom);
 
     const onDrop = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
-        const graphId = event.dataTransfer.getData(GRAPH_DRAG_AND_DROP_KEY);
-        alert("add graph" + graphId);
+        const graphId = event.dataTransfer.getData(GRAPH_DRAG_AND_DROP_KEY)?.replace("\n", "");
+        addWidget(graphId);
+
     };
 
     const allowDrop = (event: React.DragEvent<HTMLDivElement>) => {
@@ -46,7 +46,7 @@ const Dashboard = ({ dashboard }: { dashboard: DashboardType; }) => {
     return (
         <div className="dashboard" onDrop={onDrop} onDragOver={allowDrop}>
             {
-                dashboard?.widgets?.length ?
+                widgets?.length ?
                     <ResponsiveGridLayout
                         className="layout"
                         resizeHandles={["se"]}
@@ -59,7 +59,7 @@ const Dashboard = ({ dashboard }: { dashboard: DashboardType; }) => {
                     >
                         {
                             widgets.map(w =>
-                                <div key={w.id}>
+                                <div key={w.widgetId}>
                                     <WidgetContainer {...w} />
                                 </div>
                             )}
