@@ -4,7 +4,7 @@ import { notifyError } from '../../helpers/toaster';
 import { DashboardType } from '../../types/dashboard.types';
 
 export const dashabordIdAtom = atom({
-    key: 'dashabordId',
+    key: 'dashabordIdAtom',
     default: null,
     effects: [
         ({ onSet }) => {
@@ -18,8 +18,10 @@ export const dashabordIdAtom = atom({
 const dashboardDefaultSelector = selector<DashboardType>({
     key: 'dashboardDefaultSelector',
     get: async ({ get }) => {
+        const dashboardId = get(dashabordIdAtom);
+        if (!dashboardId) return null;
         try {
-            return await dashboardCommunicator.getDashboard(get(dashabordIdAtom));
+            return await dashboardCommunicator.getDashboard(dashboardId);
         } catch {
             notifyError("We couldn't load your dashboard");
             return null;

@@ -30,6 +30,7 @@ const ExistingFiles = ({ pickDataSource, replaceDataSource }: ExistingFilesProps
             {
                 dashboardDataSources.map(dataSource =>
                     <DataSourceItem
+                        key={dataSource.dataSourceId}
                         fileName={dataSource.displayName}
                         onInfo={() => pickDataSource(dataSource)}
                         onRemove={() => deleteDateSource(dataSource)}

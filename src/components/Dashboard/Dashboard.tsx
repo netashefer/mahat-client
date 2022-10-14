@@ -46,7 +46,7 @@ const Dashboard = ({ dashboard }: { dashboard: DashboardType; }) => {
     return (
         <div className="dashboard" onDrop={onDrop} onDragOver={allowDrop}>
             {
-                dashboard.widgets?.length ?
+                dashboard?.widgets?.length ?
                     <ResponsiveGridLayout
                         className="layout"
                         resizeHandles={["se"]}

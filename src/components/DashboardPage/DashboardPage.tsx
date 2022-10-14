@@ -8,6 +8,7 @@ import ManagerWrapper from "../Common/ManagerWrapper/ManagerWrapper";
 import withLoader from "../Common/withLoader/withLoader";
 import Dashboard from "../Dashboard/Dashboard";
 import DataSourceManager from "../DataManager/DataSourceManager";
+import DashbaordError from "../Errors/DashboardError/DashboardError";
 import ShareLink from "../ShareLink/ShareLink";
 import DashboardActions from "./DashboardActions/DashboardActions";
 import './DashboardPage.scss';
@@ -30,7 +31,7 @@ const DashbaordPage = () => {
             return null;
         else if (openManagerPage === ManagerPanelOptions.dataSources) {
             Component = <DataSourceManager
-                dashboardId={dashboard.dashboardId}
+                dashboardId={dashboard?.dashboardId}
             />;
         } else if (openManagerPage === ManagerPanelOptions.catalog) {
             Component = <Catalog />;
@@ -43,21 +44,27 @@ const DashbaordPage = () => {
 
     return (
         <div className="dashboard-page">
-            <div className="dashboard-top">
-                <div className="left-section">
-                    <div className="dashboard-title">{dashboard.dashboardName}</div>
-                    <ShareLink />
-                </div>
-                <DashboardActions
-                    dashboardId={dashboard.dashboardId}
-                    onAddDataSource={() => setOpenManager(ManagerPanelOptions.dataSources)}
-                    onAddGrpah={() => setOpenManager(ManagerPanelOptions.catalog)}
-                />
-            </div>
-            <div className="bottom">
-                <Dashboard dashboard={dashboard} />
-                {getManager()}
-            </div>
+            {
+                dashboard ?
+                    <>
+                        <div className="dashboard-top">
+                            <div className="left-section">
+                                <div className="dashboard-title">{dashboard?.dashboardName}</div>
+                                <ShareLink />
+                            </div>
+                            <DashboardActions
+                                dashboardId={dashboard?.dashboardId}
+                                onAddDataSource={() => setOpenManager(ManagerPanelOptions.dataSources)}
+                                onAddGrpah={() => setOpenManager(ManagerPanelOptions.catalog)}
+                            />
+                        </div>
+                        <div className="bottom">
+                            <Dashboard dashboard={dashboard} />
+                            {getManager()}
+                        </div>
+                    </>
+                    : <DashbaordError />
+            }
         </div >
     );
 };

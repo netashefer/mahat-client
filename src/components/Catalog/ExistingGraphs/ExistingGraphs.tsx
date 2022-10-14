@@ -1,28 +1,23 @@
 import FileIcon from '@mui/icons-material/InsertDriveFile';
 import _ from 'lodash';
-import { DashboardDataSources } from '../../../types/dataSource.types';
+import { useRecoilValue } from 'recoil';
+import { dataSourcesAtom } from '../../../recoil/dataSources/dataSources';
+import { graphsAtom } from '../../../recoil/graphs/graphs';
 import { Graph } from '../../../types/graph.types';
+import withLoader from '../../Common/withLoader/withLoader';
 import GraphItem from '../GraphItem/GraphItem';
 import './ExistingGraphs.scss';
 
 const ExistingGraphs = () => {
-    const graphs: Graph[] = [
-        { dataSourceId: "1", graphId: "1", title: "g1", type: "pie", dashboardId: "this" },
-        { dataSourceId: "1", graphId: "2", title: "g2", type: "column", dashboardId: "this" },
-        { dataSourceId: "2", graphId: "3", title: "g3", type: "line", dashboardId: "this" },
-    ];
-    const dataSources: DashboardDataSources = [
-        { dataSourceId: "1", displayName: "Df" },
-        { dataSourceId: "2", displayName: "neta" },
-    ];
-
+    const graphs: Graph[] = useRecoilValue(graphsAtom);
+    const dataSources = useRecoilValue(dataSourcesAtom);
     const entries = Object.entries(_.groupBy(graphs, g => g.dataSourceId));
 
     return (
         <div className='existing-graphs'>
             {
                 entries.map(([dataSourceId, graphs]) => {
-                    return <div>
+                    return <div key={dataSourceId}>
                         <div className='data-source-header'>
                             <FileIcon className='file-icon' />
                             {dataSources.find(d => d.dataSourceId === dataSourceId)?.displayName}
@@ -30,13 +25,13 @@ const ExistingGraphs = () => {
                         {
                             graphs.map(g =>
                                 <GraphItem
+                                    key={g.graphId}
                                     graphId={g.graphId}
                                     title={g.title}
-                                    type={g.type}
+                                    type={g.template?.type}
                                 />
                             )
                         }
-
                     </div>;
                 })
             }
@@ -44,4 +39,4 @@ const ExistingGraphs = () => {
     );
 };
 
-export default ExistingGraphs;
+export default withLoader(ExistingGraphs);
