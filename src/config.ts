@@ -4,6 +4,7 @@ export const config = {
 		auth0:{
 			domain: "graphit.us.auth0.com",
 			client_id: "3LgivwedUyOayOiLcHOg0HOWwpUZkPgT",
+			client_secret: 'GSbhabWuFJiysBgZLrUpokgpommprKYAz79jvFkTEPijPqHGQMd9RGP7ZSaJdCtc',
 			audience: "https://local.graphit.com:3012",
 		}
 	},
@@ -12,6 +13,7 @@ export const config = {
 		auth0:{
 			domain: "graphit.us.auth0.com",
 			client_id: "3LgivwedUyOayOiLcHOg0HOWwpUZkPgT",
+			client_secret: 'GSbhabWuFJiysBgZLrUpokgpommprKYAz79jvFkTEPijPqHGQMd9RGP7ZSaJdCtc',
 			audience: "https://local.graphit.com:8000",
 		}
 	},
