@@ -29,7 +29,7 @@ const dashboardDefaultSelector = selector<DashboardType>({
     }
 });
 
-export const dashabordAtom = atom({
-    key: 'dashabordAtom',
+export const dashboardAtom = atom({
+    key: 'dashboardAtom',
     default: dashboardDefaultSelector,
 });

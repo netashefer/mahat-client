@@ -23,4 +23,4 @@ class GraphCommunicator extends Communicator {
     }
 }
 
-export default new GraphCommunicator(config.graphServerUrl);
+export default new GraphCommunicator(config.graphServer.url, config.processingService.auth0);

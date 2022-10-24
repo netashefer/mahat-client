@@ -32,4 +32,4 @@ class WidgetCommunicator extends Communicator {
     }
 }
 
-export default new WidgetCommunicator(config.graphServerUrl);
+export default new WidgetCommunicator(config.graphServer.url, config.processingService.auth0);

@@ -1,20 +1,20 @@
+import { Dashboard } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { dashabordAtom, dashboardIdAtom } from "../../recoil/dashboard/dashboard";
+import withLoader from "../../components/Common/withLoader/withLoader";
+import DashbaordError from "../../components/Errors/DashboardError/DashboardError";
+import ManagerDecider from "../../components/ManagerDecider/ManagerDecider";
+import ShareLink from "../../components/ShareLink/ShareLink";
+import { dashboardIdAtom, dashboardAtom } from "../../recoil/dashboard/dashboard";
 import { ManagerPanelOptions } from "../../types/dashboard.types";
-import withLoader from "../Common/withLoader/withLoader";
-import Dashboard from "../Dashboard/Dashboard";
-import DashbaordError from "../Errors/DashboardError/DashboardError";
-import ManagerDecider from "../ManagerDecider/ManagerDecider";
-import ShareLink from "../ShareLink/ShareLink";
 import DashboardActions from "./DashboardActions/DashboardActions";
 import './DashboardPage.scss';
 
 const DashbaordPage = () => {
     const { dashboardId } = useParams(); // for link sharing 
     const setDashboardId = useSetRecoilState(dashboardIdAtom);
-    const dashboard = useRecoilValue(dashabordAtom);
+    const dashboard = useRecoilValue(dashboardAtom);
     const [openManagerPage, setOpenManager] = useState<ManagerPanelOptions>(ManagerPanelOptions.none);
 
     useEffect(() => {
