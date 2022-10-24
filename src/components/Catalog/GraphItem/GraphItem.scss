@@ -1,0 +1,24 @@
+.graph-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1em;
+    cursor: grab;
+    user-select: none;
+
+    .graph-icon {
+        fill: #2DEDBF;
+        height: 1.5em;
+        width: 1.5em;
+        margin-right: 0.5em;
+    }
+
+    .title {
+        width: 80%;
+        text-align: left;
+    }
+
+    .delete-icon {
+        cursor: pointer;
+    }
+}

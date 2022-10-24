@@ -1,3 +1,4 @@
+import withLoader from "../../components/Common/withLoader/withLoader";
 import CreateNewDashboard from "../../components/CreateNewDashboard/CreateNewDashboard";
 import LogoTitle from "../../components/LogoTitle/LogoTitle";
 import MyDashboards from "../../components/MyDashboards/MyDashboards";
@@ -17,4 +18,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
+export default withLoader(HomePage);

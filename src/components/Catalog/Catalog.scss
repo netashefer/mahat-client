@@ -1,18 +1,21 @@
 .catalog {
-    width: 100%;
+    color: white;
 
-    .widget-option {
-        width: 100%;
-        background-color: rgb(255, 255, 255);
-        border: 1px solid rgb(177, 173, 173);
-        border-radius: 7px;
-        border-right: 4px solid rgb(32, 43, 189);
+    .new-graph-section {
+        font-size: 16px;
         height: 2em;
-        margin: 1px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 0 1em 0;
+        border-bottom: 2px solid #2DEDBF;
 
-        &:active {
-            background-color: rgb(175, 172, 172);
+        .add-icon {
+            cursor: pointer;
+            width: 2em;
+            margin-right: 0.3em;
         }
     }
+
 
 }

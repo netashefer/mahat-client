@@ -1,0 +1,19 @@
+.existing-graphs {
+    margin-top: 1em;
+
+    .title {
+        font-size: 16px;
+        color: white;
+    }
+
+    .data-source-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+
+        .file-icon {
+            margin-right: 0.2em;
+        }
+    }
+}

@@ -3,25 +3,27 @@ import { Widget } from '../../types/widget.types';
 import RemoveIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import './WidgetContainer.scss';
+import { useRemoveWidget } from '../../recoil/customHooks/useWidgetHandler';
 
 interface WidgetContainerProps extends Widget { }
 
 export const WIDGET_DRAGGABLE_TITLE_CLASSNAME = "widget-draggable-title";
 
-const WidgetContainer = ({ content, id, title }: WidgetContainerProps) => {
+const WidgetContainer = ({ widgetId, graphId, widgetProps }: WidgetContainerProps) => {
+    const removeWidget = useRemoveWidget();
     return (
         <div
             className="widget-container"
-            key={id}
+            key={widgetId}
         >
             <div className='widget-top'>
                 <EditIcon className='edit-icon' />
                 <p className={WIDGET_DRAGGABLE_TITLE_CLASSNAME}>
-                    {title}
+                    {widgetId}
                 </p>
-                <RemoveIcon className='remove-icon' />
+                <RemoveIcon className='remove-icon' onClick={() => removeWidget(widgetId)} />
             </div>
-            {content}
+            {graphId}
         </div>
     );
 };

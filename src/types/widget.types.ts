@@ -1,5 +1,8 @@
 export interface Widget {
-    id: string;
-    content: string;
-    title: string;
+    widgetId: string;
+    dashboardId: string;
+    graphId: string;
+    widgetProps: any;
 }
+
+export type WidgetWithoutId = Omit<Widget, "widgetId">;
