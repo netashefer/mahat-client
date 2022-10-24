@@ -8,7 +8,7 @@ const graphsDefaultSelector = selector<Graph[]>({
     key: 'graphsDefaultSelector',
     get: async ({ get }) => {
         try {
-            return await graphCommunicator.getGraphsOfDashboard(get(dashboardIdAtom));
+            return await graphCommunicator.getDashboardGraphs(get(dashboardIdAtom));
         } catch {
             notifyError("We couldn't load your graphs");
             return [];

@@ -8,7 +8,6 @@ const LogoTitle = ({ size }: { size: 'sm' | 'lr'; }) => {
             <Logo className={`logo ${size}`} />
             <div className={`title ${size}`}> Graph.it</div>
         </div>
-
     );
 };
 

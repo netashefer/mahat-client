@@ -3,12 +3,10 @@ import { useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { dashabordAtom, dashboardIdAtom } from "../../recoil/dashboard/dashboard";
 import { ManagerPanelOptions } from "../../types/dashboard.types";
-import Catalog from "../Catalog/Catalog";
-import ManagerWrapper from "../Common/ManagerWrapper/ManagerWrapper";
 import withLoader from "../Common/withLoader/withLoader";
 import Dashboard from "../Dashboard/Dashboard";
-import DataSourceManager from "../DataManager/DataSourceManager";
 import DashbaordError from "../Errors/DashboardError/DashboardError";
+import ManagerDecider from "../ManagerDecider/ManagerDecider";
 import ShareLink from "../ShareLink/ShareLink";
 import DashboardActions from "./DashboardActions/DashboardActions";
 import './DashboardPage.scss';
@@ -24,23 +22,6 @@ const DashbaordPage = () => {
     }, []);
 
     const closeManagerPage = () => setOpenManager(ManagerPanelOptions.none);
-
-    const getManager = () => {
-        let Component;
-        if (openManagerPage === ManagerPanelOptions.none)
-            return null;
-        else if (openManagerPage === ManagerPanelOptions.dataSources) {
-            Component = <DataSourceManager
-                dashboardId={dashboard?.dashboardId}
-            />;
-        } else if (openManagerPage === ManagerPanelOptions.catalog) {
-            Component = <Catalog />;
-        }
-
-        return <ManagerWrapper closeManagerPage={closeManagerPage}>
-            {Component}
-        </ManagerWrapper>;
-    };
 
     return (
         <div className="dashboard-page">
@@ -60,7 +41,11 @@ const DashbaordPage = () => {
                         </div>
                         <div className="bottom">
                             <Dashboard />
-                            {getManager()}
+                            <ManagerDecider
+                                closeManagerPage={closeManagerPage}
+                                openManagerPage={openManagerPage}
+                                dashboardId={dashboard?.dashboardId}
+                            />
                         </div>
                     </>
                     : <DashbaordError />

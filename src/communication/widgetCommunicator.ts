@@ -4,8 +4,7 @@ import Communicator from "./Communicator";
 import requestProvider from "./requestProvider";
 
 class WidgetCommunicator extends Communicator {
-
-    getWidgetsOfDashboard(dashboardId: string) {
+    getDashboardWidgets(dashboardId: string) {
         try {
             return requestProvider.get<Widget[]>(this.getFullURL(`widgets/dashboard/${dashboardId}`));
         } catch (e) {

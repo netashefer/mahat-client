@@ -4,8 +4,7 @@ import Communicator from "./Communicator";
 import requestProvider from "./requestProvider";
 
 class GraphCommunicator extends Communicator {
-
-    getGraphsOfDashboard(dashboardId: string) {
+    getDashboardGraphs(dashboardId: string) {
         try {
             return requestProvider.get<Graph[]>(this.getFullURL(`graphs/dashboard/${dashboardId}`));
         } catch (e) {

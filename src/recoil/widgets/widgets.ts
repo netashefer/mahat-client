@@ -8,7 +8,7 @@ const widgetsDefaultSelector = selector<Widget[]>({
     key: 'widgetsDefaultSelector',
     get: async ({ get }) => {
         try {
-            return await widgetCommunicator.getWidgetsOfDashboard(get(dashboardIdAtom));
+            return await widgetCommunicator.getDashboardWidgets(get(dashboardIdAtom));
         } catch {
             notifyError("We couldn't load your widgets");
             return [];
