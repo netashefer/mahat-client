@@ -1,8 +1,8 @@
-import { Dashboard } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import withLoader from "../../components/Common/withLoader/withLoader";
+import Dashboard from "../../components/Dashboard/Dashboard";
 import DashbaordError from "../../components/Errors/DashboardError/DashboardError";
 import ManagerDecider from "../../components/ManagerDecider/ManagerDecider";
 import ShareLink from "../../components/ShareLink/ShareLink";
