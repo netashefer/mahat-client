@@ -1,11 +1,11 @@
 import { config } from "../config";
-import { Dashboard } from "../types/dashboard.types";
+import { DashboardType } from "../types/dashboard.types";
 import Communicator from "./Communicator";
 import requestProvider from "./requestProvider";
 
 class DashboardCommunicator extends Communicator {
 
-    async createNewDashboard(dashboard: Dashboard) {
+    async createNewDashboard(dashboard: DashboardType) {
         try {
             return await requestProvider.post<string>(this.getFullURL("dashboards/create"), { dashboard }, await this.getSecureHeaders());
         } catch (e) {
@@ -29,7 +29,7 @@ class DashboardCommunicator extends Communicator {
 
     async getMyDashboards() {
         try {
-            return await requestProvider.get<Dashboard[]>(this.getFullURL(`dashboards/${"neta"}`), await this.getSecureHeaders());
+            return await requestProvider.get<DashboardType[]>(this.getFullURL(`dashboards/${"neta"}`), await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
@@ -56,7 +56,7 @@ class DashboardCommunicator extends Communicator {
 
     async getDashboard(dashboardId: string) {
         try {
-            return await requestProvider.get<Dashboard>(this.getFullURL(`dashboards/dashboard/${dashboardId}`), await this.getSecureHeaders());
+            return await requestProvider.get<DashboardType>(this.getFullURL(`dashboards/dashboard/${dashboardId}`), await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;

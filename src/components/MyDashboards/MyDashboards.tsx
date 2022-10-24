@@ -1,25 +1,14 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import TextField from "@mui/material/TextField";
-import { ChangeEvent, useEffect, useState } from "react";
-import dashboardCommunicator from "../../communication/dashboardCommunicator";
 import SearchIcon from '@mui/icons-material/Search';
-import { Dashboard } from "../../types/dashboard.types";
+import TextField from "@mui/material/TextField";
+import { ChangeEvent, useState } from "react";
+import { useRecoilValue } from 'recoil';
+import { myDashabordsAtom } from "../../recoil/dashboard/myDashboards";
 import DashboardItem from './DashboardItem/DashboardItem';
 import './MyDashboards.scss';
 
 const MyDashboards = () => {
     const [searchedValue, setSearchedValue] = useState("");
-    const [myDashboards, setMyDashboards] = useState<Dashboard[]>([]); // need recoil
-	const {user} = useAuth0();
-
-	console.log({user})
-
-    useEffect(() => {
-        (async () => {
-            const dashboards = await dashboardCommunicator.getMyDashboards();
-            setMyDashboards(dashboards);
-        })();
-    }, []);
+    const myDashboards = useRecoilValue(myDashabordsAtom);
 
     const setSearched = (event: ChangeEvent<HTMLInputElement>) => {
         setSearchedValue(event.target.value);

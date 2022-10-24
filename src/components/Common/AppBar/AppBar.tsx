@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import "./AppBar.scss";
 
 export default function ButtonAppBar() {
-	const { loginWithRedirect, logout, isAuthenticated, getAccessTokenWithPopup } = useAuth0();
+	const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 	return (
 	  <Box sx={{ flexGrow: 1 }}>
 		<AppBar position="static" className='app-bar'>

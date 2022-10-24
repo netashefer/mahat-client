@@ -8,6 +8,7 @@ import { RecoilRoot } from 'recoil';
 import './App.scss';
 import ButtonAppBar from './components/Common/AppBar/AppBar';
 import ProtectedRoute from './components/Common/ProtectedRoute/ProtectedRoute';
+import withLoader from './components/Common/withLoader/withLoader';
 import theme from './themes/theme';
 import DashbaordPage from './views/DashboardPage/DashboardPage';
 import HomePage from './views/HomePage/HomePage';
@@ -41,4 +42,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default withLoader(App);
