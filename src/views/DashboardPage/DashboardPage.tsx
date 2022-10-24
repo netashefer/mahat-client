@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { dashabordAtom, dashabordIdAtom } from "../../recoil/dashboard/dashboard";
+import { dashboardIdAtom, dashboardAtom } from "../../recoil/dashboard/dashboard";
 import { ManagerPanelOptions } from "../../types/dashboard.types";
-import withLoader from "../Common/withLoader/withLoader";
-import Dashboard from "../Dashboard/Dashboard";
-import DataSourceManager from "../DataManager/DataSourceManager";
-import ShareLink from "../ShareLink/ShareLink";
+import Dashboard from "../../components/Dashboard/Dashboard";
+import DataSourceManager from "../../components/DataManager/DataSourceManager";
+import ShareLink from "../../components/ShareLink/ShareLink";
 import DashboardActions from "./DashboardActions/DashboardActions";
 import './DashboardPage.scss';
 
 const DashbaordPage = () => {
     const { dashboardId } = useParams(); // for link sharing 
-    const setDashboardId = useSetRecoilState(dashabordIdAtom);
-    const dashboard = useRecoilValue(dashabordAtom);
+    const setDashboardId = useSetRecoilState(dashboardIdAtom);
+    const dashboard = useRecoilValue(dashboardAtom);
     const [openManagerPage, setOpenManager] = useState<ManagerPanelOptions>(ManagerPanelOptions.none);
 
     useEffect(() => {
@@ -46,4 +45,4 @@ const DashbaordPage = () => {
     );
 };
 
-export default withLoader(DashbaordPage);
+export default DashbaordPage;

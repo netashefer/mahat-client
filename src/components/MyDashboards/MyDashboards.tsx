@@ -34,6 +34,7 @@ const MyDashboards = () => {
                     myDashboards
                         ?.filter(d => d.dashboardName?.includes(searchedValue))
                         .map(d => <DashboardItem
+						key={d.dashboardId}
                             dashboardId={d.dashboardId}
                             dashboardName={d.dashboardName}
                         />)

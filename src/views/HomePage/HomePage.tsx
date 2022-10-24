@@ -1,6 +1,6 @@
-import CreateNewDashboard from "../CreateNewDashboard/CreateNewDashboard";
-import LogoTitle from "../LogoTitle/LogoTitle";
-import MyDashboards from "../MyDashboards/MyDashboards";
+import CreateNewDashboard from "../../components/CreateNewDashboard/CreateNewDashboard";
+import LogoTitle from "../../components/LogoTitle/LogoTitle";
+import MyDashboards from "../../components/MyDashboards/MyDashboards";
 import './HomePage.scss';
 
 const HomePage = () => {

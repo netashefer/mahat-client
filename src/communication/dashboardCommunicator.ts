@@ -5,58 +5,58 @@ import requestProvider from "./requestProvider";
 
 class DashboardCommunicator extends Communicator {
 
-    createNewDashboard(dashboard: DashboardType) {
+    async createNewDashboard(dashboard: DashboardType) {
         try {
-            return requestProvider.post<string>(this.getFullURL("dashboards/create"), { dashboard });
+            return await requestProvider.post<string>(this.getFullURL("dashboards/create"), { dashboard }, await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
         }
     }
 
-    addDashboardPermissions(dashboardId: string) {
+    async addDashboardPermissions(dashboardId: string) {
         try {
             const dashboardPermissions = {
                 dashboardId,
                 username: "neta"
             };
-            return requestProvider.post(this.getFullURL("dashboards/addPermissions"), { dashboardPermissions });
+            return await requestProvider.post(this.getFullURL("dashboards/addPermissions"), { dashboardPermissions }, await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
         }
     }
 
-    getMyDashboards() {
+    async getMyDashboards() {
         try {
-            return requestProvider.get<DashboardType[]>(this.getFullURL(`dashboards/${"neta"}`));
+            return await requestProvider.get<DashboardType[]>(this.getFullURL(`dashboards/${"neta"}`), await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
         }
     }
 
-    deleteDashboard(dashboardId: string) {
+    async deleteDashboard(dashboardId: string) {
         try {
-            return requestProvider.delete(this.getFullURL(`dashboards/delete/${dashboardId}`));
+            return await requestProvider.delete(this.getFullURL(`dashboards/delete/${dashboardId}`), await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
         }
     }
 
-    getDashboardUserCount(dashboardId: string) {
+    async getDashboardUserCount(dashboardId: string) {
         try {
-            return requestProvider.get<number>(this.getFullURL(`dashboards/countOfUsers/${dashboardId}`));
+            return await requestProvider.get<number>(this.getFullURL(`dashboards/countOfUsers/${dashboardId}`), await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
         }
     }
 
-    getDashboard(dashboardId: string) {
+    async getDashboard(dashboardId: string) {
         try {
-            return requestProvider.get<DashboardType>(this.getFullURL(`dashboards/dashboard/${dashboardId}`));
+            return await requestProvider.get<DashboardType>(this.getFullURL(`dashboards/dashboard/${dashboardId}`), await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
@@ -64,4 +64,4 @@ class DashboardCommunicator extends Communicator {
     }
 }
 
-export default new DashboardCommunicator(config.graphServerUrl);
+export default new DashboardCommunicator(config.graphServer.url, config.graphServer.auth0);

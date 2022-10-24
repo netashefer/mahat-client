@@ -7,7 +7,7 @@ class ExcelCommunicator extends Communicator {
 
     async addExcelDataSource(excelDataSource: DataSourceWithoutId) {
         try {
-            return await requestProvider.post<string>(this.getFullURL("excel/addDataSource"), excelDataSource);
+            return await requestProvider.post<string>(this.getFullURL("excel/addDataSource"), excelDataSource, await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
@@ -16,7 +16,7 @@ class ExcelCommunicator extends Communicator {
 
     async getDashboardDataSources(dashboardId: string) {
         try {
-            return await requestProvider.get<DashboardDataSources>(this.getFullURL(`excel/dashboard/${dashboardId}`));
+            return await requestProvider.get<DashboardDataSources>(this.getFullURL(`excel/dashboard/${dashboardId}`), await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
@@ -25,7 +25,7 @@ class ExcelCommunicator extends Communicator {
 
     async getschema(dataSourceId: DataSourceId) {
         try {
-            return await requestProvider.get<string[]>(this.getFullURL(`excel/schema/${dataSourceId}`));
+            return await requestProvider.get<string[]>(this.getFullURL(`excel/schema/${dataSourceId}`), await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
@@ -34,7 +34,7 @@ class ExcelCommunicator extends Communicator {
 
     async deleteDateSource(dataSourceId: DataSourceId) {
         try {
-            return await requestProvider.delete(this.getFullURL(`excel/${dataSourceId}`));
+            return await requestProvider.delete(this.getFullURL(`excel/${dataSourceId}`), await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
@@ -43,7 +43,7 @@ class ExcelCommunicator extends Communicator {
 
     async replaceExcelDataSource(excelDataSource: DataSource) {
         try {
-            return await requestProvider.put<string>(this.getFullURL("excel/replace"), excelDataSource);
+            return await requestProvider.put<string>(this.getFullURL("excel/replace"), excelDataSource, await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
@@ -51,4 +51,4 @@ class ExcelCommunicator extends Communicator {
     }
 }
 
-export default new ExcelCommunicator(config.processingServiceUrl);
+export default new ExcelCommunicator(config.processingService.url, config.processingService.auth0);

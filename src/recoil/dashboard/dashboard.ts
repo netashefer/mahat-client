@@ -2,8 +2,8 @@ import { atom, selector } from 'recoil';
 import dashboardCommunicator from '../../communication/dashboardCommunicator';
 import { DashboardType } from '../../types/dashboard.types';
 
-export const dashabordIdAtom = atom({
-    key: 'dashabordId',
+export const dashboardIdAtom = atom({
+    key: 'dashboardId',
     default: null,
     effects: [
         ({ onSet }) => {
@@ -17,11 +17,11 @@ export const dashabordIdAtom = atom({
 const dashboardDefaultSelector = selector<DashboardType>({
     key: 'dashboardDefaultSelector',
     get: async ({ get }) => {
-        return await dashboardCommunicator.getDashboard(get(dashabordIdAtom));
+        return await dashboardCommunicator.getDashboard(get(dashboardIdAtom));
     }
 });
 
-export const dashabordAtom = atom({
-    key: 'dashabordAtom',
+export const dashboardAtom = atom({
+    key: 'dashboardAtom',
     default: dashboardDefaultSelector,
 });
