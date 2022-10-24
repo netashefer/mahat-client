@@ -4,18 +4,18 @@ import Communicator from "./Communicator";
 import requestProvider from "./requestProvider";
 
 class GraphCommunicator extends Communicator {
-    getDashboardGraphs(dashboardId: string) {
+    async getDashboardGraphs(dashboardId: string) {
         try {
-            return requestProvider.get<Graph[]>(this.getFullURL(`graphs/dashboard/${dashboardId}`));
+            return requestProvider.get<Graph[]>(this.getFullURL(`graphs/dashboard/${dashboardId}`), await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
         }
     }
 
-    deleteGraph(graphId: string) {
+    async deleteGraph(graphId: string) {
         try {
-            return requestProvider.delete(this.getFullURL(`graphs/${graphId}`));
+            return requestProvider.delete(this.getFullURL(`graphs/${graphId}`), await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;

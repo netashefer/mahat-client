@@ -4,27 +4,27 @@ import Communicator from "./Communicator";
 import requestProvider from "./requestProvider";
 
 class WidgetCommunicator extends Communicator {
-    getDashboardWidgets(dashboardId: string) {
+    async getDashboardWidgets(dashboardId: string) {
         try {
-            return requestProvider.get<Widget[]>(this.getFullURL(`widgets/dashboard/${dashboardId}`));
+            return requestProvider.get<Widget[]>(this.getFullURL(`widgets/dashboard/${dashboardId}`), await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
         }
     }
 
-    addWidgetToDashboard(widget: WidgetWithoutId) {
+    async addWidgetToDashboard(widget: WidgetWithoutId) {
         try {
-            return requestProvider.post<string>(this.getFullURL(`widgets/add`), { widget });
+            return requestProvider.post<string>(this.getFullURL(`widgets/add`), { widget }, await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
         }
     }
 
-    removeWidgetFromDashboard(widgetId: string) {
+    async removeWidgetFromDashboard(widgetId: string) {
         try {
-            return requestProvider.delete(this.getFullURL(`widgets/${widgetId}`));
+            return requestProvider.delete(this.getFullURL(`widgets/${widgetId}`), await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
