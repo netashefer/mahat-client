@@ -1,12 +1,12 @@
-import { GraphType, GRAPH_DRAG_AND_DROP_KEY } from '../../../types/graph.types';
-import { GraphIcon } from '../../Common/GraphIcon/GraphIcon';
 import DeleteIcon from '@mui/icons-material/Delete';
-import './GraphItem.scss';
 import { useState } from 'react';
 import { useRecoilCallback } from 'recoil';
 import graphCommunicator from '../../../communication/graphCommunicator';
-import { graphsAtom } from '../../../recoil/graphs/graphs';
 import { useAddWidget } from '../../../recoil/customHooks/useWidgetHandler';
+import { graphsAtom } from '../../../recoil/graphs/graphs';
+import { GraphType, GRAPH_DRAG_AND_DROP_KEY } from '../../../types/graph.types';
+import { GraphIcon } from '../../Common/GraphIcon/GraphIcon';
+import './GraphItem.scss';
 
 interface GraphItemProps {
     graphId: string;
@@ -27,7 +27,7 @@ const GraphItem = ({ graphId, title, type }: GraphItemProps) => {
         set(graphsAtom, prev => prev?.filter(g => g.graphId !== graphId));
     }, [graphId]);
 
-    const Icon = GraphIcon[type];
+    const GraphTypeIcon = GraphIcon[type];
     return (
         <div
             className='graph-item'
@@ -37,7 +37,7 @@ const GraphItem = ({ graphId, title, type }: GraphItemProps) => {
             onMouseLeave={() => setIsHovered(false)}
             onDoubleClick={() => addWidget(graphId)}
         >
-            <Icon className="graph-icon" />
+            <GraphTypeIcon className="graph-icon" />
             <div className='title'>{title}</div>
             {isHovered && <DeleteIcon className='delete-icon' onClick={deleteGraph} />}
         </div>
