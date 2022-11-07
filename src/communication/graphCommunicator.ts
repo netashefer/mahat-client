@@ -6,7 +6,7 @@ import requestProvider from "./requestProvider";
 class GraphCommunicator extends Communicator {
     async getDashboardGraphs(dashboardId: string) {
         try {
-            return requestProvider.get<Graph[]>(this.getFullURL(`graphs/dashboard/${dashboardId}`), await this.getSecureHeaders());
+            return await requestProvider.get<Graph[]>(this.getFullURL(`graphs/dashboard/${dashboardId}`), await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
@@ -15,7 +15,7 @@ class GraphCommunicator extends Communicator {
 
     async deleteGraph(graphId: string) {
         try {
-            return requestProvider.delete(this.getFullURL(`graphs/${graphId}`), await this.getSecureHeaders());
+            return await requestProvider.delete(this.getFullURL(`graphs/${graphId}`), await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
@@ -23,4 +23,4 @@ class GraphCommunicator extends Communicator {
     }
 }
 
-export default new GraphCommunicator(config.graphServer.url, config.processingService.auth0);
+export default new GraphCommunicator(config.graphServer.url, config.graphServer.auth0);

@@ -6,7 +6,7 @@ import requestProvider from "./requestProvider";
 class WidgetCommunicator extends Communicator {
     async getDashboardWidgets(dashboardId: string) {
         try {
-            return requestProvider.get<Widget[]>(this.getFullURL(`widgets/dashboard/${dashboardId}`), await this.getSecureHeaders());
+            return await requestProvider.get<Widget[]>(this.getFullURL(`widgets/dashboard/${dashboardId}`), await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
@@ -15,7 +15,7 @@ class WidgetCommunicator extends Communicator {
 
     async addWidgetToDashboard(widget: WidgetWithoutId) {
         try {
-            return requestProvider.post<string>(this.getFullURL(`widgets/add`), { widget }, await this.getSecureHeaders());
+            return await requestProvider.post<string>(this.getFullURL(`widgets/add`), { widget }, await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
@@ -24,7 +24,7 @@ class WidgetCommunicator extends Communicator {
 
     async removeWidgetFromDashboard(widgetId: string) {
         try {
-            return requestProvider.delete(this.getFullURL(`widgets/${widgetId}`), await this.getSecureHeaders());
+            return await requestProvider.delete(this.getFullURL(`widgets/${widgetId}`), await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
@@ -32,4 +32,4 @@ class WidgetCommunicator extends Communicator {
     }
 }
 
-export default new WidgetCommunicator(config.graphServer.url, config.processingService.auth0);
+export default new WidgetCommunicator(config.graphServer.url, config.graphServer.auth0);
