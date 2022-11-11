@@ -13,7 +13,7 @@ export const WIDGET_DRAGGABLE_TITLE_CLASSNAME = "widget-draggable-title";
 
 const WidgetContainer = ({ widgetId, graphId, widgetProps }: WidgetContainerProps) => {
     const removeWidget = useRemoveWidget();
-    const bla = useRef();
+    const containerRef = useRef();
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
 
@@ -23,14 +23,14 @@ const WidgetContainer = ({ widgetId, graphId, widgetProps }: WidgetContainerProp
             setHeight(event[0].contentBoxSize[0].blockSize);
         });
 
-        resizeObserver.observe(bla.current);
+        resizeObserver.observe(containerRef.current);
     });
 
     return (
         <div
             className="widget-container"
             key={widgetId}
-            ref={bla}
+            ref={containerRef}
         >
             <div className='widget-top'>
                 <EditIcon className='edit-icon' />

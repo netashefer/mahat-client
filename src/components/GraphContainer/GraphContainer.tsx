@@ -21,10 +21,10 @@ const GraphContainer = ({ spec, graphId, width, height }: GraphContainerProps) =
     const ref = useRef<HighchartsReact.RefObject>();
 
     useEffect(() => {
-        request();// eslint-disable-next-line
+        askAggregatedData();// eslint-disable-next-line
     }, [graph?.dataSourceId]);
 
-    const request = async () => {
+    const askAggregatedData = async () => {
         if (graph?.dataSourceId && graph?.graphConfig) {
             const aggregatedData = await aggregatorCommunicator.getAggregatedData(graph?.graphConfig, graph?.dataSourceId);
             setData(aggregatedData);
