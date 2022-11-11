@@ -3,8 +3,8 @@ import Highcharts from 'highcharts/highstock';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import aggregatorCommunicator from '../../communication/aggregatorCommunicator';
+import { GraphOptionsMap } from '../../helpers/graph.option.helper';
 import { graphsAtom } from '../../recoil/graphs/graphs';
-import { Graph } from '../../types/graph.types';
 import './GraphContainer.scss';
 
 interface GraphContainerProps {
@@ -24,14 +24,9 @@ const GraphContainer = ({ spec, graphId, width, height }: GraphContainerProps) =
         request();// eslint-disable-next-line
     }, [graph?.dataSourceId]);
 
-    const graphConfig: Graph["graphConfig"] = {
-        x_field: "name",
-        y_field: { aggragation: "sum" }
-    };
-
     const request = async () => {
-        if (graph?.dataSourceId) {
-            const aggregatedData = await aggregatorCommunicator.getAggregatedData(graphConfig, graph?.dataSourceId);
+        if (graph?.dataSourceId && graph?.graphConfig) {
+            const aggregatedData = await aggregatorCommunicator.getAggregatedData(graph?.graphConfig, graph?.dataSourceId);
             setData(aggregatedData);
         }
     };
@@ -41,36 +36,15 @@ const GraphContainer = ({ spec, graphId, width, height }: GraphContainerProps) =
     }, [width, height]);
 
     const options = {
-        chart: {
-            type: 'pie'
-        },
         title: {
             text: graph?.title
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>count: {point.y}, percentage: {point.percentage:.1f}%</b>'
-        },
-        accessibility: {
-            point: {
-                valueSuffix: '%'
-            }
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.name}: {point.y}'
-                },
-                showInLegend: true
-            }
         },
         series: [{
             name: 'item',
             colorByPoint: true,
             data: aggregatedData
-        }]
+        }],
+        ...GraphOptionsMap[graph?.template?.type],
     };
 
     return (

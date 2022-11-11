@@ -1,6 +1,6 @@
 import { DataSourceId } from "./dataSource.types";
 
-export type GraphType = string; // for now
+export type GraphType = "pie" | "line" | "column";
 
 export type Graph = {
     graphId: string;
