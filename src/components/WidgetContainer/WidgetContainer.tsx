@@ -2,7 +2,9 @@
 import RemoveIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useRef, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { useRemoveWidget } from '../../recoil/customHooks/useWidgetHandler';
+import { graphItemSelector } from '../../recoil/graphs/graphs';
 import { Widget } from '../../types/widget.types';
 import GraphContainer from '../GraphContainer/GraphContainer';
 import './WidgetContainer.scss';
@@ -16,6 +18,7 @@ const WidgetContainer = ({ widgetId, graphId, widgetProps }: WidgetContainerProp
     const containerRef = useRef();
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
+    const graph = useRecoilValue(graphItemSelector(graphId));
 
     useEffect(() => {
         const resizeObserver = new ResizeObserver((event) => {
@@ -35,11 +38,18 @@ const WidgetContainer = ({ widgetId, graphId, widgetProps }: WidgetContainerProp
             <div className='widget-top'>
                 <EditIcon className='edit-icon' />
                 <p className={WIDGET_DRAGGABLE_TITLE_CLASSNAME}>
-                    {widgetId}
+                    {graph?.title || "no title"}
                 </p>
                 <RemoveIcon className='remove-icon' onClick={() => removeWidget(widgetId)} />
             </div>
-            <GraphContainer width={width} data={[]} spec={{}} graphId={graphId} height={height} />
+            {
+                graph &&
+                <GraphContainer
+                    graph={graph}
+                    width={width}
+                    height={height}
+                />
+            }
         </div>
     );
 };

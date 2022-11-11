@@ -1,6 +1,6 @@
 import { GraphType } from "../types/graph.types";
 
-export const GraphOptionsMap: Record<GraphType, object> = {
+export const GraphOptionsMap: Record<GraphType, Highcharts.Options> = {
     pie: {
         chart: {
             type: 'pie'

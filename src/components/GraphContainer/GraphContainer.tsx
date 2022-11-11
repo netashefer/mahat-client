@@ -1,22 +1,18 @@
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts/highstock';
 import { useEffect, useRef, useState } from 'react';
-import { useRecoilValue } from 'recoil';
 import aggregatorCommunicator from '../../communication/aggregatorCommunicator';
 import { GraphOptionsMap } from '../../helpers/graph.option.helper';
-import { graphsAtom } from '../../recoil/graphs/graphs';
+import { Graph } from '../../types/graph.types';
 import './GraphContainer.scss';
 
 interface GraphContainerProps {
-    data: any[];
-    spec: any;
-    graphId: string;
+    graph: Graph;
     width: number;
     height: number;
 }
 
-const GraphContainer = ({ spec, graphId, width, height }: GraphContainerProps) => {
-    const graph = useRecoilValue(graphsAtom)?.find(g => g.graphId === graphId);
+const GraphContainer = ({ graph, width, height }: GraphContainerProps) => {
     const [aggregatedData, setData] = useState([]);
     const ref = useRef<HighchartsReact.RefObject>();
 
@@ -35,16 +31,23 @@ const GraphContainer = ({ spec, graphId, width, height }: GraphContainerProps) =
         ref?.current.chart.reflow();
     }, [width, height]);
 
-    const options = {
+    const options: Partial<Highcharts.Options> = {
+        ...GraphOptionsMap[graph?.template?.type],
+        chart: {
+            backgroundColor: "#2D325A",
+            ...GraphOptionsMap[graph?.template?.type]?.chart
+        },
         title: {
-            text: graph?.title
+            text: ""
         },
         series: [{
             name: 'item',
-            colorByPoint: true,
-            data: aggregatedData
+            data: aggregatedData,
+            type: graph?.template?.type
         }],
-        ...GraphOptionsMap[graph?.template?.type],
+        legend: {
+            itemStyle: { color: "white" }
+        }
     };
 
     return (
