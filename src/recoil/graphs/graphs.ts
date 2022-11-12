@@ -1,4 +1,4 @@
-import { atom, selector } from "recoil";
+import { atom, selector, selectorFamily } from "recoil";
 import graphCommunicator from "../../communication/graphCommunicator";
 import { notifyError } from "../../helpers/toaster";
 import { Graph } from "../../types/graph.types";
@@ -19,4 +19,11 @@ const graphsDefaultSelector = selector<Graph[]>({
 export const graphsAtom = atom<Graph[]>({
     key: 'graphsAtomKey',
     default: graphsDefaultSelector,
+});
+
+export const graphSelector = selectorFamily<Graph, string>({
+    key: "graphSelector",
+    get: (graphId) => ({ get }) => {
+        return get(graphsAtom)?.find(g => g.graphId === graphId);
+    },
 });

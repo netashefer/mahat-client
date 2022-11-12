@@ -9,7 +9,7 @@ export const useAddWidget = () => {
         const widget: WidgetWithoutId = {
             dashboardId: snapshot.getLoadable(dashboardIdAtom).getValue(),
             graphId,
-            widgetProps: {}
+            widgetProps: {},
         };
 
         const widgetId = await widgetCommunicator.addWidgetToDashboard(widget);
