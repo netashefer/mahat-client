@@ -25,7 +25,6 @@ export const GraphOptionsMap: Record<GraphType, Highcharts.Options> = {
             }
         },
     },
-
     column: {},
     line: {}
 }; 

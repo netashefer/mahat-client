@@ -3,8 +3,8 @@ import Highcharts from 'highcharts/highstock';
 import { useEffect, useRef, useState } from 'react';
 import aggregatorCommunicator from '../../communication/aggregatorCommunicator';
 import { GraphOptionsMap } from '../../helpers/graph.option.helper';
+import { BACKGROUND_COLOR } from '../../styles/styles.constants';
 import { Graph } from '../../types/graph.types';
-import './GraphContainer.scss';
 
 interface GraphContainerProps {
     graph: Graph;
@@ -17,10 +17,10 @@ const GraphContainer = ({ graph, width, height }: GraphContainerProps) => {
     const ref = useRef<HighchartsReact.RefObject>();
 
     useEffect(() => {
-        askAggregatedData();// eslint-disable-next-line
+        fetchAggregatedData();// eslint-disable-next-line
     }, [graph?.dataSourceId]);
 
-    const askAggregatedData = async () => {
+    const fetchAggregatedData = async () => {
         if (graph?.dataSourceId && graph?.graphConfig) {
             const aggregatedData = await aggregatorCommunicator.getAggregatedData(graph?.graphConfig, graph?.dataSourceId);
             setData(aggregatedData);
@@ -34,7 +34,7 @@ const GraphContainer = ({ graph, width, height }: GraphContainerProps) => {
     const options: Partial<Highcharts.Options> = {
         ...GraphOptionsMap[graph?.template?.type],
         chart: {
-            backgroundColor: "#2D325A",
+            backgroundColor: BACKGROUND_COLOR,
             ...GraphOptionsMap[graph?.template?.type]?.chart
         },
         title: {

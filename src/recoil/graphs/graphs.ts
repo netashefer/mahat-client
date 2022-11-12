@@ -21,8 +21,8 @@ export const graphsAtom = atom<Graph[]>({
     default: graphsDefaultSelector,
 });
 
-export const graphItemSelector = selectorFamily<Graph, string>({
-    key: "graphItemSelector",
+export const graphSelector = selectorFamily<Graph, string>({
+    key: "graphSelector",
     get: (graphId) => ({ get }) => {
         return get(graphsAtom)?.find(g => g.graphId === graphId);
     },
