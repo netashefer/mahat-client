@@ -38,8 +38,10 @@ const DashboardActions = React.memo(({ dashboardId, onAddDataSource, onAddGrpah 
             <Tooltip title={tooltipComponent} placement="bottom" >
                 <InfoIcon className='info-icon' />
             </Tooltip>
-            <ActionButton text="Add graph" onClick={onAddGrpah} borderColor="green" />
-            <ActionButton text="Add data source" onClick={onAddDataSource} borderColor="blue" />
+			<div className='action-buttons-container'>
+            	<ActionButton text="Add graph" onClick={onAddGrpah} borderColor="green" />
+            	<ActionButton text="Add data source" onClick={onAddDataSource} borderColor="blue" />
+			</div>
         </div>
     );
 });
