@@ -33,7 +33,7 @@ const CreateNewDashboard = () => {
             <TextField
                 className='name-text-field'
                 id="outlined-basic"
-                label="give it a new Name!"
+                label="Give it a new name!"
                 variant="outlined"
                 onChange={(e) => setNewName(e.target.value)}
                 value={newName}
