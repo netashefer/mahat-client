@@ -21,7 +21,7 @@ const Dropdown = ({label, items, value, onChange}: DropdownProps) => {
 	
 	return(
 		<FormControl variant="standard" className='customized-dropdown'>
-        	<InputLabel id={label}>
+        	<InputLabel id={label} className="input-label">
 				{label}
 			</InputLabel>
         	<Select
@@ -31,6 +31,7 @@ const Dropdown = ({label, items, value, onChange}: DropdownProps) => {
           		label={label}>
 				{items.map(item => 
 					<MenuItem 
+					className='menu-item'
 					value={item} 
 					key={item}>
 						{capitalizeFirstLetter(item)}
