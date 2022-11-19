@@ -5,11 +5,10 @@ import DataSourceManager from '../DataManager/DataSourceManager';
 
 interface ManagerDeciderProps {
     openManagerPage: ManagerPanelOptions;
-    closeManagerPage: () => void;
     dashboardId: string;
 }
 
-const ManagerDecider = ({ openManagerPage, closeManagerPage, dashboardId }: ManagerDeciderProps) => {
+const ManagerDecider = ({ openManagerPage, dashboardId }: ManagerDeciderProps) => {
 
     const getManager = () => {
         switch (openManagerPage) {
@@ -26,7 +25,6 @@ const ManagerDecider = ({ openManagerPage, closeManagerPage, dashboardId }: Mana
 
     return (
         <ManagerWrapper
-            closeManagerPage={closeManagerPage}
         >
             {getManager()}
         </ManagerWrapper>

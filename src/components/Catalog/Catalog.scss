@@ -1,25 +1,19 @@
 .catalog {
     color: white;
+	display: block;
 
     .new-graph-section {
         font-size: 16px;
         height: 2em;
         display: flex;
-        justify-content: center;
         align-items: center;
         padding: 0 0 1em 0;
         border-bottom: 2px solid #2DEDBF;
-		background-color: transparent;
-		color: white;
 
-		.new-graph-button {
-			height: inherit;
-			
-			.add-icon {
-				cursor: pointer;
-				width: 2em;
-				margin-right: 0.3em;
-			}
+		.add-icon {
+			cursor: pointer;
+			width: 2em;
+			margin-right: 0.3em;
 		}
     }
 }

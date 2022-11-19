@@ -1,19 +1,16 @@
-import { ReactComponent as AddIcon } from '../../icons/add.svg';
-import ExistingGraphs from './ExistingGraphs/ExistingGraphs';
-import './Catalog.scss';
 import { useState } from 'react';
+import { ReactComponent as AddIcon } from '../../icons/add.svg';
 import GraphWorkshop from '../GraphWorkshop/GraphWorkshop';
-import { Button } from '@mui/material';
+import './Catalog.scss';
+import ExistingGraphs from './ExistingGraphs/ExistingGraphs';
 
 const Catalog = () => {
 	const [shouldOpenGraphWorkshop, setShouldOpenGraphWorkshop] = useState(false);
     return (
         <div className='catalog'>
-            <div className='new-graph-section' >
-				<Button className='new-graph-button'>
-				<AddIcon className='add-icon' onClick={() => setShouldOpenGraphWorkshop(true)}/> 
-					Create New Graph
-				</Button>
+            <div className='new-graph-section' onClick={() => setShouldOpenGraphWorkshop(true)}>
+				<AddIcon className='add-icon' /> 
+				Create New Graph
             </div>
             <ExistingGraphs />
 			<GraphWorkshop isOpen={shouldOpenGraphWorkshop}/>
