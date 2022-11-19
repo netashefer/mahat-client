@@ -17,11 +17,17 @@ const DashbaordPage = () => {
     const dashboard = useRecoilValue(dashboardAtom);
     const [openManagerPage, setOpenManager] = useState<ManagerPanelOptions>(ManagerPanelOptions.none);
 
+	const openAndCloseManagerPage = (managerPanelOption: ManagerPanelOptions) => {
+		if(openManagerPage !== ManagerPanelOptions.none){
+			setOpenManager(ManagerPanelOptions.none)
+		} else {
+			setOpenManager(managerPanelOption);
+		}
+	}
+
     useEffect(() => {
         setDashboardId(dashboardId); // eslint-disable-next-line
     }, []);
-
-    const closeManagerPage = () => setOpenManager(ManagerPanelOptions.none);
 
     return (
         <div className="dashboard-page">
@@ -35,14 +41,13 @@ const DashbaordPage = () => {
                             </div>
                             <DashboardActions
                                 dashboardId={dashboard?.dashboardId}
-                                onAddDataSource={() => setOpenManager(ManagerPanelOptions.dataSources)}
-                                onAddGrpah={() => setOpenManager(ManagerPanelOptions.catalog)}
+                                onAddDataSource={() => openAndCloseManagerPage(ManagerPanelOptions.dataSources)}
+                                onAddGrpah={() => openAndCloseManagerPage(ManagerPanelOptions.catalog)}
                             />
                         </div>
                         <div className="bottom">
                             <Dashboard />
                             <ManagerDecider
-                                closeManagerPage={closeManagerPage}
                                 openManagerPage={openManagerPage}
                                 dashboardId={dashboard?.dashboardId}
                             />
