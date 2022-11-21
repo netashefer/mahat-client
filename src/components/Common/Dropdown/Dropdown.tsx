@@ -1,45 +1,46 @@
 import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from "@mui/material";
 import { SetStateAction, Dispatch } from "react";
+import { FieldConfig } from "../../GraphWorkshop/ParametersPanel/chartParametersMapping";
 import './Dropdown.scss';
 
 type DropdownProps = {
-	value: string;
-	onChange: Dispatch<SetStateAction<any>>; 
+	value: FieldConfig;
+	onChange: Dispatch<SetStateAction<any>>;
 	label: string;
-	items: string[];
-}
+	items: FieldConfig[];
+};
 
-const Dropdown = ({label, items, value, onChange}: DropdownProps) => {
-
-	const capitalizeFirstLetter = (string: string) => { //move to helpers
-		return string.charAt(0).toUpperCase() + string.slice(1);
-	};
-
+const Dropdown = ({ label, items, value, onChange }: DropdownProps) => {
 	const handleChange = (event: SelectChangeEvent) => {
-		onChange(event.target.value);
+		const item = items.find(v => v.value === event.target.value);
+		console.log(item, items);
+
+		onChange(item);
 	};
-	
-	return(
+
+	return (
 		<FormControl variant="standard" className='customized-dropdown'>
-        	<InputLabel id={label} className="input-label">
+			<InputLabel id={label} className="input-label">
 				{label}
 			</InputLabel>
-        	<Select
+			<Select
 				labelId={label}
-          		value={value}
-          		onChange={handleChange}
-          		label={label}>
-				{items.map(item => 
-					<MenuItem 
-					className='menu-item'
-					value={item} 
-					key={item}>
-						{capitalizeFirstLetter(item)}
+				value={value?.value}
+				onChange={handleChange}
+				label={label}
+			>
+				{items?.map(item =>
+					<MenuItem
+						className='menu-item'
+						value={item?.value}
+						key={item?.displayName}
+						onChange={() => console.log(item)}>
+						{item?.displayName}
 					</MenuItem>
 				)}
-        	</Select>
-      </FormControl>
-	)
-}
+			</Select>
+		</FormControl>
+	);
+};
 
 export default Dropdown;

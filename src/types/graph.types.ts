@@ -11,13 +11,15 @@ export type Graph = {
 };
 
 export type GraphWorkshopState = {
-	isEditMode: boolean,
-	creationUser: string,
-}
+    isEditMode: boolean,
+    creationUser: string,
+};
+
+export type Aggragation = 'uniqueValues' | 'valuesCount';
 
 export type GraphConfig = {
     x_field: string,
-    y_field: { aggragation?: "sum" | "none"; field?: string; };
+    y_field: { aggragation?: Aggragation; field?: string; };
 };
 
 export const GRAPH_DRAG_AND_DROP_KEY = "graph-dnd";
