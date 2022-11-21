@@ -27,15 +27,13 @@ const GraphContainer = ({ graph, width, height }: GraphContainerProps) => {
         }
     };
 
-    useEffect(() => {
-        ref?.current.chart.reflow();
-    }, [width, height]);
-
     const options: Partial<Highcharts.Options> = {
         ...GraphOptionsMap[graph?.template?.type],
         chart: {
             backgroundColor: BACKGROUND_COLOR,
-            ...GraphOptionsMap[graph?.template?.type]?.chart
+            ...GraphOptionsMap[graph?.template?.type]?.chart,
+            width,
+            height: height - 56
         },
         title: {
             text: ""
