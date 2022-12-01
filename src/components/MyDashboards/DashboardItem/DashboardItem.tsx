@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from "react-router-dom";
 import { useRecoilCallback, useSetRecoilState } from 'recoil';
@@ -15,12 +16,13 @@ type DashboardItemProps = {
 const DashboardItem = ({ dashboardName, dashboardId }: DashboardItemProps) => {
     const navigate = useNavigate();
     const setDashboardId = useSetRecoilState(dashboardIdAtom);
+    const { user } = useAuth0();
 
     const deleteDashboard = useRecoilCallback(({ set }) => async (event: React.MouseEvent<SVGSVGElement>) => {
         event.stopPropagation();
         try {
             await dashboardCommunicator.deleteDashboard(dashboardId);
-            set(myDashabordsAtom, prev => prev?.filter(d => d.dashboardId !== dashboardId) || []);
+            set(myDashabordsAtom(user.nickname), prev => prev?.filter(d => d.dashboardId !== dashboardId) || []);
         } catch {
             notifyError("We couldn't delete this dashboard");
         }

@@ -14,11 +14,11 @@ class DashboardCommunicator extends Communicator {
         }
     }
 
-    async addDashboardPermissions(dashboardId: string) {
+    async addDashboardPermissions(dashboardId: string, username: string) {
         try {
             const dashboardPermissions = {
                 dashboardId,
-                username: "neta"
+                username
             };
             return await requestProvider.post(this.getFullURL("dashboards/addPermissions"), { dashboardPermissions }, await this.getSecureHeaders());
         } catch (e) {
@@ -27,9 +27,9 @@ class DashboardCommunicator extends Communicator {
         }
     }
 
-    async getMyDashboards() {
+    async getMyDashboards(username: string) {
         try {
-            return await requestProvider.get<DashboardType[]>(this.getFullURL(`dashboards/${"neta"}`), await this.getSecureHeaders());
+            return await requestProvider.get<DashboardType[]>(this.getFullURL(`dashboards/${username}`), await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
@@ -57,6 +57,19 @@ class DashboardCommunicator extends Communicator {
     async getDashboard(dashboardId: string) {
         try {
             return await requestProvider.get<DashboardType>(this.getFullURL(`dashboards/dashboard/${dashboardId}`), await this.getSecureHeaders());
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
+
+    async addWatchedDashboardPermissions(dashboardId: string, username: string) {
+        try {
+            const dashboardPermissions = {
+                dashboardId,
+                username
+            };
+            return await requestProvider.post(this.getFullURL("dashboards/watch"), { dashboardPermissions }, await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;

@@ -1,6 +1,8 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import dashboardCommunicator from "../../communication/dashboardCommunicator";
 import withLoader from "../../components/Common/withLoader/withLoader";
 import Dashboard from "../../components/Dashboard/Dashboard";
 import DashbaordError from "../../components/Errors/DashboardError/DashboardError";
@@ -16,9 +18,11 @@ const DashbaordPage = () => {
     const setDashboardId = useSetRecoilState(dashboardIdAtom);
     const dashboard = useRecoilValue(dashboardAtom);
     const [openManagerPage, setOpenManager] = useState<ManagerPanelOptions>(ManagerPanelOptions.none);
+    const { user } = useAuth0();
 
     useEffect(() => {
-        setDashboardId(dashboardId); // eslint-disable-next-line
+        setDashboardId(dashboardId);
+        dashboardCommunicator.addWatchedDashboardPermissions(dashboardId, user.nickname); // eslint-disable-next-line
     }, []);
 
     const closeManagerPage = () => setOpenManager(ManagerPanelOptions.none);
