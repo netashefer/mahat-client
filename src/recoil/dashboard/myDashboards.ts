@@ -7,7 +7,7 @@ const myDashboardsDefaultSelector = selectorFamily<DashboardType[], string>({
     key: 'myDashboardsDefaultSelector',
     get: (username) => async () => {
         try {
-            return await dashboardCommunicator.getMyDashboards(username);
+            return await dashboardCommunicator.getDashboardsByUsername(username);
         } catch {
             notifyError("We couldn't load your dashboards");
             return [];

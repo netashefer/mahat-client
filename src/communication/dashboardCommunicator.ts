@@ -27,7 +27,7 @@ class DashboardCommunicator extends Communicator {
         }
     }
 
-    async getMyDashboards(username: string) {
+    async getDashboardsByUsername(username: string) {
         try {
             return await requestProvider.get<DashboardType[]>(this.getFullURL(`dashboards/${username}`), await this.getSecureHeaders());
         } catch (e) {
@@ -69,7 +69,7 @@ class DashboardCommunicator extends Communicator {
                 dashboardId,
                 username
             };
-            return await requestProvider.post(this.getFullURL("dashboards/watch"), { dashboardPermissions }, await this.getSecureHeaders());
+            return await requestProvider.post(this.getFullURL("dashboards/watchedPermission"), { dashboardPermissions }, await this.getSecureHeaders());
         } catch (e) {
             console.error(e);
             throw e;
