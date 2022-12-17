@@ -54,9 +54,9 @@ const ParametersPanel = () => {
 		};
 
 		try{
-			const savedGraph = await graphCommunicator.createGraph(graphToSave);
-			addGraphToExistingGraphs(savedGraph);
-			addGraphToDashboard(savedGraph.graphId)
+			const graphId = await graphCommunicator.createGraph(graphToSave) as string;
+			addGraphToExistingGraphs({...graphToSave, graphId });
+			addGraphToDashboard(graphId)
 			notifySuccess("Sucessfully created your graph!")
 		} catch (e) {
 			console.log(e)
