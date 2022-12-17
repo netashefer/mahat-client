@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useRecoilCallback, useRecoilValue } from "recoil";
 import excelCommunicator from "../../../communication/excelCommunicator";
 import graphCommunicator from "../../../communication/graphCommunicator";
-import { publish } from "../../../helpers/events";
 import { notifyError, notifySuccess } from "../../../helpers/toaster";
 import { useAddWidget } from "../../../recoil/customHooks/useWidgetHandler";
 import { dataSourcesAtom } from "../../../recoil/dataSources/dataSources";
