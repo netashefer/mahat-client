@@ -18,8 +18,8 @@ const ParametersPanel = () => {
 	const [schemaFields, setSchemaFields] = useState<FieldConfig[]>(null);
 
 	const getDataSourceSchema = async () => {
-		if (dataSource.value) {
-			const schema = await excelCommunicator.getschema(dataSource.value);
+		if (dataSource?.value) {
+			const schema = await excelCommunicator.getSchema(dataSource?.value);
 			setSchemaFields(schema.map(s => ({ value: s, displayName: s })));
 		}
 	};

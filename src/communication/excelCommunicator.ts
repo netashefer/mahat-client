@@ -23,7 +23,7 @@ class ExcelCommunicator extends Communicator {
         }
     }
 
-    async getschema(dataSourceId: DataSourceId) {
+    async getSchema(dataSourceId: DataSourceId) {
         try {
             return await requestProvider.get<string[]>(this.getFullURL(`excel/schema/${dataSourceId}`), await this.getSecureHeaders());
         } catch (e) {
