@@ -5,7 +5,7 @@ import './Input.scss';
 type InputProps = {
 	label: string,
 	value: string,
-	onChange: Dispatch<SetStateAction<string>>;
+	onChange: Dispatch<SetStateAction<string>>,
 }
 
 const Input = ({label, value, onChange}: InputProps) => {
@@ -14,7 +14,7 @@ const Input = ({label, value, onChange}: InputProps) => {
 	};	
 
 	return(
-		<TextField className="input" label={label} variant="standard" value={value} onChange={handleChange}/>
+		<TextField className="custom-input" label={label} variant="standard" value={value} onChange={handleChange}/>
 	)
 }
 

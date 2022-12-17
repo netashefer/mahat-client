@@ -3,6 +3,7 @@ import RemoveIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import { notifyError } from '../../helpers/toaster';
 import { useRemoveWidget } from '../../recoil/customHooks/useWidgetHandler';
 import { graphSelector } from '../../recoil/graphs/graphs';
 import { Widget } from '../../types/widget.types';
@@ -19,6 +20,14 @@ const WidgetContainer = ({ widgetId, graphId, widgetProps }: WidgetContainerProp
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
     const graph = useRecoilValue(graphSelector(graphId));
+
+	const deleteWidget = (widgetId: string) => {
+		try {
+			removeWidget(widgetId);
+		} catch {
+			notifyError("Failed to remove widget")
+		}
+	}
 
     useEffect(() => {
         const resizeObserver = new ResizeObserver((event) => {
@@ -40,7 +49,7 @@ const WidgetContainer = ({ widgetId, graphId, widgetProps }: WidgetContainerProp
                 <p className={WIDGET_DRAGGABLE_TITLE_CLASSNAME}>
                     {graph?.title || "No Title"}
                 </p>
-                <RemoveIcon className='remove-icon' onClick={() => removeWidget(widgetId)} />
+                <RemoveIcon className='remove-icon' onClick={() => deleteWidget(widgetId)} />
             </div>
             {
                 graph &&

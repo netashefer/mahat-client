@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { ReactComponent as AddIcon } from '../../icons/add.svg';
 import GraphWorkshop from '../GraphWorkshop/GraphWorkshop';
-import './Catalog.scss';
 import ExistingGraphs from './ExistingGraphs/ExistingGraphs';
+import './Catalog.scss';
 
 const Catalog = () => {
 	const [shouldOpenGraphWorkshop, setShouldOpenGraphWorkshop] = useState(false);

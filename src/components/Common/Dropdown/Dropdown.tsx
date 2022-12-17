@@ -12,7 +12,7 @@ type DropdownProps = {
 
 const Dropdown = ({ label, items, value, onChange }: DropdownProps) => {
 	const handleChange = (event: SelectChangeEvent) => {
-		const item = items.find(v => v.value === event.target.value);
+		const item = items.find(item => item.value === event.target.value);
 		onChange(item);
 	};
 
