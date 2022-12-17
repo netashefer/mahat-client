@@ -25,8 +25,8 @@ const GraphItem = ({ graphId, title, type }: GraphItemProps) => {
     };
 
     const deleteGraph = useRecoilCallback(({ set }) => async () => {
-        await graphCommunicator.deleteGraph(graphId);
 		deleteWidgetByGraphId(graphId);
+        await graphCommunicator.deleteGraph(graphId);
         set(graphsAtom, prev => prev?.filter(g => g.graphId !== graphId));
     }, [graphId]);
 
