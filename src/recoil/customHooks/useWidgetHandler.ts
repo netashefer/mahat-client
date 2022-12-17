@@ -23,3 +23,11 @@ export const useRemoveWidget = () => {
         set(widgetsAtom, prev => prev.filter(w => w.widgetId !== widgetId));
     }, []);
 };
+
+export const useRemoveWidgetByGraphId = () => {
+    return useRecoilCallback(({ set, snapshot }) => async (graphId: string) => {
+		const { widgetId } = snapshot.getLoadable(widgetsAtom).getValue().find(w => w.graphId === graphId);
+        await widgetCommunicator.removeWidgetFromDashboard(widgetId);
+        set(widgetsAtom, prev => prev.filter(w => w.widgetId !== widgetId));
+    }, []);
+};

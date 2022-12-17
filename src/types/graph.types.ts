@@ -3,7 +3,7 @@ import { DataSourceId } from "./dataSource.types";
 export type GraphType = "pie" | "line" | "column";
 
 export type Graph = {
-    graphId: string;
+    graphId?: string;
     title: string;
     template: { type: GraphType; };
     dataSourceId: DataSourceId;

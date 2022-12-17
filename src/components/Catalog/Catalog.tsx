@@ -13,7 +13,7 @@ const Catalog = () => {
 				Create New Graph
             </div>
             <ExistingGraphs />
-			<GraphWorkshop isOpen={shouldOpenGraphWorkshop}/>
+			<GraphWorkshop isOpen={shouldOpenGraphWorkshop} onClose={() => setShouldOpenGraphWorkshop(false)}/>
         </div>
     );
 };

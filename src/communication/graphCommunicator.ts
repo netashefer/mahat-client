@@ -4,6 +4,15 @@ import Communicator from "./Communicator";
 import requestProvider from "./requestProvider";
 
 class GraphCommunicator extends Communicator {
+    async createGraph(graph: Graph) {
+        try {
+            return await requestProvider.post<Graph>(this.getFullURL(`graphs/create`), graph, await this.getSecureHeaders());
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
+
     async getDashboardGraphs(dashboardId: string) {
         try {
             return await requestProvider.get<Graph[]>(this.getFullURL(`graphs/dashboard/${dashboardId}`), await this.getSecureHeaders());

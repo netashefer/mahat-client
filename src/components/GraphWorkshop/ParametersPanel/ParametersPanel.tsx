@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilCallback, useRecoilValue } from "recoil";
 import excelCommunicator from "../../../communication/excelCommunicator";
+import graphCommunicator from "../../../communication/graphCommunicator";
+import { publish } from "../../../helpers/events";
+import { notifyError, notifySuccess } from "../../../helpers/toaster";
+import { useAddWidget } from "../../../recoil/customHooks/useWidgetHandler";
 import { dataSourcesAtom } from "../../../recoil/dataSources/dataSources";
-import { Aggragation, Graph, GraphConfig, GraphType } from "../../../types/graph.types";
+import { graphsAtom } from "../../../recoil/graphs/graphs";
+import { Aggragation, Graph, GraphType } from "../../../types/graph.types";
 import Dropdown from "../../Common/Dropdown/Dropdown";
 import Input from "../../Common/Input/Input";
 import { chartMapping, FieldConfig } from "./chartParametersMapping";
@@ -16,6 +21,11 @@ const ParametersPanel = () => {
 	const [yAxis, setYAxis] = useState<FieldConfig>(null);
 	const [graphName, setGraphName] = useState('');
 	const [schemaFields, setSchemaFields] = useState<FieldConfig[]>(null);
+	const addGraphToDashboard = useAddWidget();
+
+	const addGraphToExistingGraphs = useRecoilCallback(({ set }) => (graph: Graph) => {
+        set(graphsAtom, prevState => [...prevState, graph]);
+    }, []);
 
 	const getDataSourceSchema = async () => {
 		if (dataSource?.value) {
@@ -33,8 +43,8 @@ const ParametersPanel = () => {
 	}, [dataSource]);
 
 
-	const saveGraph = () => {
-		const graphConfig: Graph = {
+	const saveGraph = async () => {
+		const graphToSave: Graph = {
 			dataSourceId: dataSource?.value,
 			graphConfig: {
 				x_field: xAxis.value,
@@ -42,9 +52,17 @@ const ParametersPanel = () => {
 			},
 			template: { type: graphType.value as GraphType },
 			title: graphName,
-			graphId: "1" //TODO: genrete in server
 		};
-		console.log(graphConfig);
+
+		try{
+			const savedGraph = await graphCommunicator.createGraph(graphToSave);
+			addGraphToExistingGraphs(savedGraph);
+			addGraphToDashboard(savedGraph.graphId)
+			notifySuccess("Sucessfully created your graph!")
+		} catch (e) {
+			console.log(e)
+            notifyError("We couldn't create your graph");
+        }
 	};
 
 	return (
@@ -56,7 +74,7 @@ const ParametersPanel = () => {
 			<Dropdown value={yAxis} onChange={setYAxis} label="Y Axis" items={chartMapping[graphType?.value as GraphType]?.yFieldOptions} />
 			<hr />
 			<Input value={graphName} onChange={setGraphName} label={"Graph Name"} />
-			<button onClick={saveGraph}>save</button>
+			<button onClick={saveGraph}> Save Graph </button>
 		</div>
 	);
 
