@@ -12,7 +12,7 @@ const DataSourceSchema = ({ dataSourceId, filename }: DataInstanceInfoContainerP
     const [schema, setSchema] = useState<string[]>();
 
     const getDataSourceSchema = async () => {
-        const schema = await excelCommunicator.getschema(dataSourceId);
+        const schema = await excelCommunicator.getSchema(dataSourceId);
         setSchema(schema);
     };
 

@@ -20,12 +20,18 @@ const DashbaordPage = () => {
     const [openManagerPage, setOpenManager] = useState<ManagerPanelOptions>(ManagerPanelOptions.none);
     const { user } = useAuth0();
 
+	const openAndCloseManagerPage = (managerPanelOption: ManagerPanelOptions) => {
+		if(openManagerPage !== ManagerPanelOptions.none){
+			setOpenManager(ManagerPanelOptions.none)
+		} else {
+			setOpenManager(managerPanelOption);
+		}
+	}
+
     useEffect(() => {
         setDashboardId(dashboardId);
         dashboardCommunicator.addWatchedDashboardPermissions(dashboardId, user.nickname); // eslint-disable-next-line
     }, []);
-
-    const closeManagerPage = () => setOpenManager(ManagerPanelOptions.none);
 
     return (
         <div className="dashboard-page">
@@ -39,14 +45,13 @@ const DashbaordPage = () => {
                             </div>
                             <DashboardActions
                                 dashboardId={dashboard?.dashboardId}
-                                onAddDataSource={() => setOpenManager(ManagerPanelOptions.dataSources)}
-                                onAddGrpah={() => setOpenManager(ManagerPanelOptions.catalog)}
+                                onAddDataSource={() => openAndCloseManagerPage(ManagerPanelOptions.dataSources)}
+                                onAddGrpah={() => openAndCloseManagerPage(ManagerPanelOptions.catalog)}
                             />
                         </div>
                         <div className="bottom">
                             <Dashboard />
                             <ManagerDecider
-                                closeManagerPage={closeManagerPage}
                                 openManagerPage={openManagerPage}
                                 dashboardId={dashboard?.dashboardId}
                             />

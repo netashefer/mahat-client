@@ -1,17 +1,21 @@
+import { useState } from 'react';
 import { ReactComponent as AddIcon } from '../../icons/add.svg';
+import GraphWorkshop from '../GraphWorkshop/GraphWorkshop';
 import ExistingGraphs from './ExistingGraphs/ExistingGraphs';
 import './Catalog.scss';
 
 const Catalog = () => {
+	const [shouldOpenGraphWorkshop, setShouldOpenGraphWorkshop] = useState(false);
     return (
         <div className='catalog'>
-            <div className='new-graph-section'>
-                <AddIcon className='add-icon' />
-                <div>Create New Graph</div>
+            <div className='new-graph-section' onClick={() => setShouldOpenGraphWorkshop(true)}>
+				<AddIcon className='add-icon' /> 
+				Create New Graph
             </div>
             <ExistingGraphs />
+			<GraphWorkshop isOpen={shouldOpenGraphWorkshop} onClose={() => setShouldOpenGraphWorkshop(false)}/>
         </div>
     );
 };
 
-export default Catalog;
+export default Catalog;  
