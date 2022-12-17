@@ -7,16 +7,18 @@ import { ReactComponent as AddIcon } from '../../icons/add.svg';
 import { notifyError, notifyInfo, notifySuccess } from '../../helpers/toaster';
 import { myDashabordsAtom } from '../../recoil/dashboard/myDashboards';
 import './CreateNewDashboard.scss';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const CreateNewDashboard = () => {
     const [newName, setNewName] = useState("");
+    const { user } = useAuth0();
 
     const createNewDashboard = useRecoilCallback(({ set }) => async () => {
         if (newName?.trim()) {
             try {
                 const dashboardId = await dashboardCommunicator.createNewDashboard({ dashboardName: newName });
-                await dashboardCommunicator.addDashboardPermissions(dashboardId);
-                set(myDashabordsAtom, prev => [{ dashboardName: newName, dashboardId }, ...(prev || [])]);
+                await dashboardCommunicator.addDashboardPermissions(dashboardId, user.nickname);
+                set(myDashabordsAtom(user.nickname), prev => [{ dashboardName: newName, dashboardId }, ...(prev || [])]);
                 setNewName("");
                 notifySuccess("Your dashboard created successfully");
             } catch {
@@ -25,7 +27,7 @@ const CreateNewDashboard = () => {
         } else {
             notifyInfo("You must insert a name");
         }
-    }, [newName, setNewName]);
+    }, [newName, setNewName, user]);
 
     return (
         <div className='create-new-dashboard'>

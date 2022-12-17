@@ -1,13 +1,13 @@
-import { atom, selector } from 'recoil';
+import { atomFamily, selectorFamily } from 'recoil';
 import dashboardCommunicator from '../../communication/dashboardCommunicator';
 import { notifyError } from '../../helpers/toaster';
 import { DashboardType } from '../../types/dashboard.types';
 
-const myDashboardsDefaultSelector = selector<DashboardType[]>({
+const myDashboardsDefaultSelector = selectorFamily<DashboardType[], string>({
     key: 'myDashboardsDefaultSelector',
-    get: async () => {
+    get: (username) => async () => {
         try {
-            return await dashboardCommunicator.getMyDashboards();
+            return await dashboardCommunicator.getDashboardsByUsername(username);
         } catch {
             notifyError("We couldn't load your dashboards");
             return [];
@@ -15,7 +15,7 @@ const myDashboardsDefaultSelector = selector<DashboardType[]>({
     }
 });
 
-export const myDashabordsAtom = atom({
+export const myDashabordsAtom = atomFamily<DashboardType[], string>({
     key: 'myDashabordsAtom',
     default: myDashboardsDefaultSelector,
 });
