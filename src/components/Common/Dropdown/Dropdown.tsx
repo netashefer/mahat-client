@@ -31,8 +31,7 @@ const Dropdown = ({ label, items, value, onChange }: DropdownProps) => {
 					<MenuItem
 						className='menu-item'
 						value={item?.value}
-						key={item?.displayName}
-						onChange={() => console.log(item)}>
+						key={item?.displayName}>
 						{item?.displayName}
 					</MenuItem>
 				)}
