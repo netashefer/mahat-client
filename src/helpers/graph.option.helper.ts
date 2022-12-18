@@ -25,7 +25,30 @@ export const GraphOptionsMap: Record<GraphType, Highcharts.Options> = {
             }
         },
     },
-    column: {},
+    column: {
+        chart: {
+            type: 'column'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>count: {point.y}</b>'
+        },
+        accessibility: {
+            point: {
+                valueSuffix: '%'
+            }
+        },
+        plotOptions: {
+            column: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}: {point.y}'
+                },
+                showInLegend: false,
+            }
+        },
+    },
     line: {},
     table: undefined
 }; 

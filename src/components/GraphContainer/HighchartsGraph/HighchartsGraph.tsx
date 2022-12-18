@@ -24,6 +24,9 @@ const HighchartsGraph = ({ graph, width, height, aggregatedData }: HighchartsGra
         title: {
             text: ""
         },
+        xAxis: {
+            categories: aggregatedData.map(r => r.name)
+        },
         series: [{
             name: 'item',
             data: aggregatedData,
