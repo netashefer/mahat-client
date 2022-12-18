@@ -1,19 +1,66 @@
 import { Aggragation, GraphType } from "../../../types/graph.types";
+import { Item } from "../../Common/Dropdown/Dropdown";
 
-export type FieldConfig = { value: string | Aggragation, displayName: string; };
+export type FieldConfig = { aggregation: Aggragation, displayName: string; };
 
 type chartConfig = {
-    yFieldOptions: FieldConfig[];
+    xFieldOptions: boolean;
+    yFieldOptions: {
+        func: FieldConfig['aggregation'];
+        funcDisplayName: FieldConfig['displayName'];
+        field?: string;
+    }[];
+    isYField: boolean;
+    isDataFields: boolean;
 };
+export const graphTypes: Item<GraphType>[] = [
+    { value: 'pie', label: 'Pie' },
+    { value: 'column', label: 'Column' },
+    { value: 'line', label: 'Line' },
+    { value: 'table', label: 'Table' }
+];
 
 export const chartMapping: Record<GraphType, chartConfig> = {
     pie: {
-        yFieldOptions: [{ value: 'uniqueValues', displayName: 'By Unique Values' }, { value: 'valuesCount', displayName: 'By Values Count' }]
+        xFieldOptions: false,
+        yFieldOptions: [{
+            func: 'uniqueValues',
+            funcDisplayName: 'By Unique Values',
+        }, {
+            func: 'valuesCount',
+            funcDisplayName: 'By Records Count'
+        }],
+        isYField: true,
+        isDataFields: false,
     },
     column: {
-        yFieldOptions: [{ value: 'uniqueValues', displayName: 'By Unique Values' }, { value: 'valuesCount', displayName: 'By Values Count' }]
+        xFieldOptions: true,
+        yFieldOptions: [{
+            func: 'uniqueValues',
+            funcDisplayName: 'By Unique Values',
+        }, {
+            func: 'valuesCount',
+            funcDisplayName: 'By Records Count'
+        }],
+        isYField: false,
+        isDataFields: false,
     },
     line: {
-        yFieldOptions: [{ value: 'uniqueValues', displayName: 'By Unique Values' }, { value: 'valuesCount', displayName: 'By Values Count' }]
+        xFieldOptions: true,
+        yFieldOptions: [{
+            func: 'uniqueValues',
+            funcDisplayName: 'By Unique Values',
+        }, {
+            func: 'valuesCount',
+            funcDisplayName: 'By Records Count'
+        }],
+        isYField: false,
+        isDataFields: false,
+    },
+    table: {
+        xFieldOptions: false,
+        yFieldOptions: [],
+        isYField: false,
+        isDataFields: true,
     }
 };
