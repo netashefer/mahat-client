@@ -42,7 +42,7 @@ export const chartMapping: Record<GraphType, chartConfig> = {
             func: 'valuesCount',
             funcDisplayName: 'By Records Count'
         }],
-        isYField: false,
+        isYField: true,
         isDataFields: false,
     },
     line: {
@@ -54,7 +54,7 @@ export const chartMapping: Record<GraphType, chartConfig> = {
             func: 'valuesCount',
             funcDisplayName: 'By Records Count'
         }],
-        isYField: false,
+        isYField: true,
         isDataFields: false,
     },
     table: {

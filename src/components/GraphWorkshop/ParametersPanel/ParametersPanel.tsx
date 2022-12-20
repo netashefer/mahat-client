@@ -82,7 +82,6 @@ const ParametersPanel = () => {
 				label="Data Source"
 				items={dataSources?.map(ds => ({ label: ds.displayName, value: ds.dataSourceId }))}
 			/>
-			<hr />
 			<Dropdown
 				value={graphType}
 				onChange={setGraphType}
@@ -122,7 +121,6 @@ const ParametersPanel = () => {
 							setSelectedOptions={setDataFields}
 						/>
 					</RenderIf>
-					<hr />
 					<Input value={graphName} onChange={setGraphName} label="Graph Name" />
 					<button onClick={saveGraph}> Save Graph </button>
 				</>
