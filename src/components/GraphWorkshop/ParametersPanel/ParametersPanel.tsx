@@ -90,11 +90,11 @@ const ParametersPanel = () => {
 			/>
 			<RenderIf condition={!!(graphType && dataSource && chartConfig)}>
 				<>
-					<RenderIf condition={chartConfig?.xFieldOptions}>
+					<RenderIf condition={!!chartConfig?.yFieldOptions?.length}>
 						<Dropdown
 							value={xAxis}
 							onChange={setXAxis}
-							label="X Axis"
+							label={chartConfig?.xFieldLabel || "X Axis"}
 							items={schemaFields}
 						/>
 					</RenderIf>
@@ -103,14 +103,14 @@ const ParametersPanel = () => {
 							value={yAxis}
 							onChange={setYAxis}
 							label="Y Axis"
-							items={chartConfig?.yFieldOptions.map(v => ({ label: v.funcDisplayName, value: v.func }))}
+							items={chartConfig?.yFieldOptions?.map(v => ({ label: v.funcDisplayName, value: v.func }))}
 						/>
 					</RenderIf>
-					<RenderIf condition={chartConfig?.isYField && yAxis?.value === 'uniqueValues'}>
+					<RenderIf condition={yAxis?.value === 'uniqueValues'}>
 						<Dropdown
 							value={yAxisField}
 							onChange={setYAxisField}
-							label="field Y Axis"
+							label="by field"
 							items={schemaFields}
 						/>
 					</RenderIf>

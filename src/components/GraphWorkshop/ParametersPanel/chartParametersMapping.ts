@@ -3,15 +3,14 @@ import { Item } from "../../Common/Dropdown/Dropdown";
 
 export type FieldConfig = { aggregation: Aggragation, displayName: string; };
 
-type chartConfig = {
-    xFieldOptions: boolean;
-    yFieldOptions: {
+type ChartConfig = {
+    xFieldLabel?: string;
+    yFieldOptions?: {
         func: FieldConfig['aggregation'];
         funcDisplayName: FieldConfig['displayName'];
         field?: string;
     }[];
-    isYField: boolean;
-    isDataFields: boolean;
+    isDataFields?: boolean;
 };
 export const graphTypes: Item<GraphType>[] = [
     { value: 'pie', label: 'Pie' },
@@ -20,9 +19,9 @@ export const graphTypes: Item<GraphType>[] = [
     { value: 'table', label: 'Table' }
 ];
 
-export const chartMapping: Record<GraphType, chartConfig> = {
+export const chartMapping: Record<GraphType, ChartConfig> = {
     pie: {
-        xFieldOptions: true,
+        xFieldLabel: "split according to",
         yFieldOptions: [{
             func: 'uniqueValues',
             funcDisplayName: 'By Unique Values',
@@ -30,11 +29,8 @@ export const chartMapping: Record<GraphType, chartConfig> = {
             func: 'valuesCount',
             funcDisplayName: 'By Records Count'
         }],
-        isYField: true,
-        isDataFields: false,
     },
     column: {
-        xFieldOptions: true,
         yFieldOptions: [{
             func: 'uniqueValues',
             funcDisplayName: 'By Unique Values',
@@ -42,11 +38,8 @@ export const chartMapping: Record<GraphType, chartConfig> = {
             func: 'valuesCount',
             funcDisplayName: 'By Records Count'
         }],
-        isYField: true,
-        isDataFields: false,
     },
     line: {
-        xFieldOptions: true,
         yFieldOptions: [{
             func: 'uniqueValues',
             funcDisplayName: 'By Unique Values',
@@ -54,13 +47,8 @@ export const chartMapping: Record<GraphType, chartConfig> = {
             func: 'valuesCount',
             funcDisplayName: 'By Records Count'
         }],
-        isYField: true,
-        isDataFields: false,
     },
     table: {
-        xFieldOptions: false,
-        yFieldOptions: [],
-        isYField: false,
         isDataFields: true,
     }
 };
