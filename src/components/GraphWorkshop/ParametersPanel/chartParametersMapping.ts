@@ -22,7 +22,7 @@ export const graphTypes: Item<GraphType>[] = [
 
 export const chartMapping: Record<GraphType, chartConfig> = {
     pie: {
-        xFieldOptions: false,
+        xFieldOptions: true,
         yFieldOptions: [{
             func: 'uniqueValues',
             funcDisplayName: 'By Unique Values',
