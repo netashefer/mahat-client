@@ -8,23 +8,34 @@
     .widget-draggable-title {
         cursor: move;
         user-select: none;
-        width: 80%;
+        width: 60%;
     }
 
     .widget-top {
         display: flex;
         align-items: center;
-        justify-content: space-around;
-    }
 
-    .remove-icon,
-    .edit-icon,
-    .download-image-icon,
-    .download-csv-icon {
-        cursor: pointer;
-        fill: var(--action-color);
-        width: 25px;
-        height: 25px;
-    }
+        .widget-top-bar-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            width: 20%;
+        }
 
+        .remove-icon {
+            cursor: pointer;
+            fill: var(--action-color);
+            width: 10%;
+            height: 25px;
+        }
+
+        .edit-icon,
+        .download-image-icon,
+        .download-csv-icon {
+            cursor: pointer;
+            fill: var(--action-color);
+            width: 20%;
+            height: 25px;
+        }
+    }
 }
