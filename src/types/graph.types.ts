@@ -23,7 +23,7 @@ export enum Aggragation {
 export type GraphConfig = {
     x_field: string;
     y_field: { aggragation?: Aggragation; field?: string; };
-    dataFields?: { field: string, label: string; }[];
+    dataFields?: string[];
 };
 
 export const GRAPH_DRAG_AND_DROP_KEY = "graph-dnd";

@@ -52,7 +52,7 @@ const ParametersPanel = () => {
 			graphConfig: {
 				x_field: xAxis?.value || null,
 				y_field: { aggragation: yAxis?.value, field: yAxisField?.value || null },
-				dataFields: dataFields?.map(f => ({ field: f, label: f }))
+				dataFields
 			},
 			template: { type: graphType.value as GraphType },
 			title: graphName,
