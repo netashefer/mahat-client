@@ -15,7 +15,10 @@ export type GraphWorkshopState = {
     creationUser: string,
 };
 
-export type Aggragation = 'uniqueValues' | 'valuesCount' | 'none';
+export enum Aggragation {
+    uniqueValues = 'uniqueValues',
+    valuesCount = 'valuesCount',
+}
 
 export type GraphConfig = {
     x_field: string;

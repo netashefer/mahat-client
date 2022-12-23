@@ -6,11 +6,13 @@ type DropdownProps = {
 	value: { label: string, value: string; };
 	onChange: Dispatch<SetStateAction<any>>;
 	label: string;
-	items: Item[];
+	items: OptionItem[];
 };
-export type Item<T = string> = {
+
+export type OptionItem<T = string> = {
 	label: string, value: T;
 };
+
 const Dropdown = ({ label, items, value, onChange }: DropdownProps) => {
 	const handleChange = (event: SelectChangeEvent) => {
 		const item = items.find(item => item.value === event.target.value);

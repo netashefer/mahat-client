@@ -7,7 +7,7 @@ import { useAddWidget } from "../../../recoil/customHooks/useWidgetHandler";
 import { dataSourcesAtom } from "../../../recoil/dataSources/dataSources";
 import { graphsAtom } from "../../../recoil/graphs/graphs";
 import { Aggragation, Graph, GraphType } from "../../../types/graph.types";
-import Dropdown, { Item } from "../../Common/Dropdown/Dropdown";
+import Dropdown, { OptionItem } from "../../Common/Dropdown/Dropdown";
 import Input from "../../Common/Input/Input";
 import RenderIf from "../../Common/RenderIf/RenderIf";
 import MultipleSelect from "../../MultiSelect/MultiSelect";
@@ -16,13 +16,13 @@ import './ParametersPanel.scss';
 
 const ParametersPanel = () => {
 	const dataSources = useRecoilValue(dataSourcesAtom);
-	const [dataSource, setDataSource] = useState<Item>(null);
-	const [graphType, setGraphType] = useState<Item>(null); //for the time being all of these are useState
-	const [xAxis, setXAxis] = useState<Item>(null);
-	const [yAxisField, setYAxisField] = useState<Item>(null);
-	const [yAxis, setYAxis] = useState<Item<Aggragation>>(null);
+	const [dataSource, setDataSource] = useState<OptionItem>(null);
+	const [graphType, setGraphType] = useState<OptionItem>(null); //for the time being all of these are useState
+	const [xAxis, setXAxis] = useState<OptionItem>(null);
+	const [yAxisField, setYAxisField] = useState<OptionItem>(null);
+	const [yAxis, setYAxis] = useState<OptionItem<Aggragation>>(null);
 	const [graphName, setGraphName] = useState('');
-	const [schemaFields, setSchemaFields] = useState<Item[]>(null);
+	const [schemaFields, setSchemaFields] = useState<OptionItem[]>(null);
 	const [dataFields, setDataFields] = useState<string[]>(null);
 	const addGraphToDashboard = useAddWidget();
 
@@ -58,9 +58,6 @@ const ParametersPanel = () => {
 			title: graphName,
 		};
 
-		console.log(graphToSave);
-
-
 		try {
 			const graphId = await graphCommunicator.createGraph(graphToSave) as string;
 			addGraphToExistingGraphs({ ...graphToSave, graphId });
@@ -91,22 +88,22 @@ const ParametersPanel = () => {
 			<RenderIf condition={!!(graphType && dataSource && chartConfig)}>
 				<>
 					<RenderIf condition={!!chartConfig?.yFieldOptions?.length}>
-						<Dropdown
-							value={xAxis}
-							onChange={setXAxis}
-							label={chartConfig?.xFieldLabel || "X Axis"}
-							items={schemaFields}
-						/>
+						<>
+							<Dropdown
+								value={xAxis}
+								onChange={setXAxis}
+								label={chartConfig?.xFieldLabel || "X Axis"}
+								items={schemaFields}
+							/>
+							<Dropdown
+								value={yAxis}
+								onChange={setYAxis}
+								label="Y Axis"
+								items={chartConfig?.yFieldOptions?.map(v => ({ label: v.funcDisplayName, value: v.func }))}
+							/>
+						</>
 					</RenderIf>
-					<RenderIf condition={!!chartConfig?.yFieldOptions?.length}>
-						<Dropdown
-							value={yAxis}
-							onChange={setYAxis}
-							label="Y Axis"
-							items={chartConfig?.yFieldOptions?.map(v => ({ label: v.funcDisplayName, value: v.func }))}
-						/>
-					</RenderIf>
-					<RenderIf condition={yAxis?.value === 'uniqueValues'}>
+					<RenderIf condition={yAxis?.value === Aggragation.uniqueValues}>
 						<Dropdown
 							value={yAxisField}
 							onChange={setYAxisField}
