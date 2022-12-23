@@ -14,14 +14,17 @@
     .widget-top {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-around;
     }
 
     .remove-icon,
-    .edit-icon {
+    .edit-icon,
+    .download-image-icon,
+    .download-csv-icon {
         cursor: pointer;
-        width: 10%;
         fill: var(--action-color);
+        width: 25px;
+        height: 25px;
     }
 
 }

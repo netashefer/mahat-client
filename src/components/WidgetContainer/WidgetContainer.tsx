@@ -61,8 +61,8 @@ const WidgetContainer = ({ widgetId, graphId, widgetProps }: WidgetContainerProp
         >
             <div className='widget-top'>
                 <EditIcon className='edit-icon' />
-                <DownloadCsvButton handleDownload={downloadCsv} />
-                <DownloadImageButton handleDownload={downloadImage} />
+                <DownloadCsvButton className='download-csv-icon' handleDownload={downloadCsv} />
+                <DownloadImageButton className='download-image-icon' handleDownload={downloadImage} />
                 <p className={WIDGET_DRAGGABLE_TITLE_CLASSNAME}>
                     {graph?.title || "No Title"}
                 </p>
