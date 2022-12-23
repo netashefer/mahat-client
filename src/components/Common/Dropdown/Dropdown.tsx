@@ -1,13 +1,16 @@
-import { FormControl, InputLabel, Select, MenuItem, SelectChangeEvent } from "@mui/material";
-import { SetStateAction, Dispatch } from "react";
-import { FieldConfig } from "../../GraphWorkshop/ParametersPanel/chartParametersMapping";
+import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { Dispatch, SetStateAction } from "react";
 import './Dropdown.scss';
 
 type DropdownProps = {
-	value: FieldConfig;
+	value: { label: string, value: string; };
 	onChange: Dispatch<SetStateAction<any>>;
 	label: string;
-	items: FieldConfig[];
+	items: OptionItem[];
+};
+
+export type OptionItem<T = string> = {
+	label: string, value: T;
 };
 
 const Dropdown = ({ label, items, value, onChange }: DropdownProps) => {
@@ -31,8 +34,8 @@ const Dropdown = ({ label, items, value, onChange }: DropdownProps) => {
 					<MenuItem
 						className='menu-item'
 						value={item?.value}
-						key={item?.displayName}>
-						{item?.displayName}
+						key={item?.label}>
+						{item?.label}
 					</MenuItem>
 				)}
 			</Select>

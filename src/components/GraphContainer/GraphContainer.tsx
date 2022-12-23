@@ -1,10 +1,8 @@
-import HighchartsReact from 'highcharts-react-official';
-import Highcharts from 'highcharts/highstock';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import aggregatorCommunicator from '../../communication/aggregatorCommunicator';
-import { GraphOptionsMap } from '../../helpers/graph.option.helper';
-import { BACKGROUND_COLOR } from '../../styles/styles.constants';
-import { Graph } from '../../types/graph.types';
+import { Graph, GraphType } from '../../types/graph.types';
+import HighchartsGraph from './HighchartsGraph/HighchartsGraph';
+import TableGraph from './TableGraph/TableGraph';
 
 interface GraphContainerProps {
     graph: Graph;
@@ -14,7 +12,6 @@ interface GraphContainerProps {
 
 const GraphContainer = ({ graph, width, height }: GraphContainerProps) => {
     const [aggregatedData, setData] = useState([]);
-    const ref = useRef<HighchartsReact.RefObject>();
 
     useEffect(() => {
         fetchAggregatedData();// eslint-disable-next-line
@@ -27,35 +24,19 @@ const GraphContainer = ({ graph, width, height }: GraphContainerProps) => {
         }
     };
 
-    const options: Partial<Highcharts.Options> = {
-        ...GraphOptionsMap[graph?.template?.type],
-        chart: {
-            backgroundColor: BACKGROUND_COLOR,
-            ...GraphOptionsMap[graph?.template?.type]?.chart,
-            width,
-            height: height - 56
-        },
-        title: {
-            text: ""
-        },
-        series: [{
-            name: 'item',
-            data: aggregatedData,
-            type: graph?.template?.type
-        }],
-        legend: {
-            itemStyle: { color: "white" }
-        }
+    const GraphMap: Partial<Record<GraphType, React.ComponentType<any>>> = {
+        table: TableGraph,
     };
 
+    const Component = GraphMap[graph.template.type] || HighchartsGraph;
+
     return (
-        <div>
-            <HighchartsReact
-                highcharts={Highcharts}
-                options={options}
-                ref={ref}
-            />
-        </div>
+        <Component
+            aggregatedData={aggregatedData}
+            width={width}
+            height={height}
+            graph={graph}
+        />
     );
 };
 

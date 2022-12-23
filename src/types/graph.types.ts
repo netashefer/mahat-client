@@ -1,6 +1,6 @@
 import { DataSourceId } from "./dataSource.types";
 
-export type GraphType = "pie" | "line" | "column";
+export type GraphType = "pie" | "line" | "column" | 'table';
 
 export type Graph = {
     graphId?: string;
@@ -15,11 +15,15 @@ export type GraphWorkshopState = {
     creationUser: string,
 };
 
-export type Aggragation = 'uniqueValues' | 'valuesCount';
+export enum Aggragation {
+    uniqueValues = 'uniqueValues',
+    valuesCount = 'valuesCount',
+}
 
 export type GraphConfig = {
-    x_field: string,
+    x_field: string;
     y_field: { aggragation?: Aggragation; field?: string; };
+    dataFields?: string[];
 };
 
 export const GRAPH_DRAG_AND_DROP_KEY = "graph-dnd";

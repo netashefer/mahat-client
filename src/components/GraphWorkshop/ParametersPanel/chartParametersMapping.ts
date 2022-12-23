@@ -1,19 +1,54 @@
 import { Aggragation, GraphType } from "../../../types/graph.types";
+import { OptionItem } from "../../Common/Dropdown/Dropdown";
 
-export type FieldConfig = { value: string | Aggragation, displayName: string; };
+export type FieldConfig = { aggregation: Aggragation, displayName: string; };
 
-type chartConfig = {
-    yFieldOptions: FieldConfig[];
+type ChartConfig = {
+    xFieldLabel?: string;
+    yFieldOptions?: {
+        func: FieldConfig['aggregation'];
+        funcDisplayName: FieldConfig['displayName'];
+        field?: string;
+    }[];
+    isDataFields?: boolean;
 };
+export const graphTypes: OptionItem<GraphType>[] = [
+    { value: 'pie', label: 'Pie' },
+    { value: 'column', label: 'Column' },
+    { value: 'line', label: 'Line' },
+    { value: 'table', label: 'Table' }
+];
 
-export const chartMapping: Record<GraphType, chartConfig> = {
+export const chartMapping: Record<GraphType, ChartConfig> = {
     pie: {
-        yFieldOptions: [{ value: 'uniqueValues', displayName: 'By Unique Values' }, { value: 'valuesCount', displayName: 'By Values Count' }]
+        xFieldLabel: "split according to",
+        yFieldOptions: [{
+            func: Aggragation.uniqueValues,
+            funcDisplayName: 'By Unique Values',
+        }, {
+            func: Aggragation.valuesCount,
+            funcDisplayName: 'By Records Count'
+        }],
     },
     column: {
-        yFieldOptions: [{ value: 'uniqueValues', displayName: 'By Unique Values' }, { value: 'valuesCount', displayName: 'By Values Count' }]
+        yFieldOptions: [{
+            func: Aggragation.uniqueValues,
+            funcDisplayName: 'By Unique Values',
+        }, {
+            func: Aggragation.valuesCount,
+            funcDisplayName: 'By Records Count'
+        }],
     },
     line: {
-        yFieldOptions: [{ value: 'uniqueValues', displayName: 'By Unique Values' }, { value: 'valuesCount', displayName: 'By Values Count' }]
+        yFieldOptions: [{
+            func: Aggragation.uniqueValues,
+            funcDisplayName: 'By Unique Values',
+        }, {
+            func: Aggragation.valuesCount,
+            funcDisplayName: 'By Records Count'
+        }],
+    },
+    table: {
+        isDataFields: true,
     }
 };
