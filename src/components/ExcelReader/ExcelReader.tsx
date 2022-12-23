@@ -31,10 +31,13 @@ const ExcelReader = ({ dashboardId, fileUploadStage, dataSourceIdToReplace, setF
         setFile(file);
     };
 
+    console.log(file);
+
+
     const readFile = () => {
         setIsLoading(true);
         const reader = new FileReader();
-        reader.onload = (evt) => onLoad(dashboardId, evt, file, onReadingSucceed, onReadingEnd);
+        reader.onload = (evt) => onLoad(file, onReadingSucceed, onReadingEnd);
         reader.readAsBinaryString(file);
     };
 
