@@ -1,15 +1,14 @@
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import HC_exporting from 'highcharts/modules/exporting';
 import HC_exporting_data from 'highcharts/modules/export-data';
+import HC_exporting from 'highcharts/modules/exporting';
 import HC_exporting_offline from 'highcharts/modules/offline-exporting';
-import { useEffect, useRef } from "react";
+import { useImperativeHandle, useRef } from "react";
 import { GraphOptionsMap } from "../../../helpers/graph.option.helper";
 import { SECONDARY_BACKGROUND_COLOR } from "../../../styles/styles.constants";
 import { Graph } from "../../../types/graph.types";
 import { Data } from "../../../types/table.types";
-import HighchartsFullscreen from 'highcharts/modules/full-screen';
-import { DownloadCsvButton, DownloadImageButton } from "../DownloadButtons/DownloadButtons";
+import { GraphHandler } from "../../WidgetContainer/WidgetContainer";
 
 // init the module
 HC_exporting(Highcharts);
@@ -21,9 +20,10 @@ interface HighchartsGraphProps {
     width: number;
     height: number;
     aggregatedData: Data;
+    graphHandler: React.MutableRefObject<GraphHandler>;
 }
 
-const HighchartsGraph = ({ graph, width, height, aggregatedData }: HighchartsGraphProps) => {
+const HighchartsGraph = ({ graph, width, height, aggregatedData, graphHandler }: HighchartsGraphProps) => {
     const ref = useRef<HighchartsReact.RefObject>();
 
     const downloadImage = () => {
@@ -33,6 +33,11 @@ const HighchartsGraph = ({ graph, width, height, aggregatedData }: HighchartsGra
     const downloadCsv = () => {
         ref.current?.chart?.downloadCSV();
     };
+
+    useImperativeHandle(graphHandler, () => ({
+        downloadCsv,
+        downloadImage,
+    }));
 
     const options: Partial<Highcharts.Options> = {
         ...GraphOptionsMap[graph?.template?.type],
@@ -60,15 +65,11 @@ const HighchartsGraph = ({ graph, width, height, aggregatedData }: HighchartsGra
     };
 
     return (
-        <div>
-            <DownloadCsvButton handleDownload={downloadCsv} />
-            <DownloadImageButton handleDownload={downloadImage} />
-            <HighchartsReact
-                highcharts={Highcharts}
-                options={options}
-                ref={ref}
-            />
-        </div>
+        <HighchartsReact
+            highcharts={Highcharts}
+            options={options}
+            ref={ref}
+        />
     );
 };
 

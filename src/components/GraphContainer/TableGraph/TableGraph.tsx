@@ -1,56 +1,60 @@
 import { DataGrid, GridToolbarContainer, useGridApiContext } from '@mui/x-data-grid';
 import FileSaver from 'file-saver';
 import { toBlob } from 'html-to-image';
-import { useRef } from 'react';
+import { useImperativeHandle, useRef } from 'react';
 import { prepTable } from "../../../helpers/prepTable";
+import { SECONDARY_BACKGROUND_COLOR } from '../../../styles/styles.constants';
 import { Graph } from "../../../types/graph.types";
 import { Data } from "../../../types/table.types";
-import { DownloadButtonProps, DownloadCsvButton, DownloadImageButton } from '../DownloadButtons/DownloadButtons';
-import './TableGraph.scss';
+import { GraphHandler } from '../../WidgetContainer/WidgetContainer';
+import { DownloadButtonProps } from '../../WidgetContainer/DownloadButtons/DownloadButtons';
 
 interface TableGraphProps {
     graph: Graph;
     aggregatedData: Data;
     DownloadCsvComponent: React.ComponentType<DownloadButtonProps>;
+    graphHandler: React.MutableRefObject<GraphHandler>;
 }
+type ExportCsvHandler = Pick<GraphHandler, 'downloadCsv'>;
 
 interface DownloadToolBar {
-    DownloadCsvComponent: React.ComponentType<DownloadButtonProps>;
-    DownloadImageComponent: React.ComponentType<DownloadButtonProps>;
-    downloadImage: () => void;
+    csvHandler: React.MutableRefObject<ExportCsvHandler>;
 }
 
-const DownloadToolbar = ({ DownloadCsvComponent, DownloadImageComponent, downloadImage }: DownloadToolBar) => {
+const DownloadToolbar = ({ csvHandler }: DownloadToolBar) => {
     const apiRef = useGridApiContext();
 
     const downloadCsv = async () => {
         apiRef.current.exportDataAsCsv();
     };
 
-    return (
-        <GridToolbarContainer>
-            <DownloadCsvComponent handleDownload={downloadCsv} />
-            <DownloadImageComponent handleDownload={downloadImage} />
-        </GridToolbarContainer>
-    );
+    useImperativeHandle(csvHandler, () => ({
+        downloadCsv: downloadCsv,
+    }));
+
+    return <GridToolbarContainer />;
 };
 
-const TableGraph = ({ graph, aggregatedData }: TableGraphProps) => {
+const TableGraph = ({ graph, aggregatedData, graphHandler }: TableGraphProps) => {
     const tableRef = useRef<HTMLDivElement>();
+    const csvHandler = useRef<ExportCsvHandler>();
 
     const downloadImage = async () => {
-        const node = tableRef.current.querySelector('.MuiDataGrid-main') as HTMLDivElement;
+        const node = tableRef.current;
         const blob = await toBlob(node);
         FileSaver.saveAs(blob, `${graph.title}.png`);
     };
 
     const CustomToolBar = (
         <DownloadToolbar
-            DownloadCsvComponent={DownloadCsvButton}
-            DownloadImageComponent={DownloadImageButton}
-            downloadImage={downloadImage}
+            csvHandler={csvHandler}
         />
     );
+
+    useImperativeHandle(graphHandler, () => ({
+        downloadCsv: csvHandler?.current?.downloadCsv,
+        downloadImage: downloadImage,
+    }));
 
     return (
         <DataGrid
@@ -59,7 +63,8 @@ const TableGraph = ({ graph, aggregatedData }: TableGraphProps) => {
             rowsPerPageOptions={[5]}
             rows={aggregatedData}
             columns={prepTable(graph.graphConfig)}
-            components={{ Toolbar: () => CustomToolBar }}
+            style={{ backgroundColor: SECONDARY_BACKGROUND_COLOR }}
+            components={{ Toolbar: () => CustomToolBar }} // the only way we can accsess apiRef for export csv
         />
     );
 };

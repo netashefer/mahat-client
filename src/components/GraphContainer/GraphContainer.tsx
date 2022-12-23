@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import aggregatorCommunicator from '../../communication/aggregatorCommunicator';
 import { Graph, GraphType } from '../../types/graph.types';
+import { GraphHandler } from '../WidgetContainer/WidgetContainer';
 import HighchartsGraph from './HighchartsGraph/HighchartsGraph';
 import TableGraph from './TableGraph/TableGraph';
 
@@ -8,9 +9,10 @@ interface GraphContainerProps {
     graph: Graph;
     width: number;
     height: number;
+    graphHandler: React.MutableRefObject<GraphHandler>;
 }
 
-const GraphContainer = ({ graph, width, height }: GraphContainerProps) => {
+const GraphContainer = ({ graph, width, height, graphHandler }: GraphContainerProps) => {
     const [aggregatedData, setData] = useState([]);
 
     useEffect(() => {
@@ -36,6 +38,7 @@ const GraphContainer = ({ graph, width, height }: GraphContainerProps) => {
             width={width}
             height={height}
             graph={graph}
+            graphHandler={graphHandler}
         />
     );
 };
