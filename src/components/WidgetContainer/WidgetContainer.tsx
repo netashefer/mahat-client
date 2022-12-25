@@ -8,6 +8,7 @@ import { useRemoveWidget } from '../../recoil/customHooks/useWidgetHandler';
 import { graphSelector } from '../../recoil/graphs/graphs';
 import { Widget } from '../../types/widget.types';
 import GraphContainer from '../GraphContainer/GraphContainer';
+import GraphWorkshop from '../GraphWorkshop/GraphWorkshop';
 import './WidgetContainer.scss';
 
 interface WidgetContainerProps extends Widget { }
@@ -15,12 +16,14 @@ interface WidgetContainerProps extends Widget { }
 export const WIDGET_DRAGGABLE_TITLE_CLASSNAME = "widget-draggable-title";
 
 const WidgetContainer = ({ widgetId, graphId, widgetProps }: WidgetContainerProps) => {
+	const [shouldOpenGraphWorkshop, setShouldOpenGraphWorkshop] = useState(false);
     const removeWidget = useRemoveWidget();
     const containerRef = useRef();
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
     const graph = useRecoilValue(graphSelector(graphId));
 
+	console.log(graph)
 	const deleteWidget = (widgetId: string) => {
 		try {
 			removeWidget(widgetId);
@@ -45,7 +48,7 @@ const WidgetContainer = ({ widgetId, graphId, widgetProps }: WidgetContainerProp
             ref={containerRef}
         >
             <div className='widget-top'>
-                <EditIcon className='edit-icon' />
+                <EditIcon className='edit-icon' onClick={() => setShouldOpenGraphWorkshop(true)} />
                 <p className={WIDGET_DRAGGABLE_TITLE_CLASSNAME}>
                     {graph?.title || "No Title"}
                 </p>
@@ -59,6 +62,7 @@ const WidgetContainer = ({ widgetId, graphId, widgetProps }: WidgetContainerProp
                     height={height}
                 />
             }
+			<GraphWorkshop isOpen={shouldOpenGraphWorkshop} onClose={() => setShouldOpenGraphWorkshop(false)} graphToEdit={graph}/>
         </div>
     );
 };

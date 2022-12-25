@@ -13,6 +13,15 @@ class GraphCommunicator extends Communicator {
         }
     }
 
+	async editGraph(graph: Graph) {
+		try {
+            return await requestProvider.put(this.getFullURL(`graphs/edit`), graph, await this.getSecureHeaders());
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+	}
+
     async getDashboardGraphs(dashboardId: string) {
         try {
             return await requestProvider.get<Graph[]>(this.getFullURL(`graphs/dashboard/${dashboardId}`), await this.getSecureHeaders());
