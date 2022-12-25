@@ -9,12 +9,22 @@ type InputProps = {
 }
 
 const Input = ({label, value, onChange}: InputProps) => {
+
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		onChange(event.target.value);
 	};	
 
 	return(
-		<TextField className="custom-input" label={label} variant="standard" value={value} onChange={handleChange}/>
+		<TextField 
+			className="custom-input" 
+			label={label} 
+			variant="standard" 
+			value={value} 
+			onChange={handleChange}
+			InputLabelProps={{
+				className: "custom-input-label" 
+			}}
+		/>
 	)
 }
 

@@ -1,6 +1,29 @@
 import { createTheme } from "@mui/material";
 
 const theme = createTheme({
+	components: {
+		MuiMenu:{
+			styleOverrides: {
+				paper: {
+					background: "#2a3164 !important",
+				},
+			}
+		},
+		MuiAutocomplete: {
+			styleOverrides: {
+				paper: {
+					background: "#2a3164 !important",
+				},
+			}
+		},
+		MuiInput: {
+			styleOverrides: {
+				root: {
+					borderColor: 'none !important'
+				}
+			}
+		}
+	},
     palette: {
         mode: 'dark',
         background: {
@@ -11,7 +34,7 @@ const theme = createTheme({
         },
         secondary: {
             main: '#03DAC5'
-        }
+        },
     }
 });
 
