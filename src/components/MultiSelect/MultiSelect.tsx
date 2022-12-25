@@ -1,76 +1,37 @@
-import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
+import { Autocomplete, TextField } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { Theme, useTheme } from '@mui/material/styles';
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
-    },
-};
-
-function getStyles(name: string, selectedOptions: readonly string[], theme: Theme) {
-    return {
-        fontWeight:
-            selectedOptions.indexOf(name) === -1
-                ? theme.typography.fontWeightRegular
-                : theme.typography.fontWeightMedium,
-    };
-}
 
 interface MultipleSelectProps {
+	label: string;
     options: string[];
     selectedOptions: string[];
     setSelectedOptions: (options: string[]) => void;
 }
 
-const MultipleSelect = ({ options, setSelectedOptions, selectedOptions = [] }: MultipleSelectProps) => {
-    const theme = useTheme();
-
-    const handleChange = (event: SelectChangeEvent<typeof selectedOptions>) => {
-        const { target: { value } } = event;
+const MultipleSelect = ({ options, setSelectedOptions, selectedOptions = [], label }: MultipleSelectProps) => {
+    const handleChange = (e: React.SyntheticEvent, value: string[]) => {
         setSelectedOptions(
-            // On autofill we get a stringified value.
-            typeof value === 'string' ? value.split(',') : value,
+            value
         );
     };
 
     return (
-        <FormControl className='custom-form-control'>
-            <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
-            <Select
-                multiple
-                value={selectedOptions || []}
-                onChange={handleChange}
-                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                renderValue={(selected) => (
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                        {selected?.map((value) => (
-                            <Chip key={value} label={value} />
-                        ))}
-                    </Box>
-                )}
-                MenuProps={MenuProps}
-            >
-                {options?.map((name) => (
-                    <MenuItem
-                        key={name}
-                        value={name}
-                        style={getStyles(name, selectedOptions, theme)}
-                    >
-                        {name}
-                    </MenuItem>
-                ))}
-            </Select>
+        <FormControl className='custom-form-control' sx={{width: 240, mb: 1.5}}>
+			<Autocomplete
+        		multiple
+        		id="size-small-standard-multi"
+        		options={options || []}
+				size='small'
+				limitTags={3}
+				onChange={handleChange}
+        		renderInput={(params) => (
+          			<TextField
+            			{...params}
+            			variant="standard"
+            			label={label}
+          			/>
+        		)}
+      		/>
         </FormControl>
     );
 };

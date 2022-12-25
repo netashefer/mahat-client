@@ -114,6 +114,7 @@ const ParametersPanel = () => {
 					</RenderIf>
 					<RenderIf condition={!!schemaFields && chartConfig?.isDataFields}>
 						<MultipleSelect
+							label="Fields"
 							selectedOptions={dataFields || []}
 							options={schemaFields?.map(f => f.label)}
 							setSelectedOptions={setDataFields}
