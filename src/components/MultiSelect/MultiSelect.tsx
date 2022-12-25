@@ -45,7 +45,7 @@ const MultipleSelect = ({ options, setSelectedOptions, selectedOptions = [] }: M
     };
 
     return (
-        <FormControl sx={{ m: 1, width: 300 }}>
+        <FormControl className='custom-form-control'>
             <InputLabel id="demo-multiple-chip-label">Chip</InputLabel>
             <Select
                 multiple
