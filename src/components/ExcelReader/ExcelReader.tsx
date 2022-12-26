@@ -31,9 +31,6 @@ const ExcelReader = ({ dashboardId, fileUploadStage, dataSourceIdToReplace, setF
         setFile(file);
     };
 
-    console.log(file);
-
-
     const readFile = () => {
         setIsLoading(true);
         const reader = new FileReader();
