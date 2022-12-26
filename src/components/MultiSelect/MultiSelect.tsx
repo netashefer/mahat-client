@@ -8,7 +8,7 @@ interface MultipleSelectProps {
     setSelectedOptions: (options: string[]) => void;
 }
 
-const MultipleSelect = ({ options, setSelectedOptions, label }: MultipleSelectProps) => {
+const MultipleSelect = ({ options, setSelectedOptions, selectedOptions, label }: MultipleSelectProps) => {
     const handleChange = (e: React.SyntheticEvent, value: string[]) => {
         setSelectedOptions(
             value
@@ -18,6 +18,7 @@ const MultipleSelect = ({ options, setSelectedOptions, label }: MultipleSelectPr
     return (
         <FormControl sx={{width: 240, mb: 1.5}}>
 			<Autocomplete
+				value={selectedOptions}
         		multiple
         		id="size-small-standard-multi"
         		options={options || []}
