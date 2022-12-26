@@ -30,6 +30,15 @@ class WidgetCommunicator extends Communicator {
             throw e;
         }
     }
+
+    async updateWidgetsLayout(widgets: Widget[]) {
+        try {
+            return await requestProvider.post(this.getFullURL(`widgets/updateLayout`), { widgets }, await this.getSecureHeaders());
+        } catch (e) {
+            console.error(e);
+            throw e;
+        }
+    }
 }
 
 export default new WidgetCommunicator(config.graphServer.url, config.graphServer.auth0);

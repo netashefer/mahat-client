@@ -9,16 +9,26 @@ export const useAddWidget = () => {
         const widget: WidgetWithoutId = {
             dashboardId: snapshot.getLoadable(dashboardIdAtom).getValue(),
             graphId,
-            widgetProps: {},
+            widgetProps: null
         };
 
         const widgetId = await widgetCommunicator.addWidgetToDashboard(widget);
-        set(widgetsAtom, prev => [...(prev || []), { ...widget, widgetId }]);
+        const gridProps = {
+            w: 2,
+            h: 2,
+            x: 0,
+            y: 0,
+            i: widgetId
+        };
+
+        set(widgetsAtom, prev => [...(prev || []), {
+            ...widget, widgetId, widgetProps: gridProps
+        }]);
     }, []);
 };
 
 export const useRemoveWidget = () => {
-    return useRecoilCallback(({ set, snapshot }) => async (widgetId: string) => {
+    return useRecoilCallback(({ set }) => async (widgetId: string) => {
         await widgetCommunicator.removeWidgetFromDashboard(widgetId);
         set(widgetsAtom, prev => prev.filter(w => w.widgetId !== widgetId));
     }, []);
@@ -26,7 +36,7 @@ export const useRemoveWidget = () => {
 
 export const useRemoveWidgetByGraphId = () => {
     return useRecoilCallback(({ set, snapshot }) => async (graphId: string) => {
-		const { widgetId } = snapshot.getLoadable(widgetsAtom).getValue().find(w => w.graphId === graphId);
+        const { widgetId } = snapshot.getLoadable(widgetsAtom).getValue().find(w => w.graphId === graphId);
         await widgetCommunicator.removeWidgetFromDashboard(widgetId);
         set(widgetsAtom, prev => prev.filter(w => w.widgetId !== widgetId));
     }, []);

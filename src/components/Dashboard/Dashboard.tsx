@@ -1,36 +1,31 @@
-import React, { useState } from "react";
-import { Layout, Responsive, WidthProvider } from "react-grid-layout";
+import React from "react";
+import { Responsive, WidthProvider } from "react-grid-layout";
 import 'react-grid-layout/css/styles.css';
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { useAddWidget } from "../../recoil/customHooks/useWidgetHandler";
 import { widgetsAtom } from "../../recoil/widgets/widgets";
 import { GRAPH_DRAG_AND_DROP_KEY } from "../../types/graph.types";
-import { Widget } from "../../types/widget.types";
 import WidgetContainer, { WIDGET_DRAGGABLE_TITLE_CLASSNAME } from "../WidgetContainer/WidgetContainer";
-import './Dashboard.scss';
 import EmptyDashboard from './EmptyDashboard/EmptyDashboard';
+import './Dashboard.scss';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const handleLayoutChange = (layout: any, layouts: any) => {
-    localStorage.setItem("grid-layout", JSON.stringify(layout));
-};
-
-const initialLayout: Layout[] = [
-    { i: `1`, x: 0, y: 0, w: 1, h: 2 },
-    { i: "2", x: 1, y: 8, w: 3, h: 2, minW: 2, maxW: 4 },
-    { i: "3", x: 4, y: 5, w: 6, h: 3 }
-];
-
-const getLayout = () => {
-    const savedGridLayout = localStorage.getItem("grid-layout");
-    return savedGridLayout ? JSON.parse(savedGridLayout) : initialLayout;
-};
+const DASHBOARD_COLS = 10;
 
 const Dashboard = () => {
-    const [layout] = useState<Layout[]>(getLayout());
     const addWidget = useAddWidget();
-    const widgets: Widget[] = useRecoilValue(widgetsAtom);
+    const [widgets, setWidgets] = useRecoilState(widgetsAtom);
+    const layout = widgets?.map(w => ({ ...w.widgetProps, minW: 2, minH: 2 }));
+
+    const handleLayoutChange = (layout: any[], layouts: any) => {
+        setWidgets(prev => {
+            return prev.map(widget => {
+                const props = layout.find(l => l.i === widget.widgetId);
+                return { ...widget, widgetProps: props };
+            });
+        });
+    };
 
     const onDrop = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
@@ -41,6 +36,10 @@ const Dashboard = () => {
 
     const allowDrop = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
+    };
+
+    const applyAllSizes = (config: any) => {
+        return { lg: config, md: config, sm: config, xs: config, xxs: config };
     };
 
     return (
@@ -55,7 +54,8 @@ const Dashboard = () => {
                         onLayoutChange={handleLayoutChange}
                         isResizable
                         isDraggable
-                        layouts={{ lg: layout }}
+                        layouts={applyAllSizes(layout)}
+                        cols={applyAllSizes(DASHBOARD_COLS)}
                     >
                         {
                             widgets.map(w =>
