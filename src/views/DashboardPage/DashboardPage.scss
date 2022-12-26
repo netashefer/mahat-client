@@ -2,10 +2,11 @@
 
 .dashboard-page {
     background-color: var(--main-background-color);
-    height: 100%;
+    height: 90%;
 
     .dashboard-top {
         display: flex;
+        height: 10%;
 
         .left-section {
             width: 80%;
@@ -24,6 +25,6 @@
 
     .bottom {
         display: flex;
-        height: 100%;
+        height: 90%;
     }
 }

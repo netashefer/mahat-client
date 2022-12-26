@@ -60,7 +60,7 @@ const ParametersPanel = () => {
 		};
 
 		try {
-			const graphId = await graphCommunicator.createGraph(graphToSave) as string;
+			const graphId = await graphCommunicator.createGraph(graphToSave);
 			addGraphToExistingGraphs({ ...graphToSave, graphId });
 			addGraphToDashboard(graphId);
 			notifySuccess("Sucessfully created your graph!");

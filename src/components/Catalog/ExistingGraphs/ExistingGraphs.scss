@@ -1,5 +1,7 @@
 .existing-graphs {
     margin-top: 1em;
+    overflow-y: auto;
+    height: 90%;
 
     .title {
         font-size: 16px;

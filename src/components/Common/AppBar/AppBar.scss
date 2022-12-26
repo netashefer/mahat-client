@@ -1,4 +1,9 @@
 .app-bar {
     background-image: linear-gradient(to right, #5462E1, #00FFE0) !important;
-	font-family: system-ui;
+    font-family: system-ui;
+    height: 100%;
+}
+
+.app-bar-container {
+    height: 10%
 }

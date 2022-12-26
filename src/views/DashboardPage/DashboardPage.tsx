@@ -20,13 +20,13 @@ const DashbaordPage = () => {
     const [openManagerPage, setOpenManager] = useState<ManagerPanelOptions>(ManagerPanelOptions.none);
     const { user } = useAuth0();
 
-	const openAndCloseManagerPage = (managerPanelOption: ManagerPanelOptions) => {
-		if(openManagerPage !== ManagerPanelOptions.none){
-			setOpenManager(ManagerPanelOptions.none)
-		} else {
-			setOpenManager(managerPanelOption);
-		}
-	}
+    const openAndCloseManagerPage = (managerPanelOption: ManagerPanelOptions) => {
+        if (openManagerPage === managerPanelOption) {
+            setOpenManager(ManagerPanelOptions.none);
+        } else {
+            setOpenManager(managerPanelOption);
+        }
+    };
 
     useEffect(() => {
         setDashboardId(dashboardId);
