@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilCallback, useRecoilValue } from "recoil";
 import excelCommunicator from "../../../communication/excelCommunicator";
 import graphCommunicator from "../../../communication/graphCommunicator";
@@ -60,6 +60,11 @@ const ParametersPanel = ({graphToEdit}: ParametersPanelProps) => {
 			setSchemaFields(schema.map(s => ({ value: s, label: s })));
 		}
 	};
+
+	const overrideFieldBy = (callback: Function) => {
+		callback();
+		setDataFields(null);
+	}
 
 	useEffect(() => {
 		getDataSourceSchema();
@@ -133,13 +138,13 @@ const ParametersPanel = ({graphToEdit}: ParametersPanelProps) => {
 						<>
 							<Dropdown
 								value={xAxis}
-								onChange={(xAxis) => {setXAxis(xAxis); setDataFields(null)}}
+								onChange={(xAxis) => overrideFieldBy(() => setXAxis(xAxis))}
 								label={chartConfig?.xFieldLabel || "X Axis"}
 								items={schemaFields}
 							/>
 							<Dropdown
 								value={yAxis}
-								onChange={(yAxis) => {setYAxis(yAxis);  setDataFields(null)}}
+								onChange={(yAxis) => overrideFieldBy(() => setYAxis(yAxis))}
 								label="Y Axis"
 								items={chartConfig?.yFieldOptions?.map(v => ({ label: v.funcDisplayName, value: v.func }))}
 							/>
@@ -148,7 +153,7 @@ const ParametersPanel = ({graphToEdit}: ParametersPanelProps) => {
 					<RenderIf condition={yAxis?.value === Aggragation.uniqueValues}>
 						<Dropdown
 							value={yAxisField}
-							onChange={(yAxisField) => {setYAxisField(yAxisField); setDataFields(null)}}
+							onChange={(yAxisField) => overrideFieldBy(() => setYAxisField(yAxisField))}
 							label="By Field"
 							items={schemaFields}
 						/>
