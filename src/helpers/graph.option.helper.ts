@@ -63,5 +63,13 @@ export const GraphOptionsMap: Record<GraphType, Highcharts.Options> = {
             }
         },
     },
-    table: undefined
+    table: undefined,
+    wordcloud: {
+        chart: {
+            type: 'wordcloud'
+        },
+        tooltip: {
+            headerFormat: '<span><b>{point.key}</b></span><br>'
+        },
+    }
 }; 

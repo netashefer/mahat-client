@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRecoilCallback, useRecoilValue } from "recoil";
 import excelCommunicator from "../../../communication/excelCommunicator";
 import graphCommunicator from "../../../communication/graphCommunicator";
+import { buildGraphConfig } from "../../../helpers/graphConfig.builder.helper";
 import { notifyError, notifySuccess } from "../../../helpers/toaster";
 import { useAddWidget } from "../../../recoil/customHooks/useWidgetHandler";
 import { dataSourcesAtom } from "../../../recoil/dataSources/dataSources";
@@ -17,7 +18,7 @@ import './ParametersPanel.scss';
 const ParametersPanel = () => {
 	const dataSources = useRecoilValue(dataSourcesAtom);
 	const [dataSource, setDataSource] = useState<OptionItem>(null);
-	const [graphType, setGraphType] = useState<OptionItem>(null); //for the time being all of these are useState
+	const [graphType, setGraphType] = useState<OptionItem<GraphType>>(null); //for the time being all of these are useState
 	const [xAxis, setXAxis] = useState<OptionItem>(null);
 	const [yAxisField, setYAxisField] = useState<OptionItem>(null);
 	const [yAxis, setYAxis] = useState<OptionItem<Aggragation>>(null);
@@ -47,16 +48,7 @@ const ParametersPanel = () => {
 
 
 	const saveGraph = async () => {
-		const graphToSave: Graph = {
-			dataSourceId: dataSource?.value,
-			graphConfig: {
-				x_field: xAxis?.value || null,
-				y_field: { aggragation: yAxis?.value, field: yAxisField?.value || null },
-				dataFields
-			},
-			template: { type: graphType.value as GraphType },
-			title: graphName,
-		};
+		const graphToSave = buildGraphConfig(dataSource, xAxis, yAxis, yAxisField, graphType, dataFields, graphName);
 
 		try {
 			const graphId = await graphCommunicator.createGraph(graphToSave);

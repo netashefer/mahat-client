@@ -1,1 +1,11 @@
 export type setState<T> = React.Dispatch<React.SetStateAction<T>>;
+export type Subset<K> = { // nested Partial - https://grrr.tech/posts/2021/typescript-partial/
+    [attr in keyof K]?: K[attr] extends object
+    ? Subset<K[attr]>
+    : K[attr] extends object | null
+    ? Subset<K[attr]> | null
+    : K[attr] extends object | null | undefined
+    ? Subset<K[attr]> | null | undefined
+    : K[attr];
+};
+export type PartialRecord<K extends string, T> = Partial<Record<K, T>>;
