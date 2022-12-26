@@ -51,8 +51,8 @@ const ParametersPanel = ({graphToEdit}: ParametersPanelProps) => {
 	}, []);
 
 	const editGraphInExistingGraphs = useRecoilCallback(({set}) => (graph: Graph) =>{
-		set(graphsAtom, prevState => [...prevState.filter(g => g.graphId !== graph.graphId), graph])
-	})
+		set(graphsAtom, prevState => [...prevState.filter(g => g.graphId !== graph.graphId), graph]);
+	}, []);
 
 	const getDataSourceSchema = async () => {
 		if (dataSource?.value) {
@@ -96,7 +96,7 @@ const ParametersPanel = ({graphToEdit}: ParametersPanelProps) => {
 			addGraphToDashboard(graphId);
 			notifySuccess("Sucessfully created your graph!");
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 			notifyError("We couldn't create your graph");
 		}
 	}
@@ -108,7 +108,7 @@ const ParametersPanel = ({graphToEdit}: ParametersPanelProps) => {
 			editGraphInExistingGraphs(graphWithGraphId);
 			notifySuccess("Sucessfully saved your edited graph!");
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 			notifyError("We couldn't save your edited graph");
 		}
 	}

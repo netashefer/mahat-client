@@ -1,8 +1,8 @@
 import { Modal } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
 import { Graph } from "../../types/graph.types";
-import './GraphWorkshop.scss';
 import ParametersPanel from "./ParametersPanel/ParametersPanel";
+import './GraphWorkshop.scss';
 
 interface GraphWorkshopProps {
 	isOpen: boolean,
