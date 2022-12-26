@@ -19,4 +19,11 @@ const widgetsDefaultSelector = selector<Widget[]>({
 export const widgetsAtom = atom<Widget[]>({
     key: 'widgetsAtom',
     default: widgetsDefaultSelector,
+    effects: [
+        ({ onSet }) => {
+            onSet(async widgets => {
+                await widgetCommunicator.updateWidgetsLayout(widgets);
+            });
+        },
+    ],
 });

@@ -18,11 +18,11 @@ const GraphContainer = ({ graph, width, height, graphHandler }: GraphContainerPr
 
     useEffect(() => {
         fetchAggregatedData();// eslint-disable-next-line
-    }, [graph?.dataSourceId]);
+    }, [graph?.dataSourceId, graph?.graphConfig, graph?.template]);
 
     const fetchAggregatedData = async () => {
-        if (graph?.dataSourceId && graph?.graphConfig) {
-            const aggregatedData = await aggregatorCommunicator.getAggregatedData(graph?.graphConfig, graph?.dataSourceId);
+		if (graph?.dataSourceId && graph?.graphConfig) {
+			const aggregatedData = await aggregatorCommunicator.getAggregatedData(graph?.graphConfig, graph?.dataSourceId);
             setData(aggregatedData);
         }
     };
