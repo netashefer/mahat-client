@@ -1,6 +1,5 @@
-import { useRecoilState } from 'recoil';
-import excelCommunicator from '../../../communication/excelCommunicator';
-import { notifyError } from '../../../helpers/toaster';
+import { useRecoilValue } from 'recoil';
+import { useRemoveDataSource } from '../../../recoil/customHooks/useDataSourceHandler';
 import { dataSourcesAtom } from '../../../recoil/dataSources/dataSources';
 import { DataSourceIdentifiers } from '../../../types/dataSource.types';
 import withLoader from '../../Common/withLoader/withLoader';
@@ -13,16 +12,8 @@ interface ExistingFilesProps {
 }
 
 const ExistingFiles = ({ pickDataSource, replaceDataSource }: ExistingFilesProps) => {
-    const [dashboardDataSources, setDashboardDataSources] = useRecoilState(dataSourcesAtom);
-
-    const deleteDateSource = async (dataSource: DataSourceIdentifiers) => {
-        try {
-            await excelCommunicator.deleteDateSource(dataSource.dataSourceId);
-            setDashboardDataSources(prev => prev.filter(d => d.dataSourceId !== dataSource.dataSourceId));
-        } catch {
-            notifyError("We cannot delete this data source");
-        }
-    };
+    const dashboardDataSources = useRecoilValue(dataSourcesAtom);
+    const deleteDateSource = useRemoveDataSource();
 
     return (
         <div className='existing-files'>
@@ -33,7 +24,7 @@ const ExistingFiles = ({ pickDataSource, replaceDataSource }: ExistingFilesProps
                         key={dataSource.dataSourceId}
                         fileName={dataSource.displayName}
                         onInfo={() => pickDataSource(dataSource)}
-                        onRemove={() => deleteDateSource(dataSource)}
+                        onRemove={() => deleteDateSource(dataSource?.dataSourceId)}
                         onReplace={() => replaceDataSource(dataSource)}
                     />
                 )
