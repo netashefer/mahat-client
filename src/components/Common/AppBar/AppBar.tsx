@@ -11,7 +11,7 @@ import "./AppBar.scss";
 export default function ButtonAppBar() {
 	const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 	return (
-		<Box style={{ height: '10%' }}>
+		<Box className='app-bar-container'>
 			<AppBar position="static" className='app-bar' style={{ height: '100%' }}>
 				<Toolbar>
 					<IconButton
