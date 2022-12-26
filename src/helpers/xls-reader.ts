@@ -1,40 +1,29 @@
-import * as XLSX from 'xlsx';
+import readXlsxFile, { Row } from 'read-excel-file';
 import { Table } from "../types/table.types";
 import { notifyError } from "./toaster";
 
-export const convertToJson = (csv: string): Table => {
-    const lines = csv.split("\n");
-
+export const convertToJson = (rows: Row[]): Table => {
     const result = [];
 
-    const headers = lines[0].split(",");
+    const headers = rows[0];
 
-    for (let i = 1; i < lines.length; i++) {
+    for (let i = 1; i < rows.length; i++) {
         const obj: any = {};
-        const currentline = lines[i].split(",");
-
         for (let j = 0; j < headers.length; j++) {
-            obj[headers[j]] = currentline[j];
+            obj[headers[j] as string] = rows[i][j];
         }
-
         result.push(obj);
     }
 
-    return { data: result, schema: headers };
+    return { data: result, schema: headers as string[] };
 };
 
 export const onLoad = async (
-    dashboardId: string,
-    evt: ProgressEvent<FileReader>,
     file: File,
     onReadingSucceed: (table: Table, filename: string) => void,
     onReadingEnd: () => void
-) => {// evt = on_file_select event
-    const workBook = getWorkBook(evt);
-    const workSheetName = workBook.SheetNames[0];/* Get first worksheet */
-    const workSheet = workBook.Sheets[workSheetName];
-    const data = XLSX.utils.sheet_to_csv(workSheet);/* Convert array of arrays */
-
+) => {
+    const data = await readXlsxFile(file, { dateFormat: 'mm/dd/yyyy' });
     const table: Table = convertToJson(data);
     try {
         onReadingSucceed(table, file.name);
@@ -43,10 +32,4 @@ export const onLoad = async (
     } finally {
         onReadingEnd();
     }
-};
-
-export const getWorkBook = (evt: ProgressEvent<FileReader>) => {
-    const bstr = evt.target.result;/* Parse data */
-    const wb = XLSX.read(bstr, { type: "binary" });
-    return wb;
 };
