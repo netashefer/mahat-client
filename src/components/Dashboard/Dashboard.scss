@@ -4,7 +4,7 @@
     overflow-y: auto;
 
     .react-grid-item.react-grid-placeholder {
-        background: #00E0FF;
+        background: var(--action-color);
         border-radius: 10px;
         opacity: 0.2;
         transition-duration: 100ms;

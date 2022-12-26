@@ -1,22 +1,48 @@
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
+import HC_exporting_data from 'highcharts/modules/export-data';
+import HC_exporting from 'highcharts/modules/exporting';
+import HC_exporting_offline from 'highcharts/modules/offline-exporting';
+import { useImperativeHandle, useRef } from "react";
 import { GraphOptionsMap } from "../../../helpers/graph.option.helper";
-import { BACKGROUND_COLOR } from "../../../styles/styles.constants";
+import { SECONDARY_BACKGROUND_COLOR } from "../../../styles/styles.constants";
 import { Graph } from "../../../types/graph.types";
 import { Data } from "../../../types/table.types";
+import { GraphHandler } from "../../WidgetContainer/WidgetContainer";
+
+// init the module
+HC_exporting(Highcharts);
+HC_exporting_data(Highcharts);
+HC_exporting_offline(Highcharts);
 
 interface HighchartsGraphProps {
     graph: Graph;
     width: number;
     height: number;
     aggregatedData: Data;
+    graphHandler: React.MutableRefObject<GraphHandler>;
 }
 
-const HighchartsGraph = ({ graph, width, height, aggregatedData }: HighchartsGraphProps) => {
+const HighchartsGraph = ({ graph, width, height, aggregatedData, graphHandler }: HighchartsGraphProps) => {
+    const ref = useRef<HighchartsReact.RefObject>();
+
+    const downloadImage = () => {
+        ref.current?.chart?.exportChartLocal({ type: 'image/png', filename: graph.title });
+    };
+
+    const downloadCsv = () => {
+        ref.current?.chart?.downloadCSV();
+    };
+
+    useImperativeHandle(graphHandler, () => ({
+        downloadCsv,
+        downloadImage,
+    }));
+
     const options: Partial<Highcharts.Options> = {
         ...GraphOptionsMap[graph?.template?.type],
         chart: {
-            backgroundColor: BACKGROUND_COLOR,
+            backgroundColor: SECONDARY_BACKGROUND_COLOR,
             ...GraphOptionsMap[graph?.template?.type]?.chart,
             width,
             height: height - 56
@@ -34,16 +60,16 @@ const HighchartsGraph = ({ graph, width, height, aggregatedData }: HighchartsGra
         }],
         legend: {
             itemStyle: { color: "white" }
-        }
+        },
+        exporting: { enabled: false }
     };
 
     return (
-        <div>
-            <HighchartsReact
-                highcharts={Highcharts}
-                options={options}
-            />
-        </div>
+        <HighchartsReact
+            highcharts={Highcharts}
+            options={options}
+            ref={ref}
+        />
     );
 };
 
