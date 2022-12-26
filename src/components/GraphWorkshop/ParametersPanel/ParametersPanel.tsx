@@ -7,6 +7,7 @@ import { useAddWidget } from "../../../recoil/customHooks/useWidgetHandler";
 import { dataSourcesAtom } from "../../../recoil/dataSources/dataSources";
 import { graphsAtom } from "../../../recoil/graphs/graphs";
 import { Aggragation, Graph, GraphType } from "../../../types/graph.types";
+import ActionButton from "../../../views/DashboardPage/DashboardActions/ActionButton";
 import Dropdown, { OptionItem } from "../../Common/Dropdown/Dropdown";
 import Input from "../../Common/Input/Input";
 import RenderIf from "../../Common/RenderIf/RenderIf";
@@ -107,19 +108,22 @@ const ParametersPanel = () => {
 						<Dropdown
 							value={yAxisField}
 							onChange={setYAxisField}
-							label="by field"
+							label="By Field"
 							items={schemaFields}
 						/>
 					</RenderIf>
 					<RenderIf condition={!!schemaFields && chartConfig?.isDataFields}>
 						<MultipleSelect
+							label="Fields"
 							selectedOptions={dataFields || []}
 							options={schemaFields?.map(f => f.label)}
 							setSelectedOptions={setDataFields}
 						/>
 					</RenderIf>
 					<Input value={graphName} onChange={setGraphName} label="Graph Name" />
-					<button onClick={saveGraph}> Save Graph </button>
+					<div className="action-buttons-container">
+						<ActionButton text="Save Graph" onClick={saveGraph} borderColor="green" />
+					</div>
 				</>
 			</RenderIf>
 		</div>

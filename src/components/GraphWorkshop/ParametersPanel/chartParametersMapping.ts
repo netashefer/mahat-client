@@ -21,7 +21,7 @@ export const graphTypes: OptionItem<GraphType>[] = [
 
 export const chartMapping: Record<GraphType, ChartConfig> = {
     pie: {
-        xFieldLabel: "split according to",
+        xFieldLabel: "Split According To",
         yFieldOptions: [{
             func: Aggragation.uniqueValues,
             funcDisplayName: 'By Unique Values',
