@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import aggregatorCommunicator from '../../communication/aggregatorCommunicator';
 import { Graph, GraphType } from '../../types/graph.types';
+import { PartialRecord } from '../../types/utility.types';
 import { GraphHandler } from '../WidgetContainer/WidgetContainer';
 import HighchartsGraph from './HighchartsGraph/HighchartsGraph';
 import TableGraph from './TableGraph/TableGraph';
@@ -26,7 +27,7 @@ const GraphContainer = ({ graph, width, height, graphHandler }: GraphContainerPr
         }
     };
 
-    const GraphMap: Partial<Record<GraphType, React.ComponentType<any>>> = {
+    const GraphMap: PartialRecord<GraphType, React.ComponentType<any>> = {
         table: TableGraph,
     };
 

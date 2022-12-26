@@ -16,7 +16,8 @@ export const graphTypes: OptionItem<GraphType>[] = [
     { value: 'pie', label: 'Pie' },
     { value: 'column', label: 'Column' },
     { value: 'line', label: 'Line' },
-    { value: 'table', label: 'Table' }
+    { value: 'table', label: 'Table' },
+    { value: 'wordcloud', label: 'Word Cloud' }
 ];
 
 export const chartMapping: Record<GraphType, ChartConfig> = {
@@ -49,6 +50,9 @@ export const chartMapping: Record<GraphType, ChartConfig> = {
         }],
     },
     table: {
+        isDataFields: true,
+    },
+    wordcloud: {
         isDataFields: true,
     }
 };

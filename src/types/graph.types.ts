@@ -1,11 +1,11 @@
 import { DataSourceId } from "./dataSource.types";
 
-export type GraphType = "pie" | "line" | "column" | 'table';
+export type GraphType = "pie" | "line" | "column" | 'table' | 'wordcloud';
 
 export type Graph = {
     graphId?: string;
     title: string;
-    template: { type: GraphType; };
+    template: { type: GraphType; seriesName?: string; };
     dataSourceId: DataSourceId;
     graphConfig: GraphConfig;
 };
@@ -24,6 +24,7 @@ export type GraphConfig = {
     x_field: string;
     y_field: { aggragation?: Aggragation; field?: string; };
     dataFields?: string[];
+    dataFieldsAggregation: 'weight' | null;
 };
 
 export const GRAPH_DRAG_AND_DROP_KEY = "graph-dnd";

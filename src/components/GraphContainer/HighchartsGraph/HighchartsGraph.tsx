@@ -3,6 +3,8 @@ import HighchartsReact from "highcharts-react-official";
 import HC_exporting_data from 'highcharts/modules/export-data';
 import HC_exporting from 'highcharts/modules/exporting';
 import HC_exporting_offline from 'highcharts/modules/offline-exporting';
+import noData from 'highcharts/modules/no-data-to-display';
+import wordcloud from 'highcharts/modules/wordcloud';
 import { useImperativeHandle, useRef } from "react";
 import { GraphOptionsMap } from "../../../helpers/graph.option.helper";
 import { SECONDARY_BACKGROUND_COLOR } from "../../../styles/styles.constants";
@@ -11,9 +13,11 @@ import { Data } from "../../../types/table.types";
 import { GraphHandler } from "../../WidgetContainer/WidgetContainer";
 
 // init the module
+wordcloud(Highcharts);
 HC_exporting(Highcharts);
 HC_exporting_data(Highcharts);
 HC_exporting_offline(Highcharts);
+noData(Highcharts);
 
 interface HighchartsGraphProps {
     graph: Graph;
@@ -41,6 +45,15 @@ const HighchartsGraph = ({ graph, width, height, aggregatedData, graphHandler }:
 
     const options: Partial<Highcharts.Options> = {
         ...GraphOptionsMap[graph?.template?.type],
+        lang: {
+            noData: "No data"
+        },
+        noData: {
+            style: {
+                fontWeight: 'bold',
+                fontSize: '1em'
+            }
+        },
         chart: {
             backgroundColor: SECONDARY_BACKGROUND_COLOR,
             ...GraphOptionsMap[graph?.template?.type]?.chart,
@@ -54,9 +67,9 @@ const HighchartsGraph = ({ graph, width, height, aggregatedData, graphHandler }:
             categories: aggregatedData.map(r => r.name),
         },
         series: [{
-            name: 'item',
+            name: graph?.template?.seriesName || 'Item',
             data: aggregatedData,
-            type: graph?.template?.type as any
+            type: graph?.template?.type as any,
         }],
         legend: {
             itemStyle: { color: "white" }
