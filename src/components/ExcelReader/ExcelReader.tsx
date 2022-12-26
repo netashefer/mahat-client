@@ -34,7 +34,7 @@ const ExcelReader = ({ dashboardId, fileUploadStage, dataSourceIdToReplace, setF
     const readFile = () => {
         setIsLoading(true);
         const reader = new FileReader();
-        reader.onload = (evt) => onLoad(dashboardId, evt, file, onReadingSucceed, onReadingEnd);
+        reader.onload = (evt) => onLoad(file, onReadingSucceed, onReadingEnd);
         reader.readAsBinaryString(file);
     };
 
