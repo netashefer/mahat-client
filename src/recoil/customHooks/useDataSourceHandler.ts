@@ -16,7 +16,7 @@ export const useRemoveDataSource = () => {
             set(graphsAtom, prev => prev.filter(g => g.dataSourceId !== dataSourceId));
             set(widgetsAtom, prev => prev.filter(w => !allGraphsIdsToRemove.includes(w.graphId)));
         } catch {
-            notifyError("We cannot delete this data source");
+            notifyError("We failed delete this data source");
         }
     }, []);
 };
