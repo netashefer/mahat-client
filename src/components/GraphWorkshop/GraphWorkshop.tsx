@@ -1,15 +1,16 @@
 import { Modal } from "@mui/material";
+import { Dispatch, SetStateAction } from "react";
+import { Graph } from "../../types/graph.types";
 import ParametersPanel from "./ParametersPanel/ParametersPanel";
 import './GraphWorkshop.scss';
-import { Dispatch, SetStateAction } from "react";
 
 interface GraphWorkshopProps {
 	isOpen: boolean,
 	onClose: Dispatch<SetStateAction<any>>,
-	isEditMode?: boolean, //in the future :)
+	graphToEdit?: Graph,
 }
 
-const GraphWorkshop = ({isOpen, isEditMode, onClose}: GraphWorkshopProps) => {
+const GraphWorkshop = ({isOpen, graphToEdit, onClose}: GraphWorkshopProps) => {
     return (
        <Modal 
 	   open={isOpen}
@@ -17,9 +18,9 @@ const GraphWorkshop = ({isOpen, isEditMode, onClose}: GraphWorkshopProps) => {
 		<div className='graph-workshop-modal'>
 			<div className="creation-section">
 				<div className="title">
-				{!isEditMode ? 'Create A New Graph' : 'Edit An Existing Graph'}
+				{!graphToEdit ? 'Create A New Graph' : 'Edit An Existing Graph'}
 				</div>
-				<ParametersPanel/>
+				<ParametersPanel graphToEdit={graphToEdit}/>
 			</div>
 		</div>
 	   </Modal>

@@ -9,6 +9,7 @@ import { graphSelector } from '../../recoil/graphs/graphs';
 import { Widget } from '../../types/widget.types';
 import { DownloadCsvButton, DownloadImageButton } from './DownloadButtons/DownloadButtons';
 import GraphContainer from '../GraphContainer/GraphContainer';
+import GraphWorkshop from '../GraphWorkshop/GraphWorkshop';
 import './WidgetContainer.scss';
 
 interface WidgetContainerProps extends Widget { }
@@ -21,6 +22,7 @@ export interface GraphHandler {
 }
 
 const WidgetContainer = ({ widgetId, graphId, widgetProps }: WidgetContainerProps) => {
+	const [shouldOpenGraphWorkshop, setShouldOpenGraphWorkshop] = useState(false);
     const removeWidget = useRemoveWidget();
     const containerRef = useRef();
     const [width, setWidth] = useState(0);
@@ -61,8 +63,7 @@ const WidgetContainer = ({ widgetId, graphId, widgetProps }: WidgetContainerProp
         >
             <div className='widget-top'>
                 <div className='widget-top-bar-actions'>
-
-                    <EditIcon className='edit-icon' />
+                <EditIcon className='edit-icon' onClick={() => setShouldOpenGraphWorkshop(true)} />
                     <DownloadCsvButton className='download-csv-icon' handleDownload={downloadCsv} />
                     <DownloadImageButton className='download-image-icon' handleDownload={downloadImage} />
                 </div>
@@ -80,6 +81,7 @@ const WidgetContainer = ({ widgetId, graphId, widgetProps }: WidgetContainerProp
                     graphHandler={graphHandlerRef}
                 />
             }
+			<GraphWorkshop isOpen={shouldOpenGraphWorkshop} onClose={() => setShouldOpenGraphWorkshop(false)} graphToEdit={graph}/>
         </div>
     );
 };
