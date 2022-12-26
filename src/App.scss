@@ -6,6 +6,8 @@
   font-family: Arial, Helvetica, sans-serif;
   overflow: hidden;
   user-select: none;
+  display: flex;
+  flex-direction: column;
 
   .page-title {
     font-size: 30px;
