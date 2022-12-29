@@ -1,17 +1,18 @@
+import AddIcon from '@mui/icons-material/Add';
 import { LinearProgress } from "@mui/material";
 import { ChangeEvent, useState } from "react";
 import { useRecoilCallback } from 'recoil';
 import excelCommunicator from "../../communication/excelCommunicator";
+import { DATA_SOURCE_REPLACED } from "../../constants/events";
 import { notifyError, notifySuccess } from "../../helpers/toaster";
 import { onLoad } from "../../helpers/xls-reader";
-import AddIcon from '@mui/icons-material/Add';
 import { ReactComponent as ReplaceIcon } from "../../icons/replace-icon.svg";
 import { ReactComponent as UploadIcon } from "../../icons/upload.svg";
 import { dataSourcesAtom } from "../../recoil/dataSources/dataSources";
+import { FileUploadStage } from "../../types/dataSource.types";
 import { Table } from "../../types/table.types";
 import { setState } from "../../types/utility.types";
 import './ExcelReader.scss';
-import { FileUploadStage } from "../../types/dataSource.types";
 
 interface ExcelReaderProps {
     dashboardId: string;
@@ -54,6 +55,7 @@ const ExcelReader = ({ dashboardId, fileUploadStage, dataSourceIdToReplace, setF
                 set(dataSourcesAtom, prev => {
                     return [...(prev?.filter(d => d.dataSourceId !== dataSourceIdToReplace) || []), { dataSourceId: dataSourceIdToReplace, displayName: fileName }];
                 });
+                window.postMessage({ type: DATA_SOURCE_REPLACED, dataSourceId: dataSourceIdToReplace });
                 setFileUploadStage(FileUploadStage.add);
                 notifySuccess("File replaced successfully");
             }

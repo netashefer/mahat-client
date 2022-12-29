@@ -1,6 +1,8 @@
 import { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import aggregatorCommunicator from '../../communication/aggregatorCommunicator';
+import { DATA_SOURCE_REPLACED } from '../../constants/events';
+import { useEventListener } from '../../recoil/customHooks/useEventListener';
 import { Graph, GraphType } from '../../types/graph.types';
 import { PartialRecord } from '../../types/utility.types';
 import { GraphHandler } from '../WidgetContainer/WidgetContainer';
@@ -18,6 +20,13 @@ interface GraphContainerProps {
 const GraphContainer = ({ graph, width, height, graphHandler }: GraphContainerProps) => {
     const [aggregatedData, setData] = useState([]);
     const [invalidFields, setInvalidFields] = useState([]);
+
+    const handleEvent = (e: MessageEvent) => {
+        if (e.data.type === DATA_SOURCE_REPLACED && e.data?.dataSourceId === graph.dataSourceId) {
+            fetchAggregatedData();
+        }
+    };
+    useEventListener('message', handleEvent);
 
     useEffect(() => {
         fetchAggregatedData();// eslint-disable-next-line
