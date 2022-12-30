@@ -10,7 +10,7 @@ const GraphError = ({ invalidFields }: { invalidFields: string[]; }) => {
                 The fields:
                 <ul>
                     {
-                        invalidFields.map(field => <li>{field}</li>)
+                        invalidFields.map((field, index) => <li key={index}>{field}</li>)
                     }
                 </ul>
                 are deleted or changed
