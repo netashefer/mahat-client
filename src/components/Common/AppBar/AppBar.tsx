@@ -6,15 +6,23 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
 import "./AppBar.scss";
 
 export default function ButtonAppBar() {
 	const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
+	const navigate = useNavigate();
+
+	const redirectToHomePage = () => {
+		navigate('/');
+	};
+
 	return (
 		<Box className='app-bar-container'>
 			<AppBar position="static" className='app-bar' style={{ height: '100%' }}>
 				<Toolbar>
 					<IconButton
+						onClick={redirectToHomePage}
 						size="large"
 						edge="start"
 						color="inherit"
@@ -22,8 +30,6 @@ export default function ButtonAppBar() {
 						sx={{ mr: 2 }}
 					>
 						<DashboardIcon />
-						{//make this redirect back to homepage
-						}
 					</IconButton>
 					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						Graph.it
