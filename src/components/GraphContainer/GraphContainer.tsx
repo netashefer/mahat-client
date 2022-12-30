@@ -1,4 +1,6 @@
+import { CircularProgress } from '@mui/material';
 import { AxiosError } from 'axios';
+import _ from 'lodash';
 import { useEffect, useState } from 'react';
 import aggregatorCommunicator from '../../communication/aggregatorCommunicator';
 import { DATA_SOURCE_REPLACED } from '../../constants/events';
@@ -18,7 +20,7 @@ interface GraphContainerProps {
 }
 
 const GraphContainer = ({ graph, width, height, graphHandler }: GraphContainerProps) => {
-    const [aggregatedData, setData] = useState([]);
+    const [aggregatedData, setData] = useState(null);
     const [invalidFields, setInvalidFields] = useState([]);
 
     const handleEvent = (e: MessageEvent) => {
@@ -55,13 +57,16 @@ const GraphContainer = ({ graph, width, height, graphHandler }: GraphContainerPr
         invalidFields?.length ?
             <GraphError invalidFields={invalidFields} />
             :
-            <Component
-                aggregatedData={aggregatedData}
-                width={width}
-                height={height}
-                graph={graph}
-                graphHandler={graphHandler}
-            />
+            _.isNull(aggregatedData) ?
+                <CircularProgress />
+                :
+                <Component
+                    aggregatedData={aggregatedData}
+                    width={width}
+                    height={height}
+                    graph={graph}
+                    graphHandler={graphHandler}
+                />
     );
 };
 
