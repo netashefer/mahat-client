@@ -11,6 +11,7 @@ import { GraphHandler } from '../WidgetContainer/WidgetContainer';
 import GraphError from './GraphError/GraphError';
 import HighchartsGraph from './HighchartsGraph/HighchartsGraph';
 import TableGraph from './TableGraph/TableGraph';
+import './GraphContainer.scss';
 
 interface GraphContainerProps {
     graph: Graph;
@@ -54,19 +55,24 @@ const GraphContainer = ({ graph, width, height, graphHandler }: GraphContainerPr
     const Component = GraphMap[graph.template.type] || HighchartsGraph;
 
     return (
-        invalidFields?.length ?
-            <GraphError invalidFields={invalidFields} />
-            :
-            _.isNull(aggregatedData) ?
-                <CircularProgress />
-                :
-                <Component
-                    aggregatedData={aggregatedData}
-                    width={width}
-                    height={height}
-                    graph={graph}
-                    graphHandler={graphHandler}
-                />
+        <div className='graph-container'>
+            {
+
+                invalidFields?.length ?
+                    <GraphError invalidFields={invalidFields} />
+                    :
+                    _.isNull(aggregatedData) ?
+                        <CircularProgress />
+                        :
+                        <Component
+                            aggregatedData={aggregatedData}
+                            width={width}
+                            height={height}
+                            graph={graph}
+                            graphHandler={graphHandler}
+                        />
+            }
+        </div>
     );
 };
 
