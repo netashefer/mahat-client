@@ -14,11 +14,13 @@ export const useAddWidget = () => {
 
         const widgetId = await widgetCommunicator.addWidgetToDashboard(widget);
         const gridProps = {
-            w: 2,
-            h: 2,
+            w: 3,
+            h: 3,
             x: 0,
             y: 0,
-            i: widgetId
+            i: widgetId,
+            minH: 2,
+            minW: 2,
         };
 
         set(widgetsAtom, prev => [...(prev || []), {
