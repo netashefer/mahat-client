@@ -18,6 +18,7 @@ export type GraphWorkshopState = {
 export enum Aggragation {
     uniqueValues = 'uniqueValues',
     valuesCount = 'valuesCount',
+    sum = 'sum'
 }
 
 export type GraphConfig = {

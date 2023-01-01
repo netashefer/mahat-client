@@ -148,7 +148,7 @@ const ParametersPanel = ({ graphToEdit, onClose }: ParametersPanelProps) => {
 							/>
 						</>
 					</RenderIf>
-					<RenderIf condition={yAxis?.value === Aggragation.uniqueValues}>
+					<RenderIf condition={yAxis?.value === Aggragation.uniqueValues || yAxis?.value === Aggragation.sum}>
 						<Dropdown
 							value={yAxisField}
 							onChange={(yAxisField) => overrideFieldBy(() => setYAxisField(yAxisField))}

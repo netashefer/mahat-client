@@ -38,6 +38,9 @@ export const chartMapping: Record<GraphType, ChartConfig> = {
         }, {
             func: Aggragation.valuesCount,
             funcDisplayName: 'By Records Count'
+        }, {
+            func: Aggragation.sum,
+            funcDisplayName: 'Sum'
         }],
     },
     line: {
@@ -47,6 +50,9 @@ export const chartMapping: Record<GraphType, ChartConfig> = {
         }, {
             func: Aggragation.valuesCount,
             funcDisplayName: 'By Records Count'
+        }, {
+            func: Aggragation.sum,
+            funcDisplayName: 'Sum'
         }],
     },
     table: {

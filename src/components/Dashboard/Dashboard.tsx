@@ -16,7 +16,7 @@ const DASHBOARD_COLS = 10;
 const Dashboard = () => {
     const addWidget = useAddWidget();
     const [widgets, setWidgets] = useRecoilState(widgetsAtom);
-    const layout = widgets?.map(w => ({ ...w.widgetProps, minW: 2, minH: 2 }));
+    const layout = widgets?.map(w => w.widgetProps);
 
     const handleLayoutChange = (layout: any[], layouts: any) => {
         setWidgets(prev => {
@@ -56,6 +56,7 @@ const Dashboard = () => {
                         isDraggable
                         layouts={applyAllSizes(layout)}
                         cols={applyAllSizes(DASHBOARD_COLS)}
+                        rowHeight={80}
                     >
                         {
                             widgets.map(w =>
