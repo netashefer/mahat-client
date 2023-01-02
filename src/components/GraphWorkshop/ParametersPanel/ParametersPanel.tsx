@@ -3,12 +3,12 @@ import { useRecoilCallback, useRecoilValue } from "recoil";
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import excelCommunicator from "../../../communication/excelCommunicator";
 import graphCommunicator from "../../../communication/graphCommunicator";
-import { buildGraphConfig } from "../../../helpers/graphConfig.builder.helper";
+import { buildGraphConfig, validateGraph } from "../../../helpers/graphConfig.builder.helper";
 import { notifyError, notifySuccess } from "../../../helpers/toaster";
 import { useAddWidget } from "../../../recoil/customHooks/useWidgetHandler";
 import { dataSourcesAtom } from "../../../recoil/dataSources/dataSources";
 import { graphsAtom } from "../../../recoil/graphs/graphs";
-import { Aggragation, Graph, GraphType } from "../../../types/graph.types";
+import { Aggragation, Graph, GraphType, DependentAggregation } from "../../../types/graph.types";
 import { setState } from "../../../types/utility.types";
 import ActionButton from "../../../views/DashboardPage/DashboardActions/ActionButton";
 import Dropdown, { OptionItem } from "../../Common/Dropdown/Dropdown";
@@ -82,14 +82,18 @@ const ParametersPanel = ({ graphToEdit, onClose }: ParametersPanelProps) => {
 
 	const saveGraph = async () => {
 		const graphToSave = buildGraphConfig(dataSource, xAxis, yAxis, yAxisField, graphType, dataFields, graphName);
+		if (validateGraph(graphToSave)) {
+			if (!graphToEdit) {
+				createGraph(graphToSave);
+			} else {
+				editGraph(graphToSave);
+			}
 
-		if (!graphToEdit) {
-			createGraph(graphToSave);
+			onClose();
 		} else {
-			editGraph(graphToSave);
+			notifyError("could not save your graph");
 		}
 
-		onClose();
 	};
 
 	const createGraph = async (graph: Graph) => {
@@ -148,7 +152,7 @@ const ParametersPanel = ({ graphToEdit, onClose }: ParametersPanelProps) => {
 							/>
 						</>
 					</RenderIf>
-					<RenderIf condition={yAxis?.value === Aggragation.uniqueValues || yAxis?.value === Aggragation.sum}>
+					<RenderIf condition={DependentAggregation.includes(yAxis?.value)}>
 						<Dropdown
 							value={yAxisField}
 							onChange={(yAxisField) => overrideFieldBy(() => setYAxisField(yAxisField))}
