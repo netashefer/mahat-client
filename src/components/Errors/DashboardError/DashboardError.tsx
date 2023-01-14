@@ -1,6 +1,6 @@
 import './DashboardError.scss';
 
-const DashbaordError = () => {
+const DashboardError = () => {
     return (
         <div className='dashboard-error'>
             <div className='text'>We got a problem, try refresh the page</div>
@@ -8,4 +8,4 @@ const DashbaordError = () => {
     );
 };
 
-export default DashbaordError;
+export default DashboardError;
