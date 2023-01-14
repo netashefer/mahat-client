@@ -1,3 +1,4 @@
+import { OptionItem } from "../../components/Common/Dropdown/Dropdown";
 import { Aggragation, GraphType } from "../../types/graph.types";
 
 export const graphOptionsMock = {
@@ -23,4 +24,22 @@ export const graphOptionsMock = {
 	},
 	dataFields: ["wow(NUMBER)"],
 	graphName: "fwfefwefw"
+}
+
+export const wordCloudOptionsMock = {
+    dataSource: {
+        label: "abc.xlsx",
+        value: "e3fd929b-1204-4b0f-83d1-0760ae3dd56b"
+    },
+    xAxis: null as OptionItem,
+    yAxis: null as OptionItem<Aggragation>,
+    yAxisField: null as OptionItem,
+    graphType: {
+        value: "wordcloud" as GraphType,
+        label: "Word Cloud"
+    },
+    dataFields: [
+        "wow(NUMBER)"
+    ],
+    graphName: "sdfsdfsdfsd"
 }

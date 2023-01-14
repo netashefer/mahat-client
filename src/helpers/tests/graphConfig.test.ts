@@ -1,5 +1,5 @@
 import { buildGraphConfig } from "../graphConfig.builder.helper";
-import { graphOptionsMock } from "./graphConfig.mocks";
+import { graphOptionsMock, wordCloudOptionsMock } from "./graphConfig.mocks";
 
 describe("graph config tests", () => {
 	test("build graph config should create graph config from graph options", () => {
@@ -20,6 +20,31 @@ describe("graph config tests", () => {
 			},
 			template: { type: graphType.value, seriesName: null },
 			title: graphName,
+		})
+	});
+	test("build graph config should create graph config from graph options for graph using graphBuilderMapping", () => {
+		// Arrange
+		const { dataSource, xAxis, yAxis, yAxisField, graphType, dataFields, graphName } = wordCloudOptionsMock;
+		
+		// Act
+		const graphConfig = buildGraphConfig(dataSource, xAxis, yAxis, yAxisField, graphType, dataFields, graphName);
+
+		// Assert
+		expect(graphConfig).toEqual({
+			dataSourceId: dataSource.value,
+			graphConfig: {
+				x_field: null,
+				y_field: {
+					field: null
+				},
+				dataFields: dataFields,
+				dataFieldsAggregation: "weight"
+			},
+			template: {
+				type: graphType.value,
+				seriesName: "Occurrences"
+			},
+			title: graphName
 		})
 	})
 })
