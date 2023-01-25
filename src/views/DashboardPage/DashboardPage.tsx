@@ -5,7 +5,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import dashboardCommunicator from "../../communication/dashboardCommunicator";
 import withLoader from "../../components/Common/withLoader/withLoader";
 import Dashboard from "../../components/Dashboard/Dashboard";
-import DashbaordError from "../../components/Errors/DashboardError/DashboardError";
+import DashboardError from "../../components/Errors/DashboardError/DashboardError";
 import ManagerDecider from "../../components/ManagerDecider/ManagerDecider";
 import ShareLink from "../../components/ShareLink/ShareLink";
 import { dashboardIdAtom, dashboardAtom } from "../../recoil/dashboard/dashboard";
@@ -57,7 +57,7 @@ const DashbaordPage = () => {
                             />
                         </div>
                     </>
-                    : <DashbaordError />
+                    : <DashboardError />
             }
         </div >
     );
