@@ -21,6 +21,8 @@ export enum Aggragation {
     sum = 'sum'
 }
 
+export const DependentAggregation = [Aggragation.uniqueValues, Aggragation.sum];
+
 export type GraphConfig = {
     x_field: string;
     y_field: { aggragation?: Aggragation; field?: string; };
