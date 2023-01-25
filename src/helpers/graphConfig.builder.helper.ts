@@ -1,5 +1,7 @@
+import _ from "lodash";
 import { OptionItem } from "../components/Common/Dropdown/Dropdown";
-import { Aggragation, Graph, GraphType } from "../types/graph.types";
+import { chartMapping } from "../components/GraphWorkshop/ParametersPanel/chartParametersMapping";
+import { Aggragation, DependentAggregation, Graph, GraphType } from "../types/graph.types";
 import { PartialRecord, Subset } from "../types/utility.types";
 
 export const graphBuilderMapping: PartialRecord<GraphType, Subset<Graph>> = {
@@ -37,4 +39,19 @@ export const buildGraphConfig = (
     };
 
     return graphToSave;
+};
+
+export const validateGraph = (graph: Graph) => {
+    const graphType = graph.template?.type;
+    const mustHaveElements: any[] = [graph.title, graphType];
+    chartMapping[graphType].isDataFields && mustHaveElements.push(graph.graphConfig.dataFields);
+
+    if (chartMapping[graphType].yFieldOptions?.length) {
+        mustHaveElements.push(...[graph.graphConfig.x_field, graph.graphConfig.y_field.aggragation]);
+        if (DependentAggregation.includes(graph.graphConfig.y_field.aggragation)) {
+            mustHaveElements.push(graph.graphConfig.y_field.field);
+        }
+    }
+
+    return mustHaveElements.every(configElement => !_.isEmpty(configElement));
 };
