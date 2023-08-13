@@ -1,20 +1,20 @@
 export const config = {
     processingService: {
-		url: 'https://local.graphit.com:3012',
+		url: process.env.PS_URL || 'https://local.graphit.com:3012',
 		auth0:{
 			domain: "graphit.us.auth0.com",
 			client_id: "3LgivwedUyOayOiLcHOg0HOWwpUZkPgT",
 			client_secret: 'GSbhabWuFJiysBgZLrUpokgpommprKYAz79jvFkTEPijPqHGQMd9RGP7ZSaJdCtc',
-			audience: "https://local.graphit.com:3012",
+			audience: process.env.PS_AUDIENCE || "https://local.graphit.com:3012",
 		}
 	},
     graphServer: {
-		url: 'https://local.graphit.com:8000',
+		url: process.env.GS_URL || 'https://local.graphit.com:8000',
 		auth0:{
 			domain: "graphit.us.auth0.com",
 			client_id: "3LgivwedUyOayOiLcHOg0HOWwpUZkPgT",
 			client_secret: 'GSbhabWuFJiysBgZLrUpokgpommprKYAz79jvFkTEPijPqHGQMd9RGP7ZSaJdCtc',
-			audience: "https://local.graphit.com:8000",
+			audience: process.env.GS_AUDIENCE || "https://local.graphit.com:8000",
 		}
 	},
 };
